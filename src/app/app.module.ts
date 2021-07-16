@@ -4,6 +4,10 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { MaterialModule } from './material/material.module';
 import { RouterModule } from '@angular/router';
+import { HomeComponent } from './home/home.component';
+import { VehicleComponent } from './vehicle/vehicle.component';
+import { CameraComponent } from './camera/camera.component';
+import { VehicleCameraAssignmentComponent } from './vehicle-camera-assignment/vehicle-camera-assignment.component';
 
 @NgModule({
   imports: [
@@ -11,18 +15,18 @@ import { RouterModule } from '@angular/router';
     FormsModule,
     MaterialModule,
     RouterModule.forRoot([
-      // { path: '', component: HomeComponent },
-      // { path: 'vehicle', component: VehicleComponent },
-      // { path: 'camera', component: CameraComponent },
-      // { path: 'assignment', component: VehicleCameraAssignmentComponent }
+      { path: '', component: HomeComponent },
+      { path: 'vehicle', component: VehicleComponent },
+      { path: 'camera', component: CameraComponent },
+      { path: 'assignment', component: VehicleCameraAssignmentComponent }
     ])
   ],
   declarations: [
-    AppComponent
-    // HomeComponent,
-    // VehicleComponent,
-    // CameraComponent,
-    // VehicleCameraAssignmentComponent
+    AppComponent,
+    HomeComponent,
+    VehicleComponent,
+    CameraComponent,
+    VehicleCameraAssignmentComponent
   ],
   bootstrap: [AppComponent]
 })
