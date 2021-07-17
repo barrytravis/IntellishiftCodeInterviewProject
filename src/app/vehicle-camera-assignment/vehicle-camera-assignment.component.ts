@@ -28,4 +28,12 @@ export class VehicleCameraAssignmentComponent implements OnInit {
       .pipe(tap(r => console.log(r)))
       .subscribe();
   }
+
+  unAssign() {
+    this.data
+      .post('assignments', {}, { cameraId: 0, vehicleId: 1 })
+      .pipe(tap(r => console.log(r)))
+      .subscribe();
+  }
+  
 }

@@ -1,7 +1,17 @@
+<button mat-button color="primary" (click)="openAddCameraDialog()">Add</button>
+
+<form [formGroup]="vehicleEntryForm">
+  <mat-form-field>
+    <mat-label>Vehicle Name</mat-label>
+    <input matInput placeholder="Vehicle Name" formControl="name">
+  </mat-form-field>
+</form>
+
 <mat-list>
   <mat-list-item *ngFor="let vehicle of vehicles">
     <p>Vehicle Number: {{vehicle.id}}</p>
     <p>Vehicle Name: {{vehicle.name}}</p>
     <p>Camera ID: {{vehicle.cameraId}}</p>
+    <button mat-button color="primary" (click)="deleteVehicle(vehicle.id)">Remove</button>
   </mat-list-item>
 </mat-list>

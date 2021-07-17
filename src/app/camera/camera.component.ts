@@ -17,12 +17,8 @@ export class CameraComponent implements OnInit {
     this.getCameras().subscribe(data => this.cameras = data);
   }
 
-  getCameras(): Observable<Camera[]> {
-    return this.data.get<Camera[]>('cameras');
-  }
+  openAddCameraDialog(){
 
-  getCameraById(id: number): Observable<Camera> {
-    return this.data.get<Camera>('cameras/:id', { id: id });
   }
 
   addCamera() {
@@ -31,5 +27,21 @@ export class CameraComponent implements OnInit {
       { id: 1 },
       { name: 'camera 3', vehicleId: 0 }
     );
+  }
+
+  getCameras(): Observable<Camera[]> {
+    return this.data.get<Camera[]>('cameras');
+  }
+
+  getCameraById(id: number): Observable<Camera> {
+    return this.data.get<Camera>('cameras/:id', { id: id });
+  }
+
+  // updateCamera(id: number): Observable<Camera> {
+  //   return this.data.put<Camera>('cameras/:id', { id: id });
+  // }
+
+  deleteCamera(id: number){ // : Observable<Camera> {
+    // return this.data.delete<Camera>('cameras/:id', { id: id });
   }
 }
