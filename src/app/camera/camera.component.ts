@@ -9,12 +9,16 @@ import { DataService } from '../services/data.service';
   styleUrls: ['./camera.component.css']
 })
 export class CameraComponent implements OnInit {
+cameras: Camera[];
+
   constructor(
     private data: DataService
   ) {}
 
   ngOnInit() {
-
+    this.getCameras.subscribe(
+      x => this.cameras = x
+    );
   }
 
   getCameras(): Observable<Camera[]> {
