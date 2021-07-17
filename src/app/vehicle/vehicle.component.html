@@ -1,1 +1,7 @@
-<p>Vehicle works</p>
+<mat-list>
+  <mat-list-item *ngFor="let vehicle of vehicles">
+    <p>Vehicle Number: {{vehicle.id}}</p>
+    <p>Vehicle Name: {{vehicle.name}}</p>
+    <p>Camera ID: {{vehicle.cameraId}}</p>
+  </mat-list-item>
+</mat-list>

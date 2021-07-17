@@ -14,7 +14,7 @@ export class CameraComponent implements OnInit {
   constructor(private data: DataService) {}
 
   ngOnInit() {
-    this.getCameras().subscribe(x => (this.cameras = x));
+    this.getCameras().subscribe(data => this.cameras = data);
   }
 
   getCameras(): Observable<Camera[]> {

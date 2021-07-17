@@ -6,14 +6,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  currentTab: string = 'assignemnt';
+  currentTab: string = 'assignment';
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
-  tabControl(selectedTab: string){
+  tabControl(selectedTab: string) {
     this.currentTab = selectedTab;
   }
 }

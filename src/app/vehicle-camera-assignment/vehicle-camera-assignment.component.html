@@ -1,5 +1,6 @@
 <mat-list>
-  <mat-list-item> Pepper </mat-list-item>
-  <mat-list-item> Salt </mat-list-item>
-  <mat-list-item> Paprika </mat-list-item>
+  <mat-list-item *ngFor="let assignment of assignments">
+    <p>Vehicle ID: {{assignment.vehicleId}}</p>
+    <p>Camera ID: {{assignment.cameraId}}</p>
+  </mat-list-item>
 </mat-list>

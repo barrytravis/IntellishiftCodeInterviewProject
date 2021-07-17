@@ -10,11 +10,14 @@ import { DataService } from '../services/data.service';
 })
 export class VehicleComponent implements OnInit {
 
+  vehicles: Vehicle[] = [];
+
   constructor(
     private data: DataService
     ) { }
 
   ngOnInit() {
+    this.getVehicles().subscribe(data => this.vehicles = data);
   }
 
   getVehicles(): Observable<Vehicle[]> {
