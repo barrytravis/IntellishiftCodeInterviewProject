@@ -1,4 +1,18 @@
-<div><a routerLink="/">Home</a></div>
-<div><a routerLink="/camera">Camera</a></div>
-<div><a routerLink="/vehicle">Vehicle</a></div>
-<div><a routerLink="/assignment">Assignment</a></div>
+<button mat-button><a routerLink="/">Home</a></button>
+<button mat-button><a routerLink="/camera">Camera</a></button>
+<button mat-button><a routerLink="/vehicle">Vehicle</a></button>
+<button mat-button><a routerLink="/assignment">Assignment</a></button>
+<div>
+  <mat-tab-group #tabGroup>
+    <mat-tab label="Current Assignements">
+      <app-vehicle-camera-assignment *matTabContent></app-vehicle-camera-assignment>
+    </mat-tab>
+    <mat-tab label="Vehicles">
+      <p>test</p>
+      <app-vehicle *matTabContent></app-vehicle>
+    </mat-tab>
+    <mat-tab label="Cameras">
+      <app-camera *matTabContent></app-camera>
+    </mat-tab>
+  </mat-tab-group>
+</div>
