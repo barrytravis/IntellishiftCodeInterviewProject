@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Vehicle } from '../models/vehicle.model';
+import { DataService } from '../services/data.service';
 
 @Component({
   selector: 'app-vehicle',
@@ -7,9 +10,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class VehicleComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private data: DataService
+    ) { }
 
   ngOnInit() {
+  }
+
+  getVehicles(): Observable<Vehicle[]> {
+    return this.data.get<Vehicle[]>("vehicles");
+  }
+
+  getVehicleById(id: number): Observable<Vehicle> {
+    return this.data.get<Vehicle>("vehicles/:id", { id: id });
+  }
+
+  addVehicle() {
+    this.data.post("vehicles/:id", { id: 3 }, { name: "car", cameraId: 1 });
   }
 
 }
