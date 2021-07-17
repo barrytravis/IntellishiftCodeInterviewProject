@@ -1,18 +1,8 @@
-<button mat-button><a routerLink="/">Home</a></button>
-<button mat-button><a routerLink="/camera">Camera</a></button>
-<button mat-button><a routerLink="/vehicle">Vehicle</a></button>
-<button mat-button><a routerLink="/assignment">Assignment</a></button>
-<div>
-  <mat-tab-group #tabGroup>
-    <mat-tab label="Current Assignements">
-      <app-vehicle-camera-assignment *matTabContent></app-vehicle-camera-assignment>
-    </mat-tab>
-    <mat-tab label="Vehicles">
-      <p>test</p>
-      <app-vehicle *matTabContent></app-vehicle>
-    </mat-tab>
-    <mat-tab label="Cameras">
-      <app-camera *matTabContent></app-camera>
-    </mat-tab>
-  </mat-tab-group>
-</div>
+<mat-toolbar color="primary">
+  <button mat-button (click)="tabControl('assignment')">Assignements</button>
+  <button mat-button (click)="tabControl('vehicle')">Vehicles</button>
+  <button mat-button (click)="tabControl('camera')">Cameras</button>
+</mat-toolbar>
+<app-vehicle-camera-assignment *ngIf="currentTab==='assignment'"></app-vehicle-camera-assignment>
+<app-vehicle *ngIf="currentTab==='vehicle'"></app-vehicle>
+<app-camera *ngIf="currentTab==='camera'"></app-camera>
