@@ -6,7 +6,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./vehicle-camera-assignment.component.css']
 })
 export class VehicleCameraAssignmentComponent implements OnInit {
-  constructor() {}
 
-  ngOnInit() {}
+  constructor() { }
+
+  ngOnInit() {
+  }
+
 }
