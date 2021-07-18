@@ -1,4 +1,3 @@
-import { ClassNamesMigration } from '@angular/cdk/schematics/ng-update/migrations/class-names';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Camera } from '../models/camera.model';
@@ -11,7 +10,6 @@ import { DataService } from '../services/data.service';
 })
 export class CameraComponent implements OnInit {
   cameras: Camera[] = [];
-  openCameraCreate: boolean = false;
 
   constructor(private data: DataService) {}
 

@@ -39,16 +39,20 @@ export class CameraFormComponent implements OnInit {
   }
 
   submitForm() {
-    let formCamera: Camera = new Camera();
-    let rawFormValue = this.cameraEntryForm.getRawValue();
-    formCamera.deviceNo = rawFormValue.deviceNo;
-    formCamera.vehicleId = rawFormValue.vehicleId;
-    formCamera.id = rawFormValue.id;
-
-    if(this.camera.id != null){
-      this.updateCamera.emit(formCamera)
-    } else {
-      this.createCamera.emit(formCamera);
+    this.cameraEntryForm.updateValueAndValidity();
+    
+    if(!this.cameraEntryForm.invalid){
+      let formCamera: Camera = new Camera();
+      let rawFormValue = this.cameraEntryForm.getRawValue();
+      formCamera.deviceNo = rawFormValue.deviceNo;
+      formCamera.vehicleId = rawFormValue.vehicleId;
+      formCamera.id = rawFormValue.id;
+  
+      if(this.camera.id != null){
+        this.updateCamera.emit(formCamera)
+      } else {
+        this.createCamera.emit(formCamera);
+      }
     }
   }
 

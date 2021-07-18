@@ -8,7 +8,7 @@ import { HomeComponent } from './home/home.component';
 import { VehicleComponent } from './vehicle/vehicle.component';
 import { CameraComponent } from './camera/camera.component';
 import { VehicleCameraAssignmentComponent } from './vehicle-camera-assignment/vehicle-camera-assignment.component';
-import { VehicleCreateComponent } from './vehicle-create/vehicle-create.component';
+import { VehicleFormComponent } from './vehicle-form/vehicle-form.component';
 import { CameraFormComponent } from './camera-form/camera-form.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -32,7 +32,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     VehicleComponent,
     CameraComponent,
     VehicleCameraAssignmentComponent,
-    VehicleCreateComponent,
+    VehicleFormComponent,
     CameraFormComponent
   ],
   bootstrap: [AppComponent]

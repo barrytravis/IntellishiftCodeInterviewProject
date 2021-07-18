@@ -10,7 +10,6 @@ import { DataService } from '../services/data.service';
 })
 export class VehicleComponent implements OnInit {
   vehicles: Vehicle[] = [];
-  openVehicleCreate: boolean = false;
 
   constructor(private data: DataService) {}
 
@@ -18,12 +17,16 @@ export class VehicleComponent implements OnInit {
     this.getVehicles();
   }
 
+  addVehicle() {
+    this.vehicles.push(new Vehicle());
+  }
+
   createVehicle(newVehicle: Vehicle) {
     this.data
       .post(
         'vehicles/:id',
         { id: newVehicle.id },
-        { name: newVehicle.name, cameraId: null }
+        { name: newVehicle.name, cameraId: newVehicle.cameraId }
       )
       .subscribe(() => this.getVehicles());
   }
@@ -31,25 +34,25 @@ export class VehicleComponent implements OnInit {
   getVehicles(): void {
     this.data
       .get<Vehicle[]>('vehicles')
-      .subscribe(data => this.vehicles = data);
+      .subscribe(data => (this.vehicles = data));
   }
 
   getVehicleById(id: number): Vehicle {
     let vehicle: Vehicle;
     this.data
       .get<Vehicle>('vehicles/:id', { id: id })
-      .subscribe(data => vehicle = data);
+      .subscribe(data => (vehicle = data));
     return vehicle;
   }
 
   updateVehicle(vehicle: Vehicle) {
-    this.data.put<Vehicle>(
-      'vehicles/:id',
-      { id: vehicle.id },
-      { name: vehicle.name, cameraId: vehicle.cameraId }
-    );
-
-    this.getVehicles();
+    this.data
+      .put<Vehicle>(
+        'vehicles/:id',
+        { id: vehicle.id },
+        { id: vehicle.id, name: vehicle.name, cameraId: vehicle.cameraId }
+      )
+      .subscribe(() => this.getVehicles());
   }
 
   deleteVehicle(id: number) {
