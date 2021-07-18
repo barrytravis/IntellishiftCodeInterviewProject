@@ -24,7 +24,12 @@ export class VehicleFormComponent implements OnInit {
   constructor(private readonly formBuilder: FormBuilder) {}
 
   ngOnInit() {
-    
+    if(!this.isNewVehicle){
+      this.buildForm(this._vehicle);
+    } else {
+      this.formIsReadOnly = false;
+      this.buildForm();
+    }
   }
 
   buildForm(vehicle?: Vehicle) {
