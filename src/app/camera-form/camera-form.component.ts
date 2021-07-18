@@ -3,14 +3,14 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Camera } from '../models/camera.model';
 
 @Component({
-  selector: 'app-camera-create',
-  templateUrl: './camera-create.component.html',
-  styleUrls: ['./camera-create.component.css']
+  selector: 'app-camera-form',
+  templateUrl: './camera-form.component.html',
+  styleUrls: ['./camera-form.component.css']
 })
-export class CameraCreateComponent implements OnInit {
+export class CameraFormComponent implements OnInit {
   @Output() public createCamera = new EventEmitter<Camera>();
   @Output() public updateCamera = new EventEmitter<Camera>();
-  @Output() public deleteCamera = new EventEmitter<Camera>();
+  @Output() public deleteCamera = new EventEmitter<number>();
   @Input() public camera: Camera;
 
   public cameraEntryForm: FormGroup = new FormGroup({});
@@ -19,6 +19,7 @@ export class CameraCreateComponent implements OnInit {
   constructor(private readonly formBuilder: FormBuilder) {}
 
   ngOnInit() {
+    console.log(this.camera);
     if(this.camera.id != null){
       this.buildForm(this.camera);
     } else {
@@ -53,6 +54,6 @@ export class CameraCreateComponent implements OnInit {
   }
 
   delete(){
-    this.deleteCamera.emit(this.cameraEntryForm.get('id').value);
+    this.deleteCamera.emit(this.camera.id);
   }
 }
