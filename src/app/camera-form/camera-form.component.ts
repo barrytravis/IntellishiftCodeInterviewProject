@@ -19,7 +19,6 @@ export class CameraFormComponent implements OnInit {
   constructor(private readonly formBuilder: FormBuilder) {}
 
   ngOnInit() {
-    console.log(this.camera);
     if(this.camera.id != null){
       this.buildForm(this.camera);
     } else {
@@ -37,10 +36,10 @@ export class CameraFormComponent implements OnInit {
 
   submitForm() {
     let formCamera: Camera = new Camera();
-
-    console.log(formCamera);
-    console.log(this.cameraEntryForm.getRawValue());
-    console.log(this.cameraEntryForm.get('id').value);
+    let rawFormValue = this.cameraEntryForm.getRawValue();
+    formCamera.deviceNo = rawFormValue.deviceNo;
+    formCamera.vehicleId = rawFormValue.vehicleId;
+    formCamera.id = rawFormValue.id;
 
     if(this.camera.id != null){
       this.updateCamera.emit(formCamera)
@@ -56,8 +55,9 @@ export class CameraFormComponent implements OnInit {
   }
 
   resetForm(){
-    this.buildForm(this.camera);
     this.formIsReadonly = true;
+    this.cameraEntryForm = null;
+    this.buildForm(this.camera);
   }
 
   delete(){
