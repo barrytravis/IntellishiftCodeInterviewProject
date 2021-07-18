@@ -262,6 +262,8 @@ export class DataService {
 
         
         console.log(options);
+
+        
         body = this.mockDeleteEndpointMap.get(options.url)(options.params);
         status = 200;
         statusText = 'OK';
