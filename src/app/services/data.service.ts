@@ -128,18 +128,21 @@ export class DataService {
       'vehicles/:id',
       (params: any, data: any) => {
         this.vehicles.set(params.id, data);
+        return {};
       }
     ],
     [
       'cameras/:id',
       (params: any, data: any) => {
         this.cameras.set(params.id, data);
+        return {};
       }
     ],
     [
       'assignments/:id',
       (params: any, data: any) => {
         this.assignments.set(params.id, data);
+        return {};
       }
     ]
   ]);
@@ -148,20 +151,22 @@ export class DataService {
     [
       'vehicles/:id',
       (params: any) => {
-        console.log(params);
         this.vehicles.delete(params.id);
+        return {};
       }
     ],
     [
       'cameras/:id',
       (params: any) => {
         this.cameras.delete(params.id);
+        return {};
       }
     ],
     [
       'assignments/:id',
       (params: any) => {
         this.assignments.delete(params.id);
+        return {};
       }
     ]
   ]);
@@ -259,11 +264,6 @@ export class DataService {
         status = 200;
         statusText = 'OK';
       } else if (options.method === 'DELETE') {
-
-        
-        console.log(options);
-
-        
         body = this.mockDeleteEndpointMap.get(options.url)(options.params);
         status = 200;
         statusText = 'OK';

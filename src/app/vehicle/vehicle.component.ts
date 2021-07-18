@@ -33,15 +33,18 @@ export class VehicleComponent implements OnInit {
   }
 
   updateVehicle(vehicle: Vehicle) {
-    this.data.put<Vehicle>('vehicles/:id', { id: vehicle.id }, { vehicle });
+    this.data.put<Vehicle>(
+      'vehicles/:id',
+      { id: vehicle.id },
+      { name: vehicle.name, id: vehicle.id }
+    );
 
     this.getVehicles();
   }
 
   async deleteVehicle(id: number) {
-    console.log('delete attempt:' + id);
-    await this.data.delete('vehicles/:id', { id: id }).subscribe();
-
-    this.getVehicles();
+    await this.data
+      .delete('vehicles/:id', { id: id })
+      .subscribe(() => this.getVehicles());
   }
 }

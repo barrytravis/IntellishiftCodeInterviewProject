@@ -49,8 +49,6 @@ export class VehicleCreateComponent implements OnInit {
         { name: newVehicle.name, cameraId: null }
       )
       .subscribe(
-        x => console.log(x),
-        err => console.error(err),
         () => {
           this.successfulCreate.emit();
           this.formClosed.emit();
