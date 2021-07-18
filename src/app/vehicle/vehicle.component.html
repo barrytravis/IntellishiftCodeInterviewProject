@@ -1,11 +1,5 @@
-<button mat-button color="primary" (click)="openAddCameraDialog()">Add</button>
-
-<form [formGroup]="vehicleEntryForm">
-  <mat-form-field>
-    <mat-label>Vehicle Name</mat-label>
-    <input matInput placeholder="Vehicle Name" formControl="name">
-  </mat-form-field>
-</form>
+<button mat-button *ngIf="!openVehicleCreate" color="primary" (click)="openVehicleCreate=true">Create Vehicle</button>
+<app-vehicle-create *ngIf="openVehicleCreate" (formClosed)="openVehicleCreate=false" (successfulCreate)="getVehicles()"></app-vehicle-create>
 
 <mat-list>
   <mat-list-item *ngFor="let vehicle of vehicles">

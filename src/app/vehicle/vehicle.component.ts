@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Vehicle } from '../models/vehicle.model';
 import { DataService } from '../services/data.service';
@@ -12,29 +11,12 @@ import { DataService } from '../services/data.service';
 export class VehicleComponent implements OnInit {
 
   vehicles: Vehicle[] = [];
-  vehicleEntryForm: FormGroup;
+  openVehicleCreate: boolean = false;
 
-  constructor(
-    private data: DataService,
-    private readonly formBuilder: FormBuilder
-    ) { }
+  constructor(private data: DataService) { }
 
   ngOnInit() {
     this.getVehicles().subscribe(data => this.vehicles = data);
-  }
-
-  openAddCameraDialog(){
-
-  }
-
-  buildForm(formValue: Vehicle){
-    this.vehicleEntryForm = this.formBuilder.group({
-      name: this.formBuilder.control(formValue.name)
-    })
-  }
-
-  addVehicle() {
-    this.data.post("vehicles/:id", { id: 3 }, { name: "car", CameraId: 1 });
   }
 
   getVehicles(): Observable<Vehicle[]> {
