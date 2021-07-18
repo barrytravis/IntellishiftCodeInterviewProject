@@ -123,6 +123,48 @@ export class DataService {
     ]
   ]);
 
+  private mockPutEndpointMap = new Map<string, Function>([
+    [
+      "vehicles/:id",
+      (params: any, data: any) => {
+        this.vehicles.set(params.id, data)
+      }
+    ],
+        [
+      "cameras/:id",
+      (params: any, data: any) => {
+        this.cameras.set(params.id, data)
+      }
+    ],
+    [
+      "assignments/:id",
+      (params: any, data: any) => {
+        this.assignments.set(params.id, data)
+      }
+    ]
+  ]);
+
+  private mockDeleteEndpointMap = new Map<string, Function>([
+    [
+      "vehicles/:id",
+      (params: any, data: any) => {
+        this.vehicles.delete(params.id)
+      }
+    ],
+        [
+      "cameras/:id",
+      (params: any, data: any) => {
+        this.cameras.delete(params.id)
+      }
+    ],
+    [
+      "assignments/:id",
+      (params: any, data: any) => {
+        this.assignments.delete(params.id)
+      }
+    ]
+  ]);
+
   private cameras = new Map<number, Camera>([
     [0, { deviceNo: "Camera 1" }],
     [1, { deviceNo: "Camera 2" }]
@@ -161,13 +203,30 @@ export class DataService {
     options.method = "GET";
     options.url = url;
     options.params = params;
-
     return this.request(options).pipe(map(r => r.body as T));
   }
 
   public post<T>(url: string, params?: any, data?: any): Observable<T> {
     const options = new DataServiceOptions();
     options.method = "POST";
+    options.url = url;
+    options.params = params;
+    options.data = data;
+    return this.request(options).pipe(map(r => r.body as T));
+  }
+
+  public put<T>(url: string, params?: any, data?: any): Observable<T> {
+    const options = new DataServiceOptions();
+    options.method = "PUT";
+    options.url = url;
+    options.params = params;
+    options.data = data;
+    return this.request(options).pipe(map(r => r.body as T));
+  }
+
+  public delete<T>(url: string, params?: any, data?: any): Observable<T> {
+    const options = new DataServiceOptions();
+    options.method = "DELETE";
     options.url = url;
     options.params = params;
     options.data = data;
@@ -187,6 +246,20 @@ export class DataService {
         statusText = "OK";
       } else if (options.method === "POST") {
         body = this.mockPostEndpointMap.get(options.url)(
+          options.params,
+          options.data
+        );
+        status = 200;
+        statusText = "OK";
+      } else if (options.method === "PUT") {
+        body = this.mockPutEndpointMap.get(options.url)(
+          options.params,
+          options.data
+        );
+        status = 200;
+        statusText = "OK";
+      } else if (options.method === "DELETE") {
+        body = this.mockDeleteEndpointMap.get(options.url)(
           options.params,
           options.data
         );
