@@ -12,16 +12,9 @@ export class CameraFormComponent implements OnInit {
   @Output() public updateCamera = new EventEmitter<Camera>();
   @Output() public deleteCamera = new EventEmitter<number>();
   public _camera: Camera;
-  @Input() public set vehicle(camera: Camera) {
+  @Input() public set camera(camera: Camera) {
     this._camera = camera;
     this.isNewCamera = !this._camera.id;
-
-    if(!this.isNewCamera){
-      this.buildForm(this._camera);
-    } else {
-      this.formIsReadOnly = false;
-      this.buildForm();
-    }
   };
 
   public cameraEntryForm: FormGroup = new FormGroup({});
@@ -30,7 +23,13 @@ export class CameraFormComponent implements OnInit {
 
   constructor(private readonly formBuilder: FormBuilder) {}
 
-  ngOnInit() { 
+  ngOnInit() {
+    if(!this.isNewCamera){
+      this.buildForm(this._camera);
+    } else {
+      this.formIsReadOnly = false;
+      this.buildForm();
+    }
   }
 
   buildForm(camera?: Camera) {

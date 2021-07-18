@@ -15,13 +15,6 @@ export class VehicleFormComponent implements OnInit {
   @Input() public set vehicle(vehicle: Vehicle) {
     this._vehicle = vehicle;
     this.isNewVehicle = !this._vehicle.id;
-
-    if(!this.isNewVehicle){
-      this.buildForm(this._vehicle);
-    } else {
-      this.formIsReadOnly = false;
-      this.buildForm();
-    }
   };
 
   public vehicleEntryForm: FormGroup = new FormGroup({});
@@ -30,7 +23,9 @@ export class VehicleFormComponent implements OnInit {
 
   constructor(private readonly formBuilder: FormBuilder) {}
 
-  ngOnInit() { }
+  ngOnInit() {
+    
+  }
 
   buildForm(vehicle?: Vehicle) {
     this.vehicleEntryForm = this.formBuilder.group({
