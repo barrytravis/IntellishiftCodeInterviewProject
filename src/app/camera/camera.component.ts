@@ -19,6 +19,10 @@ export class CameraComponent implements OnInit {
     this.getCameras();
   }
 
+  addNewCamera(){
+    this.cameras.push(new Camera());
+  }
+
   createCamera(newCamera: Camera) {
     this.data
       .post(

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Camera } from '../models/camera.model';
 
 @Component({
@@ -10,15 +10,16 @@ import { Camera } from '../models/camera.model';
 export class CameraCreateComponent implements OnInit {
   @Output() public createCamera = new EventEmitter<Camera>();
   @Output() public updateCamera = new EventEmitter<Camera>();
-  @Output() public formClosed = new EventEmitter<boolean>();
+  @Output() public deleteCamera = new EventEmitter<Camera>();
   @Input() public camera: Camera;
 
   public cameraEntryForm: FormGroup = new FormGroup({});
-
+  public readonly: boolean = true;
+  
   constructor(private readonly formBuilder: FormBuilder) {}
 
   ngOnInit() {
-    if (this.camera) {
+    if(this.camera.id != null){
       this.buildForm(this.camera);
     } else {
       this.buildForm();
@@ -27,9 +28,9 @@ export class CameraCreateComponent implements OnInit {
 
   buildForm(camera?: Camera) {
     this.cameraEntryForm = this.formBuilder.group({
-      deviceNo: this.formBuilder.control(camera?.deviceNo || ''),
-      id: this.formBuilder.control(camera?.id || ''),
-      vehicleId: this.formBuilder.control(camera?.vehicleId || '')
+      deviceNo: this.formBuilder.control(camera?.deviceNo || '', Validators.required),
+      id: this.formBuilder.control(camera?.id || '', [Validators.required, Validators.pattern("^[0-9]*$")]),
+      vehicleId: this.formBuilder.control(camera?.vehicleId || '', [Validators.pattern("^[0-9]*$")])
     });
   }
 
@@ -39,15 +40,19 @@ export class CameraCreateComponent implements OnInit {
     formCamera.deviceNo = this.cameraEntryForm.get('deviceNo').value;
     formCamera.vehicleId = this.cameraEntryForm.get('vehicleId').value;
 
-    if(this.camera){
+    if(this.camera.id != null){
       this.updateCamera.emit(formCamera)
     } else {
       this.createCamera.emit(formCamera);
     }
-    this.closeForm();
   }
 
-  closeForm() {
-    this.formClosed.emit();
+  resetForm(){
+    this.buildForm(this.camera);
+    this.readonly = true;
+  }
+
+  delete(){
+    this.deleteCamera.emit(this.cameraEntryForm.get('id').value);
   }
 }
