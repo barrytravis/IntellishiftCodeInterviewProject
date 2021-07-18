@@ -19,7 +19,7 @@ export class CameraComponent implements OnInit {
     this.getCameras();
   }
 
-  addNewCamera() {
+  addCamera() {
     this.cameras.push(new Camera());
   }
 
@@ -28,7 +28,7 @@ export class CameraComponent implements OnInit {
       .post(
         'cameras/:id',
         { id: newCamera.id },
-        { deviceNo: newCamera.deviceNo, vehicleId: null }
+        { deviceNo: newCamera.deviceNo, vehicleId: newCamera.vehicleId }
       )
       .subscribe(() => this.getCameras());
   }
