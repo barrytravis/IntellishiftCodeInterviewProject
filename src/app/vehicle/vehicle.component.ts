@@ -24,15 +24,24 @@ export class VehicleComponent implements OnInit {
       .subscribe(data => (this.vehicles = data));
   }
 
-  getVehicleById(id: number): Observable<Vehicle> {
-    return this.data.get<Vehicle>('vehicles/:id', { id: id });
+  getVehicleById(id: number): Vehicle {
+    let vehicle: Vehicle;
+    this.data
+      .get<Vehicle>('vehicles/:id', { id: id })
+      .subscribe(data => (vehicle = data));
+    return vehicle;
   }
 
-  updateVehicle(id: number): Observable<Vehicle> {
-    return this.data.put<Vehicle>('Vehicles/:id', { id: id });
+  updateVehicle(vehicle: Vehicle) {
+    this.data.put<Vehicle>('vehicles/:id', { id: vehicle.id }, { vehicle });
+
+    this.getVehicles();
   }
 
-  deleteVehicle(id: number): void {
-    this.data.delete('Vehicles/:id', { id: id });
+  async deleteVehicle(id: number) {
+    console.log('delete attempt:' + id);
+    await this.data.delete('vehicles/:id', { id: id }).subscribe();
+
+    this.getVehicles();
   }
 }

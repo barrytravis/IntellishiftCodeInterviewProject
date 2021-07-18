@@ -1,23 +1,23 @@
-import { HttpHeaders, HttpResponse } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { BehaviorSubject, Observable, of } from "rxjs";
-import { delay, map, take } from "rxjs/operators";
+import { HttpHeaders, HttpResponse } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { delay, map, take } from 'rxjs/operators';
 import {
   Assignment,
   AssignmentRequest,
   AssignmentResponse
-} from "../models/assignment.model";
-import { Camera } from "../models/camera.model";
-import { DataServiceOptions } from "../models/data-service-options.model";
-import { Vehicle } from "../models/vehicle.model";
+} from '../models/assignment.model';
+import { Camera } from '../models/camera.model';
+import { DataServiceOptions } from '../models/data-service-options.model';
+import { Vehicle } from '../models/vehicle.model';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root'
 })
 export class DataService {
   private mockGetEndpointMap = new Map<string, Function>([
     [
-      "vehicles",
+      'vehicles',
       () => {
         let vehicles: Vehicle[] = [];
         this.vehicles.forEach((v, k) => {
@@ -29,7 +29,7 @@ export class DataService {
       }
     ],
     [
-      "vehicles/:id",
+      'vehicles/:id',
       (params: any): Vehicle => {
         let vehicle: Vehicle = null;
         vehicle = JSON.parse(JSON.stringify(this.vehicles.get(params.id)));
@@ -38,7 +38,7 @@ export class DataService {
       }
     ],
     [
-      "cameras",
+      'cameras',
       () => {
         let cameras: Camera[] = [];
         this.cameras.forEach((v, k) => {
@@ -50,7 +50,7 @@ export class DataService {
       }
     ],
     [
-      "cameras/:id",
+      'cameras/:id',
       (params: any) => {
         let camera = null;
         camera = JSON.parse(JSON.stringify(this.cameras.get(params.id)));
@@ -59,7 +59,7 @@ export class DataService {
       }
     ],
     [
-      "assignments",
+      'assignments',
       () => {
         let assignments: AssignmentResponse[] = [];
         this.assignments.forEach((v, k) => {
@@ -76,7 +76,7 @@ export class DataService {
 
   private mockPostEndpointMap = new Map<string, Function>([
     [
-      "vehicles/:id",
+      'vehicles/:id',
       (params: any, data: any) => {
         let vehicle: object = null;
         vehicle = this.vehicles.set(params.id, {
@@ -86,7 +86,7 @@ export class DataService {
       }
     ],
     [
-      "cameras/:id",
+      'cameras/:id',
       (params: any, data: any) => {
         let camera: object = null;
         camera = this.cameras.set(params.id, { deviceNo: data.name });
@@ -94,17 +94,17 @@ export class DataService {
       }
     ],
     [
-      "assignments",
+      'assignments',
       (params: any, data: AssignmentRequest) => {
         let key = this.getLastKeyInMap(this.assignments);
         let cid = this.getUndeletedByValue(
           this.assignments,
-          "cameraId",
+          'cameraId',
           data.cameraId
         );
         let vid = this.getUndeletedByValue(
           this.assignments,
-          "vehicleId",
+          'vehicleId',
           data.vehicleId
         );
         if (cid != null) {
@@ -125,54 +125,55 @@ export class DataService {
 
   private mockPutEndpointMap = new Map<string, Function>([
     [
-      "vehicles/:id",
+      'vehicles/:id',
       (params: any, data: any) => {
-        this.vehicles.set(params.id, data)
-      }
-    ],
-        [
-      "cameras/:id",
-      (params: any, data: any) => {
-        this.cameras.set(params.id, data)
+        this.vehicles.set(params.id, data);
       }
     ],
     [
-      "assignments/:id",
+      'cameras/:id',
       (params: any, data: any) => {
-        this.assignments.set(params.id, data)
+        this.cameras.set(params.id, data);
+      }
+    ],
+    [
+      'assignments/:id',
+      (params: any, data: any) => {
+        this.assignments.set(params.id, data);
       }
     ]
   ]);
 
   private mockDeleteEndpointMap = new Map<string, Function>([
     [
-      "vehicles/:id",
-      (params: any, data: any) => {
-        this.vehicles.delete(params.id)
-      }
-    ],
-        [
-      "cameras/:id",
-      (params: any, data: any) => {
-        this.cameras.delete(params.id)
+      'vehicles/:id',
+      (params: any) => {
+        console.log(params);
+        this.vehicles.delete(params.id);
       }
     ],
     [
-      "assignments/:id",
-      (params: any, data: any) => {
-        this.assignments.delete(params.id)
+      'cameras/:id',
+      (params: any) => {
+        this.cameras.delete(params.id);
+      }
+    ],
+    [
+      'assignments/:id',
+      (params: any) => {
+        this.assignments.delete(params.id);
       }
     ]
   ]);
 
   private cameras = new Map<number, Camera>([
-    [0, { deviceNo: "Camera 1" }],
-    [1, { deviceNo: "Camera 2" }]
+    [0, { deviceNo: 'Camera 1' }],
+    [1, { deviceNo: 'Camera 2' }]
   ]);
 
   private vehicles = new Map<number, Vehicle>([
-    [0, { name: "Dump Truck 1" }],
-    [1, { name: "Dump Truck 2" }]
+    [0, { name: 'Dump Truck 1' }],
+    [1, { name: 'Dump Truck 2' }]
   ]);
 
   private assignments = new Map<number, Assignment>([
@@ -187,7 +188,7 @@ export class DataService {
     const l: IterableIterator<[A, B]> = m.entries();
     const a: [A, B][] = Array.from(l);
     return a.find(
-      ([_k, v]) => v[searchValueName] === searchValue && v["deleted"] === false
+      ([_k, v]) => v[searchValueName] === searchValue && v['deleted'] === false
     );
   };
 
@@ -200,7 +201,7 @@ export class DataService {
 
   public get<T>(url: string, params?: any): Observable<T> {
     const options = new DataServiceOptions();
-    options.method = "GET";
+    options.method = 'GET';
     options.url = url;
     options.params = params;
     return this.request(options).pipe(map(r => r.body as T));
@@ -208,7 +209,7 @@ export class DataService {
 
   public post<T>(url: string, params?: any, data?: any): Observable<T> {
     const options = new DataServiceOptions();
-    options.method = "POST";
+    options.method = 'POST';
     options.url = url;
     options.params = params;
     options.data = data;
@@ -217,19 +218,18 @@ export class DataService {
 
   public put<T>(url: string, params?: any, data?: any): Observable<T> {
     const options = new DataServiceOptions();
-    options.method = "PUT";
+    options.method = 'PUT';
     options.url = url;
     options.params = params;
     options.data = data;
     return this.request(options).pipe(map(r => r.body as T));
   }
 
-  public delete<T>(url: string, params?: any, data?: any): Observable<T> {
+  public delete<T>(url: string, params?: any): Observable<T> {
     const options = new DataServiceOptions();
-    options.method = "DELETE";
+    options.method = 'DELETE';
     options.url = url;
     options.params = params;
-    options.data = data;
     return this.request(options).pipe(map(r => r.body as T));
   }
 
@@ -238,38 +238,38 @@ export class DataService {
   ): Observable<Response | HttpResponse<Object>> {
     let body = null,
       status = 404,
-      statusText = "Not Found";
+      statusText = 'Not Found';
     try {
-      if (options.method === "GET") {
+      if (options.method === 'GET') {
         body = this.mockGetEndpointMap.get(options.url)(options.params);
         status = 200;
-        statusText = "OK";
-      } else if (options.method === "POST") {
+        statusText = 'OK';
+      } else if (options.method === 'POST') {
         body = this.mockPostEndpointMap.get(options.url)(
           options.params,
           options.data
         );
         status = 200;
-        statusText = "OK";
-      } else if (options.method === "PUT") {
+        statusText = 'OK';
+      } else if (options.method === 'PUT') {
         body = this.mockPutEndpointMap.get(options.url)(
           options.params,
           options.data
         );
         status = 200;
-        statusText = "OK";
-      } else if (options.method === "DELETE") {
-        body = this.mockDeleteEndpointMap.get(options.url)(
-          options.params,
-          options.data
-        );
+        statusText = 'OK';
+      } else if (options.method === 'DELETE') {
+
+        
+        console.log(options);
+        body = this.mockDeleteEndpointMap.get(options.url)(options.params);
         status = 200;
-        statusText = "OK";
+        statusText = 'OK';
       } else {
-        statusText = "No endpoint can be found for that request type.";
+        statusText = 'No endpoint can be found for that request type.';
       }
     } catch (ex) {
-      body = { message: "BAD REQUEST" };
+      body = { message: 'BAD REQUEST' };
       status = 400;
     }
     JSON.parse(JSON.stringify(body));
