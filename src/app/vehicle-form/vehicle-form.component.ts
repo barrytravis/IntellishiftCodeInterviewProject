@@ -11,28 +11,30 @@ export class VehicleFormComponent implements OnInit {
   @Output() public createVehicle = new EventEmitter<Vehicle>();
   @Output() public updateVehicle = new EventEmitter<Vehicle>();
   @Output() public deleteVehicle = new EventEmitter<number>();
-  @Input() public vehicle: Vehicle;
+  public _vehicle: Vehicle;
+  @Input() public set vehicle(vehicle: Vehicle) {
+    this._vehicle = vehicle;
+    this.isNewVehicle = !this._vehicle.id;
+
+    if(!this.isNewVehicle){
+      this.buildForm(this._vehicle);
+    } else {
+      this.formIsReadOnly = false;
+      this.buildForm();
+    }
+  };
 
   public vehicleEntryForm: FormGroup = new FormGroup({});
-  public formIsReadonly: boolean = true;
+  public formIsReadOnly: boolean = true;
   public isNewVehicle: boolean;
 
   constructor(private readonly formBuilder: FormBuilder) {}
 
-  ngOnInit() {    
-    this.isNewVehicle = !this.vehicle.id;
-
-    if(!this.isNewVehicle){
-      this.buildForm(this.vehicle);
-    } else {
-      this.formIsReadonly = false;
-      this.buildForm();
-    }
-  }
+  ngOnInit() { }
 
   buildForm(vehicle?: Vehicle) {
     this.vehicleEntryForm = this.formBuilder.group({
-      name: this.formBuilder.control({value: vehicle?.name || '', disabled: this.formIsReadonly}, [Validators.required]),
+      name: this.formBuilder.control({value: vehicle?.name || '', disabled: this.formIsReadOnly}, [Validators.required]),
       id: this.formBuilder.control({value: vehicle?.id || '', disabled: !this.isNewVehicle}, [Validators.required, Validators.pattern("^[0-9]*$")])
     });
   }
@@ -46,7 +48,7 @@ export class VehicleFormComponent implements OnInit {
       formCamera.name = rawFormValue.name;
       formCamera.id = rawFormValue.id;
 
-      if(this.vehicle.id != null){
+      if(this._vehicle.id != null){
         this.updateVehicle.emit(formCamera)
       } else {
         this.createVehicle.emit(formCamera);
@@ -55,7 +57,7 @@ export class VehicleFormComponent implements OnInit {
   }
 
   allowEdit(){
-    this.formIsReadonly = false;
+    this.formIsReadOnly = false;
     this.vehicleEntryForm.get('deviceNo').enable({onlySelf: true});
     this.vehicleEntryForm.get('vehicleId').enable({onlySelf: true});
   }
@@ -65,12 +67,12 @@ export class VehicleFormComponent implements OnInit {
       this.delete();
     }
 
-    this.formIsReadonly = true;
+    this.formIsReadOnly = true;
     this.vehicleEntryForm = null;
-    this.buildForm(this.vehicle);
+    this.buildForm(this._vehicle);
   }
 
   delete(){
-    this.deleteVehicle.emit(this.vehicle.id);
+    this.deleteVehicle.emit(this._vehicle.id);
   }
 }

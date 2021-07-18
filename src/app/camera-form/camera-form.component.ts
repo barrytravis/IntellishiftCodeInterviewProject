@@ -11,30 +11,33 @@ export class CameraFormComponent implements OnInit {
   @Output() public createCamera = new EventEmitter<Camera>();
   @Output() public updateCamera = new EventEmitter<Camera>();
   @Output() public deleteCamera = new EventEmitter<number>();
-  @Input() public camera: Camera;
+  public _camera: Camera;
+  @Input() public set vehicle(camera: Camera) {
+    this._camera = camera;
+    this.isNewCamera = !this._camera.id;
+
+    if(!this.isNewCamera){
+      this.buildForm(this._camera);
+    } else {
+      this.formIsReadOnly = false;
+      this.buildForm();
+    }
+  };
 
   public cameraEntryForm: FormGroup = new FormGroup({});
-  public formIsReadonly: boolean = true;
+  public formIsReadOnly: boolean = true;
   public isNewCamera: boolean;
 
   constructor(private readonly formBuilder: FormBuilder) {}
 
-  ngOnInit() {    
-    this.isNewCamera = !this.camera.id;
-
-    if(!this.isNewCamera){
-      this.buildForm(this.camera);
-    } else {
-      this.formIsReadonly = false;
-      this.buildForm();
-    }
+  ngOnInit() { 
   }
 
   buildForm(camera?: Camera) {
     this.cameraEntryForm = this.formBuilder.group({
-      deviceNo: this.formBuilder.control({value: camera?.deviceNo || '', disabled: this.formIsReadonly}, [Validators.required]),
+      deviceNo: this.formBuilder.control({value: camera?.deviceNo || '', disabled: this.formIsReadOnly}, [Validators.required]),
       id: this.formBuilder.control({value: camera?.id || '', disabled: !this.isNewCamera}, [Validators.required, Validators.pattern("^[0-9]*$")]),
-      vehicleId: this.formBuilder.control({value: camera?.vehicleId || '', disabled: this.formIsReadonly}, [Validators.pattern("^[0-9]*$")])
+      vehicleId: this.formBuilder.control({value: camera?.vehicleId || '', disabled: this.formIsReadOnly}, [Validators.pattern("^[0-9]*$")])
     });
   }
 
@@ -48,7 +51,7 @@ export class CameraFormComponent implements OnInit {
       formCamera.vehicleId = rawFormValue.vehicleId;
       formCamera.id = rawFormValue.id;
   
-      if(this.camera.id != null){
+      if(this._camera.id != null){
         this.updateCamera.emit(formCamera)
       } else {
         this.createCamera.emit(formCamera);
@@ -57,7 +60,7 @@ export class CameraFormComponent implements OnInit {
   }
 
   allowEdit(){
-    this.formIsReadonly = false;
+    this.formIsReadOnly = false;
     this.cameraEntryForm.get('deviceNo').enable({onlySelf: true});
     this.cameraEntryForm.get('vehicleId').enable({onlySelf: true});
   }
@@ -67,12 +70,12 @@ export class CameraFormComponent implements OnInit {
       this.delete();
     }
 
-    this.formIsReadonly = true;
+    this.formIsReadOnly = true;
     this.cameraEntryForm = null;
-    this.buildForm(this.camera);
+    this.buildForm(this._camera);
   }
 
   delete(){
-    this.deleteCamera.emit(this.camera.id);
+    this.deleteCamera.emit(this._camera.id);
   }
 }
