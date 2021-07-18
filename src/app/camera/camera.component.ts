@@ -1,3 +1,4 @@
+import { ClassNamesMigration } from '@angular/cdk/schematics/ng-update/migrations/class-names';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Camera } from '../models/camera.model';
@@ -9,39 +10,51 @@ import { DataService } from '../services/data.service';
   styleUrls: ['./camera.component.css']
 })
 export class CameraComponent implements OnInit {
-  cameras: Camera[];
+  cameras: Camera[] = [];
+  openCameraCreate: boolean = false;
 
   constructor(private data: DataService) {}
 
   ngOnInit() {
-    this.getCameras().subscribe(data => this.cameras = data);
+    this.getCameras();
   }
 
-  openAddCameraDialog(){
-
+  createCamera(newCamera: Camera) {
+    this.data
+      .post(
+        'cameras/:id',
+        { id: newCamera.id },
+        { deviceNo: newCamera.deviceNo, vehicleId: null }
+      )
+      .subscribe(() => this.getCameras());
   }
 
-  addCamera() {
-    this.data.post(
-      'cameras/:id',
-      { id: 1 },
-      { name: 'camera 3', vehicleId: 0 }
-    );
+  getCameras() {
+    this.data.get<Camera[]>('Cameras').subscribe(data => (this.cameras = data));
   }
 
-  getCameras(): Observable<Camera[]> {
-    return this.data.get<Camera[]>('cameras');
+  getCameraById(id: number): Camera {
+    let camera: Camera;
+    this.data
+      .get<Camera>('Cameras/:id', { id: id })
+      .subscribe(data => (camera = data));
+
+    return camera;
   }
 
-  getCameraById(id: number): Observable<Camera> {
-    return this.data.get<Camera>('cameras/:id', { id: id });
+  updateCamera(camera: Camera) {
+    this.data
+      .put<Camera>(
+        'Cameras/:id',
+        { id: camera.id },
+        { name: camera.deviceNo, vehicleId: camera.vehicleId }
+      )
+      .subscribe(() => this.getCameras());
   }
 
-  // updateCamera(id: number): Observable<Camera> {
-  //   return this.data.put<Camera>('cameras/:id', { id: id });
-  // }
-
-  deleteCamera(id: number){ // : Observable<Camera> {
-    // return this.data.delete<Camera>('cameras/:id', { id: id });
+  deleteCamera(id: number) {
+    this.data
+      .delete('Cameras/:id', { id: id })
+      .subscribe(() => this.getCameras());
   }
 }

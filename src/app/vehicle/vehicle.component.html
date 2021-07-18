@@ -1,12 +1,27 @@
-<button mat-button *ngIf="!openVehicleCreate" color="primary" (click)="openVehicleCreate=true">Create Vehicle</button>
-<app-vehicle-create *ngIf="openVehicleCreate" (formClosed)="openVehicleCreate=false" (successfulCreate)="getVehicles()"></app-vehicle-create>
+<button
+  mat-button
+  *ngIf="!openVehicleCreate"
+  color="primary"
+  (click)="openVehicleCreate=true"
+>
+  Create Vehicle
+</button>
+<app-vehicle-create
+  *ngIf="openVehicleCreate"
+  (formClosed)="openVehicleCreate=false"
+  (createVehicle)="createVehicle($event)"
+></app-vehicle-create>
 
 <mat-list>
   <mat-list-item *ngFor="let vehicle of vehicles">
     <p>Vehicle Number: {{vehicle.id}}</p>
     <p>Vehicle Name: {{vehicle.name}}</p>
     <p>Camera ID: {{vehicle.cameraId}}</p>
-    <button mat-button color="primary" (click)="updateVehicle(vehicle)">Edit</button>
-    <button mat-button color="primary" (click)="deleteVehicle(vehicle.id)">Remove</button>
+    <button mat-button color="primary" (click)="updateVehicle(vehicle)">
+      Edit
+    </button>
+    <button mat-button color="primary" (click)="deleteVehicle(vehicle.id)">
+      Remove
+    </button>
   </mat-list-item>
 </mat-list>

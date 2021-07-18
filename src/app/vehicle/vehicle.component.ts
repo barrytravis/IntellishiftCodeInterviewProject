@@ -18,6 +18,16 @@ export class VehicleComponent implements OnInit {
     this.getVehicles();
   }
 
+  createVehicle(newVehicle: Vehicle) {
+    this.data
+      .post(
+        'vehicles/:id',
+        { id: newVehicle.id },
+        { name: newVehicle.name, cameraId: null }
+      )
+      .subscribe(() => this.getVehicles());
+  }
+
   getVehicles(): void {
     this.data
       .get<Vehicle[]>('vehicles')
@@ -42,8 +52,8 @@ export class VehicleComponent implements OnInit {
     this.getVehicles();
   }
 
-  async deleteVehicle(id: number) {
-    await this.data
+  deleteVehicle(id: number) {
+    this.data
       .delete('vehicles/:id', { id: id })
       .subscribe(() => this.getVehicles());
   }

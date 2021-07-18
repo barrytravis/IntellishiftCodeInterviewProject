@@ -9,7 +9,7 @@ import { DataService } from '../services/data.service';
   styleUrls: ['./vehicle-create.component.css']
 })
 export class VehicleCreateComponent implements OnInit {
-  @Output() public successfulCreate = new EventEmitter<boolean>();
+  @Output() public createVehicle = new EventEmitter<Vehicle>();
   @Output() public formClosed = new EventEmitter<boolean>();
 
   public vehicleEntryForm: FormGroup = new FormGroup({});
@@ -34,25 +34,11 @@ export class VehicleCreateComponent implements OnInit {
     let newVehicle: Vehicle = new Vehicle();
     newVehicle.id = this.vehicleEntryForm.get('id').value;
     newVehicle.name = this.vehicleEntryForm.get('name').value;
-    this.addVehicle(newVehicle);
+    this.createVehicle.emit(newVehicle);
+    this.closeForm();
   }
 
   closeForm() {
     this.formClosed.emit();
-  }
-
-  addVehicle(newVehicle: Vehicle) {
-    this.data
-      .post(
-        'vehicles/:id',
-        { id: newVehicle.id },
-        { name: newVehicle.name, cameraId: null }
-      )
-      .subscribe(
-        () => {
-          this.successfulCreate.emit();
-          this.formClosed.emit();
-        }
-      );
   }
 }
