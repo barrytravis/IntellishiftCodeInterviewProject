@@ -1,0 +1,19 @@
+<form [formGroup]="cameraEntryForm" fxLayout="row">
+  <div fxLayout="column">
+    <mat-form-field>
+      <mat-label>Camera ID</mat-label>
+      <input matInput placeholder="Camera ID" formControlName="id" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Device Number</mat-label>
+      <input matInput placeholder="Device Number" formControlName="deviceNo" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Vehicle ID</mat-label>
+      <input matInput placeholder="Vehicle ID" formControlName="vehicleId" />
+    </mat-form-field>
+  </div>
+</form>
+
+<button mat-button color="primary" (click)="submitForm()">Submit</button>
+<button mat-button color="primary" (click)="closeForm()">Cancel</button>

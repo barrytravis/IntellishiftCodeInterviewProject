@@ -14,10 +14,7 @@ export class VehicleCreateComponent implements OnInit {
 
   public vehicleEntryForm: FormGroup = new FormGroup({});
 
-  constructor(
-    private readonly formBuilder: FormBuilder,
-    private data: DataService
-  ) {}
+  constructor(private readonly formBuilder: FormBuilder) {}
 
   ngOnInit() {
     this.buildForm();

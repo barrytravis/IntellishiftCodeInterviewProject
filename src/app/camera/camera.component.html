@@ -1,13 +1,25 @@
 <div class="container">
-  <button mat-button color="primary" (click)="openAddCameraDialog()">Add</button>
-
+  <button
+    mat-button
+    color="primary"
+    *ngIf="!openCameraCreate"
+    (click)="openCameraCreate=true"
+  >
+    Add
+  </button>
+  <app-camera-create
+    *ngIf="openCameraCreate"
+    (formClosed)="openCameraCreate=false"
+    (createCamera)="createCamera($event)"
+  ></app-camera-create>
 
   <mat-list>
     <mat-list-item *ngFor="let camera of cameras">
       <p>Camera ID: {{camera.id}}</p>
       <p>Camera ID: {{camera.deviceNo}}</p>
-      <button mat-button color="primary" (click)="deleteCamera(camera.id)">Remove</button>
+      <button mat-button color="primary" (click)="deleteCamera(camera.id)">
+        Remove
+      </button>
     </mat-list-item>
   </mat-list>
-
 </div>

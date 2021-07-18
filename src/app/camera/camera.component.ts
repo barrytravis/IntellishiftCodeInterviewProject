@@ -30,13 +30,13 @@ export class CameraComponent implements OnInit {
   }
 
   getCameras() {
-    this.data.get<Camera[]>('Cameras').subscribe(data => (this.cameras = data));
+    this.data.get<Camera[]>('cameras').subscribe(data => (this.cameras = data));
   }
 
   getCameraById(id: number): Camera {
     let camera: Camera;
     this.data
-      .get<Camera>('Cameras/:id', { id: id })
+      .get<Camera>('cameras/:id', { id: id })
       .subscribe(data => (camera = data));
 
     return camera;
@@ -45,7 +45,7 @@ export class CameraComponent implements OnInit {
   updateCamera(camera: Camera) {
     this.data
       .put<Camera>(
-        'Cameras/:id',
+        'cameras/:id',
         { id: camera.id },
         { name: camera.deviceNo, vehicleId: camera.vehicleId }
       )
@@ -54,7 +54,7 @@ export class CameraComponent implements OnInit {
 
   deleteCamera(id: number) {
     this.data
-      .delete('Cameras/:id', { id: id })
+      .delete('cameras/:id', { id: id })
       .subscribe(() => this.getCameras());
   }
 }

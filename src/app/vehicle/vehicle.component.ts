@@ -31,14 +31,14 @@ export class VehicleComponent implements OnInit {
   getVehicles(): void {
     this.data
       .get<Vehicle[]>('vehicles')
-      .subscribe(data => (this.vehicles = data));
+      .subscribe(data => this.vehicles = data);
   }
 
   getVehicleById(id: number): Vehicle {
     let vehicle: Vehicle;
     this.data
       .get<Vehicle>('vehicles/:id', { id: id })
-      .subscribe(data => (vehicle = data));
+      .subscribe(data => vehicle = data);
     return vehicle;
   }
 
@@ -46,7 +46,7 @@ export class VehicleComponent implements OnInit {
     this.data.put<Vehicle>(
       'vehicles/:id',
       { id: vehicle.id },
-      { name: vehicle.name, id: vehicle.id }
+      { name: vehicle.name, cameraId: vehicle.cameraId }
     );
 
     this.getVehicles();
