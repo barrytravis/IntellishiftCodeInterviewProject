@@ -89,7 +89,7 @@ export class DataService {
       'cameras/:id',
       (params: any, data: any) => {
         let camera: object = null;
-        camera = this.cameras.set(params.id, { deviceNo: data.deviceNo });
+        camera = this.cameras.set(params.id, { deviceNo: data.deviceNo, vehicleId: data.vehicleId });
         return {};
       }
     ],

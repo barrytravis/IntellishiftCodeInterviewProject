@@ -20,7 +20,7 @@ export class CameraFormComponent implements OnInit {
   constructor(private readonly formBuilder: FormBuilder) {}
 
   ngOnInit() {    
-    this.isNewCamera = (this.camera.id === (null || undefined));
+    this.isNewCamera = !this.camera.id;
 
     if(!this.isNewCamera){
       this.buildForm(this.camera);
