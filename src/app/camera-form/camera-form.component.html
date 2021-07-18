@@ -1,5 +1,5 @@
-<form [formGroup]="cameraEntryForm" fxLayout="row">
-  <div fxLayout="column">
+<div class="flex-container">
+  <form [formGroup]="cameraEntryForm">
     <mat-form-field>
       <mat-label>Camera ID</mat-label>
       <input matInput placeholder="Camera ID" formControlName="id" />
@@ -12,9 +12,11 @@
       <mat-label>Vehicle ID</mat-label>
       <input matInput placeholder="Vehicle ID" formControlName="vehicleId" />
     </mat-form-field>
+  </form>
+  <div class="buttons">
+    <button mat-button color="primary" (click)="delete()">Remove</button>
+    <button mat-button color="primary" *ngIf="formIsReadonly" (click)="allowEdit()">Edit</button>
+    <button mat-button color="primary" (click)="submitForm()">Submit</button>
+    <button mat-button color="primary" (click)="resetForm()">Cancel</button>
   </div>
-</form>
-<button mat-button color="primary" (click)="delete()">Remove</button>
-<button mat-button color="primary" (click)="readonly=false">Edit</button>
-<button mat-button color="primary" (click)="submitForm()">Submit</button>
-<button mat-button color="primary" (click)="resetForm()">Cancel</button>
+</div>

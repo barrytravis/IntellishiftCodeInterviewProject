@@ -1,8 +1,5 @@
-<div class="container">
-  <app-camera-form *ngFor="let camera of cameras" [camera]="camera" (createCamera)="createCamera($event)"
-    (updateCamera)="updateCamera($event)" (deleteCamera)="deleteCamera($event)">
-  </app-camera-form>
+<app-camera-form *ngFor="let camera of cameras" [camera]="camera" (createCamera)="createCamera($event)"
+  (updateCamera)="updateCamera($event)" (deleteCamera)="deleteCamera($event)">
+</app-camera-form>
 
-  <button mat-button (click)="addNewCamera()">+</button>
-
-</div>
+<button mat-button (click)="addNewCamera()">+</button>
