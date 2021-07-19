@@ -89,7 +89,10 @@ export class DataService {
       'cameras/:id',
       (params: any, data: any) => {
         let camera: object = null;
-        camera = this.cameras.set(params.id, { deviceNo: data.deviceNo, vehicleId: data.vehicleId });
+        camera = this.cameras.set(params.id, {
+          deviceNo: data.deviceNo,
+          vehicleId: data.vehicleId
+        });
         return {};
       }
     ],
@@ -173,12 +176,14 @@ export class DataService {
 
   private cameras = new Map<number, Camera>([
     [0, { deviceNo: 'Camera 1' }],
-    [1, { deviceNo: 'Camera 2' }]
+    [1, { deviceNo: 'Camera 2' }],
+    [2, { deviceNo: 'Camera 3' }]
   ]);
 
   private vehicles = new Map<number, Vehicle>([
     [0, { name: 'Dump Truck 1' }],
-    [1, { name: 'Dump Truck 2' }]
+    [1, { name: 'Dump Truck 2' }],
+    [2, { name: 'Dump Truck 3' }]
   ]);
 
   private assignments = new Map<number, Assignment>([

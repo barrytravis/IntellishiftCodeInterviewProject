@@ -1,4 +1,8 @@
 .container {
-  padding-top: 15px;
+  padding-top: 10px;
   padding-left: 30px;
+}
+
+.search-form {
+  width: 200px;
 }

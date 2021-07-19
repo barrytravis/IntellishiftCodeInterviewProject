@@ -11,10 +11,17 @@ export class VehicleFormComponent implements OnInit {
   @Output() public createVehicle = new EventEmitter<Vehicle>();
   @Output() public updateVehicle = new EventEmitter<Vehicle>();
   @Output() public deleteVehicle = new EventEmitter<number>();
-  public _vehicle: Vehicle;
+  private _vehicle: Vehicle;
   @Input() public set vehicle(vehicle: Vehicle) {
     this._vehicle = vehicle;
-    this.isNewVehicle = !this._vehicle.id;
+    this.isNewVehicle = (this._vehicle.id === null || this._vehicle.id === undefined);
+
+    if(!this.isNewVehicle){
+      this.buildForm(this._vehicle);
+    } else {
+      this.formIsReadOnly = false;
+      this.buildForm();
+    }
   };
 
   public vehicleEntryForm: FormGroup = new FormGroup({});
@@ -23,19 +30,34 @@ export class VehicleFormComponent implements OnInit {
 
   constructor(private readonly formBuilder: FormBuilder) {}
 
-  ngOnInit() {
-    if(!this.isNewVehicle){
-      this.buildForm(this._vehicle);
-    } else {
-      this.formIsReadOnly = false;
-      this.buildForm();
-    }
-  }
+  ngOnInit() {}
 
   buildForm(vehicle?: Vehicle) {
+    let vehicleName: string
+    if  (vehicle?.name != null || vehicle?.name != undefined){
+      vehicleName = vehicle.name;
+    } else {
+      vehicleName = '';
+    }
+
+    let vehicleId: number
+    if  (vehicle?.id != null || vehicle?.id != undefined){
+      vehicleId = vehicle.id;
+    } else {
+      vehicleId = null;
+    }
+
+    let cameraIdNumber: number
+    if  (vehicle?.cameraId != null || vehicle?.cameraId != undefined){
+      cameraIdNumber = vehicle.cameraId;
+    } else {
+      cameraIdNumber = null;
+    }
+
     this.vehicleEntryForm = this.formBuilder.group({
-      name: this.formBuilder.control({value: vehicle?.name || '', disabled: this.formIsReadOnly}, [Validators.required]),
-      id: this.formBuilder.control({value: vehicle?.id || '', disabled: !this.isNewVehicle}, [Validators.required, Validators.pattern("^[0-9]*$")])
+      name: this.formBuilder.control({value: vehicleName, disabled: this.formIsReadOnly}, [Validators.required]),
+      id: this.formBuilder.control({value: vehicleId, disabled: !this.isNewVehicle}, [Validators.required, Validators.pattern("^[0-9]*$")]),
+      cameraId: this.formBuilder.control({value: cameraIdNumber, disabled: !this.isNewVehicle}, [Validators.required, Validators.pattern("^[0-9]*$")])
     });
   }
 

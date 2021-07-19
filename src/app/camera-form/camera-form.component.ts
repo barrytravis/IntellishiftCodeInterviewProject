@@ -11,10 +11,17 @@ export class CameraFormComponent implements OnInit {
   @Output() public createCamera = new EventEmitter<Camera>();
   @Output() public updateCamera = new EventEmitter<Camera>();
   @Output() public deleteCamera = new EventEmitter<number>();
-  public _camera: Camera;
+  private _camera: Camera;
   @Input() public set camera(camera: Camera) {
     this._camera = camera;
-    this.isNewCamera = !this._camera.id;
+    this.isNewCamera = (this._camera.id === null || this._camera.id === undefined);
+    
+    if(!this.isNewCamera){
+      this.buildForm(this._camera);
+    } else {
+      this.formIsReadOnly = false;
+      this.buildForm();
+    }
   };
 
   public cameraEntryForm: FormGroup = new FormGroup({});
@@ -23,20 +30,34 @@ export class CameraFormComponent implements OnInit {
 
   constructor(private readonly formBuilder: FormBuilder) {}
 
-  ngOnInit() {
-    if(!this.isNewCamera){
-      this.buildForm(this._camera);
-    } else {
-      this.formIsReadOnly = false;
-      this.buildForm();
-    }
-  }
+  ngOnInit() {}
 
   buildForm(camera?: Camera) {
+    let deviceNumber: string
+    if  (camera?.deviceNo != null || camera?.deviceNo != undefined){
+      deviceNumber = camera.deviceNo;
+    } else {
+      deviceNumber = '';
+    }
+
+    let cameraId: number
+    if  (camera?.id != null || camera?.id != undefined){
+      cameraId = camera.id;
+    } else {
+      cameraId = null;
+    }
+
+    let vehicleIdNumber: number
+    if  (camera?.vehicleId != null || camera?.vehicleId != undefined){
+      vehicleIdNumber = camera.vehicleId;
+    } else {
+      vehicleIdNumber = null;
+    }
+
     this.cameraEntryForm = this.formBuilder.group({
-      deviceNo: this.formBuilder.control({value: camera?.deviceNo || '', disabled: this.formIsReadOnly}, [Validators.required]),
-      id: this.formBuilder.control({value: camera?.id || '', disabled: !this.isNewCamera}, [Validators.required, Validators.pattern("^[0-9]*$")]),
-      vehicleId: this.formBuilder.control({value: camera?.vehicleId || '', disabled: this.formIsReadOnly}, [Validators.pattern("^[0-9]*$")])
+      deviceNo: this.formBuilder.control({value: deviceNumber, disabled: this.formIsReadOnly}, [Validators.required]),
+      id: this.formBuilder.control({value: cameraId, disabled: !this.isNewCamera}, [Validators.required, Validators.pattern("^[0-9]*$")]),
+      vehicleId: this.formBuilder.control({value: vehicleIdNumber, disabled: this.formIsReadOnly}, [Validators.pattern("^[0-9]*$")])
     });
   }
 

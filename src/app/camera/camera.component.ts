@@ -9,12 +9,19 @@ import { DataService } from '../services/data.service';
   styleUrls: ['./camera.component.css']
 })
 export class CameraComponent implements OnInit {
-  cameras: Camera[] = [];
-
+  public cameras: Camera[] = [];
+  public searchInput: string;
   constructor(private data: DataService) {}
 
   ngOnInit() {
     this.getCameras();
+  }
+
+  filterCameraList(searchInputs) {
+    console.log(searchInputs);
+    this.cameras.filter(
+      x => x.deviceNo.search(new RegExp(searchInputs, 'i')) == -1
+    );
   }
 
   addCamera() {
