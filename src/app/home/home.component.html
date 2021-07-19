@@ -1,7 +1,7 @@
-  <mat-toolbar color="primary">
-  <button mat-button (click)="tabControl('assignment')">Assignements</button>
-  <button mat-button (click)="tabControl('vehicle')">Vehicles</button>
-  <button mat-button (click)="tabControl('camera')">Cameras</button>
+<mat-toolbar color="primary">
+  <button mat-button [ngClass]="{'unselected': currentTab!='assignment'}" (click)="tabControl('assignment')">Assignements</button>
+  <button mat-button [ngClass]="{'unselected': currentTab!='vehicle'}" (click)="tabControl('vehicle')">Vehicles</button>
+  <button mat-button [ngClass]="{'unselected': currentTab!='camera'}" (click)="tabControl('camera')">Cameras</button>
 </mat-toolbar>
 <app-vehicle-camera-assignment *ngIf="currentTab==='assignment'"></app-vehicle-camera-assignment>
 <app-vehicle *ngIf="currentTab==='vehicle'"></app-vehicle>
