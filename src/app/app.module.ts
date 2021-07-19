@@ -11,6 +11,7 @@ import { VehicleCameraAssignmentComponent } from './vehicle-camera-assignment/ve
 import { VehicleFormComponent } from './vehicle-form/vehicle-form.component';
 import { CameraFormComponent } from './camera-form/camera-form.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AssignmentCardComponent } from './assignment-card/assignment-card.component';
 
 @NgModule({
   imports: [
@@ -33,7 +34,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     CameraComponent,
     VehicleCameraAssignmentComponent,
     VehicleFormComponent,
-    CameraFormComponent
+    CameraFormComponent,
+    AssignmentCardComponent
   ],
   bootstrap: [AppComponent]
 })

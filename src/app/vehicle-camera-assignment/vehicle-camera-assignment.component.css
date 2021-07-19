@@ -6,8 +6,3 @@
   width: 200px;
 }
 
-.assignment-card {
-  min-width: 200px;
-  max-width: 300px;
-  display: flex;
-}

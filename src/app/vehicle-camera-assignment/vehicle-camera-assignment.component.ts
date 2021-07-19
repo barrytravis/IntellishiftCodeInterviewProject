@@ -23,6 +23,7 @@ export class VehicleCameraAssignmentComponent implements OnInit {
       this.assignments = data;
     });
 
+    console.log("assignments");
     console.log(this.assignments);
   }
 
