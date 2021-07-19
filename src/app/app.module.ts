@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
+import { StoreModule } from '@ngrx/store';
 import { MaterialModule } from './material/material.module';
 import { RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
@@ -15,6 +16,7 @@ import { AssignmentCardComponent } from './assignment-card/assignment-card.compo
 
 @NgModule({
   imports: [
+    StoreModule.forRoot({}),
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
