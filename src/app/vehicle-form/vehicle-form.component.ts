@@ -57,7 +57,7 @@ export class VehicleFormComponent implements OnInit {
     this.vehicleEntryForm = this.formBuilder.group({
       name: this.formBuilder.control({value: vehicleName, disabled: this.formIsReadOnly}, [Validators.required]),
       id: this.formBuilder.control({value: vehicleId, disabled: !this.isNewVehicle}, [Validators.required, Validators.pattern("^[0-9]*$")]),
-      cameraId: this.formBuilder.control({value: cameraIdNumber, disabled: !this.isNewVehicle})
+      cameraId: this.formBuilder.control({value: cameraIdNumber, disabled: !this.isNewVehicle}, )
     });
   }
 
@@ -80,8 +80,8 @@ export class VehicleFormComponent implements OnInit {
 
   allowEdit(){
     this.formIsReadOnly = false;
-    this.vehicleEntryForm.get('deviceNo').enable({onlySelf: true});
-    this.vehicleEntryForm.get('vehicleId').enable({onlySelf: true});
+    this.vehicleEntryForm.get('name').enable({onlySelf: true});
+    this.vehicleEntryForm.get('cameraId').enable({onlySelf: true});
   }
 
   resetForm(){
