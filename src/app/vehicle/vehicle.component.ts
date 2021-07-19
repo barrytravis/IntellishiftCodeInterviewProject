@@ -55,14 +55,6 @@ export class VehicleComponent implements OnInit {
     });
   }
 
-  getVehicleById(id: number): Vehicle {
-    let vehicle: Vehicle;
-    this.data.get<Vehicle>('vehicles/:id', { id: id }).subscribe(data => {
-      vehicle = data;
-    });
-    return vehicle;
-  }
-
   updateVehicle(vehicle: Vehicle) {
     this.data
       .put<Vehicle>(

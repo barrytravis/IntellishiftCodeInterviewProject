@@ -5,3 +5,7 @@
 .search-form {
   width: 200px;
 }
+
+.row {
+  display: flex;
+}

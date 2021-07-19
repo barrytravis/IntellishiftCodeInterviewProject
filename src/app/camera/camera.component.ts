@@ -55,15 +55,6 @@ export class CameraComponent implements OnInit {
     });
   }
 
-  getCameraById(id: number): Camera {
-    let camera: Camera;
-    this.data
-      .get<Camera>('cameras/:id', { id: id })
-      .subscribe(data => (camera = data));
-
-    return camera;
-  }
-
   updateCamera(camera: Camera) {
     this.data
       .put<Camera>(

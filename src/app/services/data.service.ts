@@ -187,7 +187,9 @@ export class DataService {
   ]);
 
   private assignments = new Map<number, Assignment>([
-    [0, { cameraId: 0, vehicleId: 0, dateCreated: new Date(), deleted: false }]
+    [0, { cameraId: 0, vehicleId: 0, dateCreated: new Date(), deleted: false }],
+    [1, { cameraId: 1, vehicleId: 2, dateCreated: new Date(), deleted: false }],
+    [2, { cameraId: 4, vehicleId: 3, dateCreated: new Date(), deleted: false }]
   ]);
 
   private getUndeletedByValue = <A, B>(

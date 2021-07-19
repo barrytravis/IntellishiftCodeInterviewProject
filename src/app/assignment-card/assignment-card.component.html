@@ -2,10 +2,24 @@
   <mat-card-content>
     <div class="row">
       <div class="column">
-        <p>Vehicle ID: {{assignment?.vehicleId}}</p>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Vehicle Name</mat-label>
+          <mat-select [(value)]="_assignment.vehicleId">
+            <mat-option *ngFor="let vehicle of unassignedVehicles">{{vehicle.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
       </div>
       <div class="column">
-        <p>Camera ID: {{assignment?.cameraId}}</p>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Camera Number</mat-label>
+          <mat-select [(value)]="_assignment.cameraId">
+            <mat-option *ngFor="let vehicle of unassignedCameras">{{vehicle.deviceNo}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
       </div>
     </div>
   </mat-card-content>

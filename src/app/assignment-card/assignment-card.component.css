@@ -1,16 +1,12 @@
 .assignment-card {
-  min-width: 200px;
-  max-width: 300px;
-  display: flex;
-  justify-content: space-evenly;
+  width: fit-content;
+  margin-top: 10px;
 }
 
 .row {
   display: flex;
-  justify-content: space-evenly;
 }
 
 .column {
-  display: flex;
-  width: 100%;
+  padding: 5px;
 }
