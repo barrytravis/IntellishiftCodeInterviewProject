@@ -16,7 +16,7 @@
   <div class="buttons">
     <button mat-button color="primary" *ngIf="formIsReadOnly" (click)="allowEdit()">Edit</button>
     <button mat-button color="primary" *ngIf="!formIsReadOnly" (click)="submitForm()">Submit</button>
-    <button mat-button color="primary" *ngIf="!formIsReadOnly" (click)="resetForm()">Cancel</button>
-    <button mat-button  color="warn" (click)="delete()">Remove</button>
+    <button mat-button color="secondary" *ngIf="!formIsReadOnly" (click)="resetForm()">Cancel</button>
+    <button mat-button color="warn" *ngIf="formIsReadOnly"(click)="delete()">Remove</button>
   </div>
 </div>

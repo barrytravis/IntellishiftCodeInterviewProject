@@ -10,22 +10,27 @@ import { DataService } from '../services/data.service';
 })
 export class CameraComponent implements OnInit {
   public cameras: Camera[] = [];
-  public searchInput: string;
+  public originalCameras: Camera[] = [];
+  public searchInput: string = '';
+
   constructor(private data: DataService) {}
 
   ngOnInit() {
     this.getCameras();
   }
 
-  filterCameraList(searchInputs) {
-    console.log(searchInputs);
-    this.cameras.filter(
-      x => x.deviceNo.search(new RegExp(searchInputs, 'i')) == -1
-    );
+  filterCameraList(searchInput?) {
+    if (!searchInput) {
+      this.cameras = this.originalCameras;
+    } else {
+      this.cameras = this.originalCameras.filter(x =>
+        x.deviceNo.toLocaleLowerCase().includes(searchInput.toLocaleLowerCase())
+      );
+    }
   }
 
   addCamera() {
-    this.cameras.push(new Camera());
+    this.cameras.unshift(new Camera());
   }
 
   createCamera(newCamera: Camera) {
@@ -39,7 +44,10 @@ export class CameraComponent implements OnInit {
   }
 
   getCameras() {
-    this.data.get<Camera[]>('cameras').subscribe(data => (this.cameras = data));
+    this.data.get<Camera[]>('cameras').subscribe(data => {
+      this.originalCameras = data.sort(x => x.id);
+      this.filterCameraList();
+    });
   }
 
   getCameraById(id: number): Camera {

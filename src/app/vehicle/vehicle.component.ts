@@ -9,7 +9,9 @@ import { DataService } from '../services/data.service';
   styleUrls: ['./vehicle.component.css']
 })
 export class VehicleComponent implements OnInit {
-  vehicles: Vehicle[] = [];
+  public vehicles: Vehicle[] = [];
+  public originalVehicles: Vehicle[] = [];
+  public searchInput: string = '';
 
   constructor(private data: DataService) {}
 
@@ -18,8 +20,18 @@ export class VehicleComponent implements OnInit {
     console.log(this.vehicles);
   }
 
+  filterVehicleList(searchInput?) {
+    if (!searchInput) {
+      this.vehicles = this.originalVehicles;
+    } else {
+      this.vehicles = this.originalVehicles.filter(x =>
+        x.name.toLocaleLowerCase().includes(searchInput.toLocaleLowerCase())
+      );
+    }
+  }
+
   addVehicle() {
-    this.vehicles.push(new Vehicle());
+    this.vehicles.unshift(new Vehicle());
   }
 
   createVehicle(newVehicle: Vehicle) {
@@ -33,16 +45,17 @@ export class VehicleComponent implements OnInit {
   }
 
   getVehicles(): void {
-    this.data
-      .get<Vehicle[]>('vehicles')
-      .subscribe((data) => {this.vehicles = data;});
+    this.data.get<Vehicle[]>('vehicles').subscribe(data => {
+      this.originalVehicles = data;
+      this.filterVehicleList();
+    });
   }
 
   getVehicleById(id: number): Vehicle {
     let vehicle: Vehicle;
-    this.data
-      .get<Vehicle>('vehicles/:id', { id: id })
-      .subscribe((data) => {vehicle = data;});
+    this.data.get<Vehicle>('vehicles/:id', { id: id }).subscribe(data => {
+      vehicle = data;
+    });
     return vehicle;
   }
 

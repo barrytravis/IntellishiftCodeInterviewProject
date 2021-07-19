@@ -1,6 +1,10 @@
 <div class="container">
   <div class="row flex">
-    <input matInput placeholder="Search By Device Number" class="search-form flex-center" [(ngModel)]="searchInput" (ngModelChanage)="filterCameraList($event)" />
+
+    <mat-form-field class="search-form">
+      <input matInput placeholder="Search By Device Number" name="searchForm"  [(ngModel)]="searchInput" (ngModelChange)="filterCameraList($event)" />
+    </mat-form-field>
+
     <button mat-button color="primary" (click)="addCamera()"><p>New Camera</p></button>
   </div>
 
