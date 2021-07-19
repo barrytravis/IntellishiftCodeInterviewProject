@@ -47,17 +47,9 @@ export class VehicleFormComponent implements OnInit {
       vehicleId = null;
     }
 
-    let cameraIdNumber: number
-    if  (vehicle?.cameraId != null || vehicle?.cameraId != undefined){
-      cameraIdNumber = vehicle.cameraId;
-    } else {
-      cameraIdNumber = null;
-    }
-
     this.vehicleEntryForm = this.formBuilder.group({
       name: this.formBuilder.control({value: vehicleName, disabled: this.formIsReadOnly}, [Validators.required]),
-      id: this.formBuilder.control({value: vehicleId, disabled: !this.isNewVehicle}, [Validators.required, Validators.pattern("^[0-9]*$")]),
-      cameraId: this.formBuilder.control({value: cameraIdNumber, disabled: !this.isNewVehicle}, )
+      id: this.formBuilder.control({value: vehicleId, disabled: !this.isNewVehicle}, [Validators.required, Validators.pattern("^[0-9]*$")])
     });
   }
 

@@ -33,12 +33,16 @@ export class CameraComponent implements OnInit {
     this.cameras.unshift(new Camera());
   }
 
+  removeBlankCamera(camera: Camera){
+    this.cameras.slice(this.cameras.indexOf(camera), 1)
+  }
+
   createCamera(newCamera: Camera) {
     this.data
       .post(
         'cameras/:id',
         { id: newCamera.id },
-        { deviceNo: newCamera.deviceNo, vehicleId: newCamera.vehicleId }
+        { deviceNo: newCamera.deviceNo, vehicleId: null }
       )
       .subscribe(() => this.getCameras(), err => console.log(err));
   }

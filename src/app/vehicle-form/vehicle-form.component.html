@@ -8,10 +8,6 @@
       <mat-label>Name</mat-label>
       <input matInput placeholder="Name" formControlName="name" />
     </mat-form-field>
-    <mat-form-field>
-      <mat-label>Camera ID</mat-label>
-      <input matInput placeholder="Camera ID" formControlName="cameraId" />
-    </mat-form-field>
   </form>
   <div class="buttons">
     <button mat-button color="primary" *ngIf="formIsReadOnly" (click)="allowEdit()">Edit</button>

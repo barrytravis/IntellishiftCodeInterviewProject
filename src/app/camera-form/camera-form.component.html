@@ -8,10 +8,6 @@
       <mat-label>Device Number</mat-label>
       <input matInput placeholder="Device Number" formControlName="deviceNo" />
     </mat-form-field>
-    <mat-form-field>
-      <mat-label>Vehicle ID</mat-label>
-      <input matInput placeholder="Vehicle ID" formControlName="vehicleId" />
-    </mat-form-field>
   </form>
   <div class="buttons">
     <button mat-button color="primary" *ngIf="formIsReadOnly" (click)="allowEdit()">Edit</button>

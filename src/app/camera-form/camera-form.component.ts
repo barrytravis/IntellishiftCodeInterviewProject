@@ -11,6 +11,8 @@ export class CameraFormComponent implements OnInit {
   @Output() public createCamera = new EventEmitter<Camera>();
   @Output() public updateCamera = new EventEmitter<Camera>();
   @Output() public deleteCamera = new EventEmitter<number>();
+  @Output() public deleteUnsubmittedCamera = new EventEmitter<Camera>();
+
   private _camera: Camera;
   @Input() public set camera(camera: Camera) {
     this._camera = camera;
@@ -47,17 +49,9 @@ export class CameraFormComponent implements OnInit {
       cameraId = null;
     }
 
-    let vehicleIdNumber: number
-    if  (camera?.vehicleId != null || camera?.vehicleId != undefined){
-      vehicleIdNumber = camera.vehicleId;
-    } else {
-      vehicleIdNumber = null;
-    }
-
     this.cameraEntryForm = this.formBuilder.group({
       deviceNo: this.formBuilder.control({value: deviceNumber, disabled: this.formIsReadOnly}, [Validators.required]),
-      id: this.formBuilder.control({value: cameraId, disabled: !this.isNewCamera}, [Validators.required, Validators.pattern("^[0-9]*$")]),
-      vehicleId: this.formBuilder.control({value: vehicleIdNumber, disabled: this.formIsReadOnly}, [Validators.pattern("^[0-9]*$")])
+      id: this.formBuilder.control({value: cameraId, disabled: !this.isNewCamera}, [Validators.required, Validators.pattern("^[0-9]*$")])
     });
   }
 
@@ -68,8 +62,8 @@ export class CameraFormComponent implements OnInit {
       let formCamera: Camera = new Camera();
       let rawFormValue = this.cameraEntryForm.getRawValue();
       formCamera.deviceNo = rawFormValue.deviceNo;
-      formCamera.vehicleId = rawFormValue.vehicleId;
       formCamera.id = rawFormValue.id;
+      formCamera.vehicleId = this.camera?.vehicleId ?? null;
   
       if(this._camera.id != null){
         this.updateCamera.emit(formCamera)
@@ -96,6 +90,12 @@ export class CameraFormComponent implements OnInit {
   }
 
   delete(){
-    this.deleteCamera.emit(this._camera.id);
+    if (this._camera?.id != null || this._camera?.id != undefined){
+      this.deleteCamera.emit(this._camera.id);
+    }
+    else {
+      this.deleteUnsubmittedCamera.emit(this._camera);
+    }
+    
   }
 }
