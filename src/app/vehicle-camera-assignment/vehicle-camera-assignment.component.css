@@ -1,8 +1,13 @@
 .container {
-  padding-top: 10px;
-  padding-left: 15px;
+  padding: 15px;
 }
 
 .search-form {
   width: 200px;
+}
+
+.assignment-card {
+  min-width: 200px;
+  max-width: 300px;
+  display: flex;
 }

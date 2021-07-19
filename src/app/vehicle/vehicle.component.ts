@@ -17,7 +17,6 @@ export class VehicleComponent implements OnInit {
 
   ngOnInit() {
     this.getVehicles();
-    console.log(this.vehicles);
   }
 
   filterVehicleList(searchInput?) {

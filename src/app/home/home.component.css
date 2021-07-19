@@ -1,3 +1,7 @@
+.container {
+  padding: 15px;
+}
+
 .unselected {
   color: #b38cff;
 }

@@ -12,14 +12,18 @@ import { DataService } from '../services/data.service';
 export class VehicleCameraAssignmentComponent implements OnInit {
   constructor(private data: DataService) {}
 
-  assignments: AssignmentResponse[] = [];
+  public assignments: AssignmentResponse[] = [];
 
   ngOnInit() {
-    this.getAssignments().subscribe(data => (this.assignments = data));
+    this.getAssignments();
   }
 
-  getAssignments(): Observable<AssignmentResponse[]> {
-    return this.data.get<AssignmentResponse[]>('assignments');
+  getAssignments() {
+    this.data.get<AssignmentResponse[]>('assignments').subscribe(data => {
+      this.assignments = data;
+    });
+
+    console.log(this.assignments);
   }
 
   assign() {
@@ -35,5 +39,4 @@ export class VehicleCameraAssignmentComponent implements OnInit {
       .pipe(tap(r => console.log(r)))
       .subscribe();
   }
-  
 }
