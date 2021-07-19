@@ -30,7 +30,7 @@ export class VehicleComponent implements OnInit {
     }
   }
 
-  addVehicle() {
+  addBlankVehicle() {
     this.vehicles.unshift(new Vehicle());
   }
 
@@ -41,7 +41,7 @@ export class VehicleComponent implements OnInit {
         { id: newVehicle.id },
         { name: newVehicle.name, cameraId: newVehicle.cameraId }
       )
-      .subscribe(() => this.getVehicles());
+      .subscribe(() => this.getVehicles(), err => console.log(err));
   }
 
   getVehicles(): void {
@@ -66,7 +66,7 @@ export class VehicleComponent implements OnInit {
         { id: vehicle.id },
         { id: vehicle.id, name: vehicle.name, cameraId: vehicle.cameraId }
       )
-      .subscribe(() => this.getVehicles());
+      .subscribe(() => this.getVehicles(), err => console.log(err));
   }
 
   deleteVehicle(id: number) {

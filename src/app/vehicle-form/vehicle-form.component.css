@@ -1,5 +1,6 @@
 .flex-container {
   display: flex;
+  padding-bottom: 15px;
 }
 
 .buttons {

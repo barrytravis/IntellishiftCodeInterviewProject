@@ -29,7 +29,7 @@ export class CameraComponent implements OnInit {
     }
   }
 
-  addCamera() {
+  addBlankCamera() {
     this.cameras.unshift(new Camera());
   }
 
@@ -40,7 +40,7 @@ export class CameraComponent implements OnInit {
         { id: newCamera.id },
         { deviceNo: newCamera.deviceNo, vehicleId: newCamera.vehicleId }
       )
-      .subscribe(() => this.getCameras());
+      .subscribe(() => this.getCameras(), err => console.log(err));
   }
 
   getCameras() {
@@ -70,7 +70,7 @@ export class CameraComponent implements OnInit {
           vehicleId: camera.vehicleId
         }
       )
-      .subscribe(() => this.getCameras());
+      .subscribe(() => this.getCameras(), err => console.log(err));
   }
 
   deleteCamera(id: number) {

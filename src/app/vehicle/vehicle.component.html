@@ -5,7 +5,7 @@
     <input matInput placeholder="Search By Vehicle Name" name="searchForm"  [(ngModel)]="searchInput" (ngModelChange)="filterVehicleList($event)" />
   </mat-form-field>
 
-  <button mat-button color="primary" (click)="addVehicle()"><p>New Vehicle</p></button>
+  <button mat-button color="primary" (click)="addBlankVehicle()"><p>New Vehicle</p></button>
 </div>
 
   <app-vehicle-form *ngFor="let vehicle of vehicles" [vehicle]="vehicle" (createVehicle)="createVehicle($event)"

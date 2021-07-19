@@ -5,7 +5,7 @@
       <input matInput placeholder="Search By Device Number" name="searchForm"  [(ngModel)]="searchInput" (ngModelChange)="filterCameraList($event)" />
     </mat-form-field>
 
-    <button mat-button color="primary" (click)="addCamera()"><p>New Camera</p></button>
+    <button mat-button color="primary" (click)="addBlankCamera()"><p>New Camera</p></button>
   </div>
 
   <app-camera-form *ngFor="let camera of cameras" [camera]="camera" (createCamera)="createCamera($event)"
