@@ -95,7 +95,6 @@ export class CameraFormComponent implements OnInit {
     }
     else {
       this.deleteUnsubmittedCamera.emit(this._camera);
-    }
-    
+    }    
   }
 }

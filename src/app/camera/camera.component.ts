@@ -30,11 +30,12 @@ export class CameraComponent implements OnInit {
   }
 
   addBlankCamera() {
-    this.cameras.unshift(new Camera());
+    this.originalCameras.unshift(new Camera());
   }
 
-  removeBlankCamera(camera: Camera){
-    this.cameras.slice(this.cameras.indexOf(camera), 1)
+  removeBlankCamera(index: number) {
+    this.originalCameras.splice(index, 1);
+    this.filterCameraList();
   }
 
   createCamera(newCamera: Camera) {

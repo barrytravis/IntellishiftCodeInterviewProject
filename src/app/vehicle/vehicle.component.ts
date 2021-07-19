@@ -31,7 +31,12 @@ export class VehicleComponent implements OnInit {
   }
 
   addBlankVehicle() {
-    this.vehicles.unshift(new Vehicle());
+    this.originalVehicles.unshift(new Vehicle());
+  }
+
+  removeBlankVehicle(index: number) {
+    this.originalVehicles.splice(index, 1);
+    this.filterVehicleList();
   }
 
   createVehicle(newVehicle: Vehicle) {

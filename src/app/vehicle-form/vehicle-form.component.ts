@@ -11,6 +11,7 @@ export class VehicleFormComponent implements OnInit {
   @Output() public createVehicle = new EventEmitter<Vehicle>();
   @Output() public updateVehicle = new EventEmitter<Vehicle>();
   @Output() public deleteVehicle = new EventEmitter<number>();
+  @Output() public deleteUnsubmittedVehicle = new EventEmitter<void>();
   private _vehicle: Vehicle;
   @Input() public set vehicle(vehicle: Vehicle) {
     this._vehicle = vehicle;
@@ -86,7 +87,14 @@ export class VehicleFormComponent implements OnInit {
     this.buildForm(this._vehicle);
   }
 
-  delete(){
+
+
+delete(){
+  if (this._vehicle?.id != null || this._vehicle?.id != undefined){
     this.deleteVehicle.emit(this._vehicle.id);
   }
+  else {
+    this.deleteUnsubmittedVehicle.emit();
+  }    
+}
 }
