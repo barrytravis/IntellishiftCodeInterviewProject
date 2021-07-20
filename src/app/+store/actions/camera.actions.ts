@@ -24,3 +24,4 @@ export const deleteCamera = createAction(
   '[VEHICLE] DeleteCamera',
   props<{ cameraId: number }>()
 );
+
