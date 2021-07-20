@@ -6,10 +6,14 @@
     </mat-form-field>
 
     <button mat-button color="primary" (click)="addBlankVehicle()"><p>New Vehicle</p></button>
-  </div>
 
-  <app-vehicle-form *ngFor="let vehicle of vehicles;let i = index" [vehicle]="vehicle"
-    (createVehicle)="createVehicle($event)" (updateVehicle)="updateVehicle($event)"
-    (deleteVehicle)="deleteVehicle($event)" (deleteUnsubmittedVehicle)="removeBlankVehicle(i)">
-  </app-vehicle-form>
+  </div>
+  <div class="row">
+
+    <app-vehicle-form *ngFor="let vehicle of vehicles;let i = index" [vehicle]="vehicle"
+      (createVehicle)="createVehicle($event)" (updateVehicle)="updateVehicle($event)"
+      (deleteVehicle)="deleteVehicle($event)" (deleteUnsubmittedVehicle)="removeBlankVehicle(i)">
+    </app-vehicle-form>
+
+  </div>
 </div>

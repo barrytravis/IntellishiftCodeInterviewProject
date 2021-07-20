@@ -8,10 +8,12 @@
     <button mat-button color="primary" (click)="addBlankCamera()"><p>New Camera</p></button>
 
   </div>
+  <div class="row">
 
-  <app-camera-form *ngFor="let camera of cameras;let i = index" [camera]="camera" (createCamera)="createCamera($event)"
-    (updateCamera)="updateCamera($event)" (deleteCamera)="deleteCamera($event)"
-    (deleteUnsubmittedCamera)="removeBlankCamera(i)">
-  </app-camera-form>
+    <app-camera-form *ngFor="let camera of cameras;let i = index" [camera]="camera"
+      (createCamera)="createCamera($event)" (updateCamera)="updateCamera($event)" (deleteCamera)="deleteCamera($event)"
+      (deleteUnsubmittedCamera)="removeBlankCamera(i)">
+    </app-camera-form>
 
+  </div>
 </div>

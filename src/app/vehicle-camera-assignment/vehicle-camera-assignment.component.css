@@ -1,6 +1,5 @@
 .container {
   padding: 15px;
-  display: flex;
 }
 
 .search-form {
@@ -9,8 +8,4 @@
 
 .row {
   display: flex;
-}
-
-.column {
-  padding: 5px;
 }
