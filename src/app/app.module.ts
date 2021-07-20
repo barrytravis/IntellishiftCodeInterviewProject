@@ -13,6 +13,7 @@ import { VehicleFormComponent } from './vehicle-form/vehicle-form.component';
 import { CameraFormComponent } from './camera-form/camera-form.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AssignmentCardComponent } from './assignment-card/assignment-card.component';
+import { GenericMessageDialogComponent } from './generic-message-dialog/generic-message-dialog.component';
 
 @NgModule({
   imports: [
@@ -37,7 +38,8 @@ import { AssignmentCardComponent } from './assignment-card/assignment-card.compo
     VehicleCameraAssignmentComponent,
     VehicleFormComponent,
     CameraFormComponent,
-    AssignmentCardComponent
+    AssignmentCardComponent,
+    GenericMessageDialogComponent
   ],
   bootstrap: [AppComponent]
 })

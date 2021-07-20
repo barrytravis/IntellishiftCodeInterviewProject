@@ -99,6 +99,8 @@ export class DataService {
     [
       'assignments',
       (params: any, data: AssignmentRequest) => {
+        console.log(data);
+
         let key = this.getLastKeyInMap(this.assignments);
         let cid = this.getUndeletedByValue(
           this.assignments,
@@ -170,13 +172,24 @@ export class DataService {
   private cameras = new Map<number, Camera>([
     [0, { deviceNo: 'Camera 1' }],
     [1, { deviceNo: 'Camera 2' }],
-    [2, { deviceNo: 'Camera 3' }]
+    [2, { deviceNo: 'Camera 3' }],
+    [3, { deviceNo: 'Camera 4' }],
+    [4, { deviceNo: 'Camera 5' }],
+    [5, { deviceNo: 'Camera 6' }],
+    [6, { deviceNo: 'Camera 7' }],
+    [7, { deviceNo: 'Camera 8' }],
+    [8, { deviceNo: 'Camera 9' }],
   ]);
 
   private vehicles = new Map<number, Vehicle>([
     [0, { name: 'Dump Truck 1' }],
     [1, { name: 'Dump Truck 2' }],
-    [2, { name: 'Dump Truck 3' }]
+    [3, { name: 'Dump Truck 4' }],
+    [4, { name: 'Dump Truck 5' }],
+    [5, { name: 'Dump Truck 6' }],
+    [6, { name: 'Dump Truck 7' }],
+    [7, { name: 'Dump Truck 8' }],
+    [8, { name: 'Dump Truck 9' }],
   ]);
 
   private assignments = new Map<number, Assignment>([

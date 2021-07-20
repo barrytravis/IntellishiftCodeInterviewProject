@@ -32,8 +32,6 @@ export class AssignmentCardComponent implements OnInit {
     if (!this.isNewAssignment) {
       this._vehicle = this.getVehicleById(assignment.vehicleId);
       this._camera = this.getCameraById(assignment.cameraId);
-      console.log(this._vehicle);
-      console.log(this._camera);
     } else {
       this.buildForm();
     }
@@ -52,12 +50,8 @@ export class AssignmentCardComponent implements OnInit {
 
   buildForm() {
     this.assignmentForm = this.formBuilder.group({
-      cameraDeviceNo: this.formBuilder.control({ value: null }, [
-        Validators.required
-      ]),
-      vehicleId: this.formBuilder.control({ value: null }, [
-        Validators.required
-      ])
+      cameraId: this.formBuilder.control('', [Validators.required]),
+      vehicleId: this.formBuilder.control('', [Validators.required])
     });
   }
 
@@ -67,9 +61,9 @@ export class AssignmentCardComponent implements OnInit {
     if (!this.assignmentForm.invalid) {
       let formAssignment: AssignmentRequest = new AssignmentRequest();
       let rawFormValue = this.assignmentForm.getRawValue();
-      formAssignment.cameraId = rawFormValue.deviceNo;
-      formAssignment.vehicleId = rawFormValue.id;
-
+      formAssignment.cameraId = rawFormValue.cameraId;
+      formAssignment.vehicleId = rawFormValue.vehicleId;
+      console.log(formAssignment);
       this.createAssignment.emit(formAssignment);
     }
   }

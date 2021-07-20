@@ -5,19 +5,19 @@
 
         <form [formGroup]="assignmentForm">
 
-          <mat-form-field *ngIf="assignmentForm.controls['cameraDeviceNo'] as cameraDeviceNoControl">
-            <mat-label>Camera Number</mat-label>
-            <input matInput placeholder="Camera Number" formControlName="cameraDeviceNo" />
-            <mat-error *ngIf="cameraDeviceNoControl.hasError('required')">
+          <mat-form-field *ngIf="assignmentForm.controls['cameraId'] as cameraIdControl">
+            <mat-label>Camera ID</mat-label>
+            <input matInput placeholder="Camera Number" formControlName="cameraId" />
+            <mat-error *ngIf="cameraIdControl.hasError('required')">
               <p>Required</p>
             </mat-error>
-            <mat-error *ngIf="cameraDeviceNoControl.hasError('cameraPaired')">
+            <mat-error *ngIf="cameraIdControl.hasError('cameraPaired')">
               <p>This camera is already assigned</p>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field *ngIf="assignmentForm.controls['vehicleId'] as vehicleIdControl">
-            <mat-label>Camera Number</mat-label>
+            <mat-label>Vehicle ID</mat-label>
             <input matInput placeholder="Camera Number" formControlName="vehicleId" />
             <mat-error *ngIf="vehicleIdControl.hasError('required')">
               <p>Required</p>
@@ -43,7 +43,7 @@
         <h4>Camera: {{_camera.deviceNo}}</h4>
 
         <div class="buttons">
-          <button mat-button color="warn" (click)="deleteAssignment(_assignment.id)">Unassign</button>
+          <button mat-button color="warn" (click)="deleteAssignment.emit(_assignment.id)">Unassign</button>
         </div>
 
       </div>
