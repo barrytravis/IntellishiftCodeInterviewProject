@@ -30,7 +30,6 @@ export class VehicleCameraAssignmentComponent implements OnInit {
   getAssignments() {
     this.data.get<AssignmentResponse[]>('assignments').subscribe(data => {
       this.originalAssignments = data;
-      console.log(data);
       this.filterAssignmentList();
     });
   }
@@ -47,11 +46,6 @@ export class VehicleCameraAssignmentComponent implements OnInit {
 
   public createBlankAssignment() {
     this.newAssignment = new AssignmentResponse();
-  }
-
-  public updateAssignment(assignment: AssignmentResponse) {
-    this.unAssign(assignment.id);
-    this.assign(assignment);
   }
 
   public async assign(assignment: AssignmentRequest) {
@@ -72,18 +66,18 @@ export class VehicleCameraAssignmentComponent implements OnInit {
     }
   }
 
-  public unAssign(assignmentId: number) {
+  public unAssign(assignment: AssignmentResponse) {
     this.data
-      .delete('assignments', { id: assignmentId })
+      .delete('assignments/:id', { id: assignment.id }, assignment)
       .pipe(tap(r => console.log(r)))
-      .subscribe();
+      .subscribe(() => this.getAssignments());
   }
 
   public isCurrentlyAssigned(cameraId: number, vehicleId: number): boolean {
     let vehicleAssigned: boolean =
-      this.originalAssignments.findIndex(x => x.vehicleId) != -1;
+      this.originalAssignments.findIndex(x => x.vehicleId === vehicleId) != -1;
     let cameraAssigned: boolean =
-      this.originalAssignments.findIndex(x => x.cameraId) != -1;
+      this.originalAssignments.findIndex(x => x.cameraId === cameraId) != -1;
 
     if (vehicleAssigned && cameraAssigned) {
       this.openIsAssignedModal(
@@ -93,7 +87,7 @@ export class VehicleCameraAssignmentComponent implements OnInit {
       return true;
     } else if (vehicleAssigned) {
       this.openIsAssignedModal(
-        'Thi vehicle is already assigned, please unassign before making a new assignment.'
+        'This vehicle is already assigned, please unassign before making a new assignment.'
       );
 
       return true;
@@ -110,7 +104,6 @@ export class VehicleCameraAssignmentComponent implements OnInit {
 
   public openIsAssignedModal(message: string) {
     const dialogRef = this.dialog.open(GenericMessageDialogComponent, {
-      width: '250px',
       data: message
     });
 

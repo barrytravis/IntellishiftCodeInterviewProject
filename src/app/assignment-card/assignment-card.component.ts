@@ -16,8 +16,10 @@ import { DataService } from '../services/data.service';
 export class AssignmentCardComponent implements OnInit {
   @Output() public createAssignment = new EventEmitter<AssignmentRequest>();
   @Output() public updateAssignment = new EventEmitter<AssignmentResponse>();
-  @Output() public deleteAssignment = new EventEmitter<number>();
-  @Output() public deleteUnsubmittedAssignment = new EventEmitter<void>();
+  @Output() public deleteAssignment = new EventEmitter<AssignmentResponse>();
+  @Output() public deleteUnsubmittedAssignment = new EventEmitter<
+    AssignmentResponse
+  >();
 
   public _assignment: AssignmentResponse;
   public _camera: Camera;
@@ -63,7 +65,6 @@ export class AssignmentCardComponent implements OnInit {
       let rawFormValue = this.assignmentForm.getRawValue();
       formAssignment.cameraId = rawFormValue.cameraId;
       formAssignment.vehicleId = rawFormValue.vehicleId;
-      console.log(formAssignment);
       this.createAssignment.emit(formAssignment);
     }
   }
@@ -83,5 +84,9 @@ export class AssignmentCardComponent implements OnInit {
       vehicle = data;
     });
     return vehicle;
+  }
+
+  delAssignment() {
+    this.deleteUnsubmittedAssignment.emit(this._assignment);
   }
 }

@@ -99,8 +99,6 @@ export class DataService {
     [
       'assignments',
       (params: any, data: AssignmentRequest) => {
-        console.log(data);
-
         let key = this.getLastKeyInMap(this.assignments);
         let cid = this.getUndeletedByValue(
           this.assignments,
@@ -166,6 +164,17 @@ export class DataService {
         this.cameras.delete(params.id);
         return {};
       }
+    ],
+    [
+      'assignments/:id',
+      (params: any, data: Assignment) => {
+        this.assignments.set(params.id, {
+          cameraId: data.cameraId,
+          vehicleId: data.vehicleId,
+          dateCreated: data.dateCreated,
+          deleted: true
+        });
+      }
     ]
   ]);
 
@@ -178,7 +187,7 @@ export class DataService {
     [5, { deviceNo: 'Camera 6' }],
     [6, { deviceNo: 'Camera 7' }],
     [7, { deviceNo: 'Camera 8' }],
-    [8, { deviceNo: 'Camera 9' }],
+    [8, { deviceNo: 'Camera 9' }]
   ]);
 
   private vehicles = new Map<number, Vehicle>([
@@ -189,7 +198,7 @@ export class DataService {
     [5, { name: 'Dump Truck 6' }],
     [6, { name: 'Dump Truck 7' }],
     [7, { name: 'Dump Truck 8' }],
-    [8, { name: 'Dump Truck 9' }],
+    [8, { name: 'Dump Truck 9' }]
   ]);
 
   private assignments = new Map<number, Assignment>([
@@ -243,11 +252,12 @@ export class DataService {
     return this.request(options).pipe(map(r => r.body as T));
   }
 
-  public delete<T>(url: string, params?: any): Observable<T> {
+  public delete<T>(url: string, params?: any, data?: any): Observable<T> {
     const options = new DataServiceOptions();
     options.method = 'DELETE';
     options.url = url;
     options.params = params;
+    options.data = data;
     return this.request(options).pipe(map(r => r.body as T));
   }
 

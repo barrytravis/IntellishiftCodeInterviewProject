@@ -31,7 +31,7 @@
 
         <div class="buttons">
           <button mat-button color="primary" [disabled]="assignmentForm.invalid" (click)="submitForm()">Submit</button>
-          <button mat-button color="secondary" (click)="deleteUnsubmittedAssignment.emit()">Cancel</button>
+          <button mat-button color="secondary" (click)="delAssignment()">Cancel</button>
         </div>
 
       </div>
@@ -43,7 +43,7 @@
         <h4>Camera: {{_camera.deviceNo}}</h4>
 
         <div class="buttons">
-          <button mat-button color="warn" (click)="deleteAssignment.emit(_assignment.id)">Unassign</button>
+          <button mat-button color="warn" (click)="deleteAssignment.emit(_assignment.)">Unassign</button>
         </div>
 
       </div>

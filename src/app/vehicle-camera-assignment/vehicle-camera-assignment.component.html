@@ -17,7 +17,7 @@
   <div class="row">
 
     <app-assignment-card *ngFor="let assignment of assignments; let i = index" [assignment]="assignment"
-      (createAssignment)="assign($event)" (updateAssignment)="updateAssignment($event)"
+      (createAssignment)="assign($event)"
       (deleteAssignment)="unAssign($event)">
     </app-assignment-card>
 
