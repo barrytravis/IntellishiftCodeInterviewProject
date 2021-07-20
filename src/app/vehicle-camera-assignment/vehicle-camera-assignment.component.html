@@ -10,14 +10,18 @@
   </div>
   <div class="row">
 
-    <app-assignment-card *ngIf="newAssignment" [assignment]="newAssignment" (cancel)="newAssignment=null">
+    <app-assignment-card *ngIf="newAssignment" [assignment]="newAssignment" (createAssignment)="assign($event)" (deleteUnsubmittedAssignment)="newAssignment=null">
     </app-assignment-card>
 
   </div>
   <div class="row">
 
-    <app-assignment-card *ngFor="let assignment of assignments; let i = index" [assignment]="assignment">
+    <app-assignment-card *ngFor="let assignment of assignments; let i = index" [assignment]="assignment"
+      (createAssignment)="assign($event)" (updateAssignment)="updateAssignment($event)"
+      (deleteAssignment)="unAssign($event)">
     </app-assignment-card>
+
+
 
   </div>
 </div>

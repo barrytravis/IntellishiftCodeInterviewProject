@@ -164,13 +164,6 @@ export class DataService {
         this.cameras.delete(params.id);
         return {};
       }
-    ],
-    [
-      'assignments/:id',
-      (params: any) => {
-        this.assignments.delete(params.id);
-        return {};
-      }
     ]
   ]);
 

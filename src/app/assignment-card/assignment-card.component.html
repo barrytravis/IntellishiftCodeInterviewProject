@@ -1,7 +1,7 @@
 <mat-card class="assignment-card">
   <mat-card-content>
     <div class="row">
-      <div class="column" *ngIf="isEdit">
+      <div class="column" *ngIf="isNewAssignment">
 
         <mat-form-field appearance="fill">
           <mat-label>Vehicle Name</mat-label>
@@ -18,7 +18,7 @@
       </mat-form-field>
 
       </div>
-      <div class="column" *ngIf="!isEdit">
+      <div class="column" *ngIf="!isNewAssignment">
 
 
         <h4>Vehicle: {{_assignment.vehicleId}}</h4>

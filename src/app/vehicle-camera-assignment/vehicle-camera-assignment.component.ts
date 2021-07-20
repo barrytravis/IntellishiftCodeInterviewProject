@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { Assignment, AssignmentResponse } from '../models/assignment.model';
+import { Assignment, AssignmentRequest, AssignmentResponse } from '../models/assignment.model';
 import { DataService } from '../services/data.service';
 
 @Component({
@@ -26,9 +26,6 @@ export class VehicleCameraAssignmentComponent implements OnInit {
       this.originalAssignments = data;
       this.filterAssignmentList();
     });
-
-    console.log("assignments");
-    console.log(this.assignments);
   }
 
   filterAssignmentList(searchInput?) {
@@ -45,16 +42,21 @@ export class VehicleCameraAssignmentComponent implements OnInit {
     this.newAssignment = new AssignmentResponse();
   }
 
-  assign() {
+  updateAssignment(assignment: AssignmentResponse){
+    this.unAssign(assignment.id);
+    this.assign(assignment);
+  }
+
+  assign(assignment: AssignmentRequest) {
     this.data
-      .post('assignments', {}, { cameraId: 0, vehicleId: 1 })
+      .post('assignments', {}, { cameraId: assignment.cameraId, vehicleId: assignment.vehicleId })
       .pipe(tap(r => console.log(r)))
       .subscribe();
   }
 
-  unAssign() {
+  unAssign(assignmentId: number) {
     this.data
-      .post('assignments', {}, { cameraId: 0, vehicleId: 1 })
+      .delete('assignments', { id: assignmentId })
       .pipe(tap(r => console.log(r)))
       .subscribe();
   }

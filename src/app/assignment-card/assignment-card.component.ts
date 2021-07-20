@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { AssignmentResponse } from '../models/assignment.model';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AssignmentRequest, AssignmentResponse } from '../models/assignment.model';
 import { Camera } from '../models/camera.model';
 import { Vehicle } from '../models/vehicle.model';
 import { DataService } from '../services/data.service';
@@ -10,39 +11,52 @@ import { DataService } from '../services/data.service';
   styleUrls: ['./assignment-card.component.css']
 })
 export class AssignmentCardComponent implements OnInit {
-  @Output() public createCamera = new EventEmitter<AssignmentResponse>();
-  @Output() public updateCamera = new EventEmitter<AssignmentResponse>();
-  @Output() public deleteCamera = new EventEmitter<number>();
-  @Output() public deleteUnsubmittedCamera = new EventEmitter<AssignmentResponse>();
+  @Output() public createAssignment = new EventEmitter<AssignmentRequest>();
+  @Output() public updateAssignment = new EventEmitter<AssignmentResponse>();
+  @Output() public deleteAssignment = new EventEmitter<number>();
+  @Output() public deleteUnsubmittedAssignment = new EventEmitter<void>();
 
   public _assignment: AssignmentResponse;
+  public _camera: Camera;
+  public _vehicle: Vehicle;
+  public assignmentForm: FormGroup = new FormGroup({});
+
   @Input() public set assignment(assignment: AssignmentResponse) {
     this._assignment = assignment;
     this.isNewAssignment =
       this._assignment.id === null || this._assignment.id === undefined;
 
-    console.log('inside card comp');
-    console.log(assignment);
-
     if (!this.isNewAssignment) {
-      this.buildForm(this._assignment);
+      this._vehicle = this.getVehicleById(assignment.vehicleId);
+      this._camera = this.getCameraById(assignment.cameraId);
+      console.log(this._vehicle);
+      console.log(this._camera);
     } else {
-      this.formIsReadOnly = false;
       this.buildForm();
     }
   }
 
-  public formIsReadOnly: boolean;
   public isNewAssignment: boolean;
-  public isEdit: boolean = false;
   unassignedVehicles: Vehicle[] = [];
   unassignedCameras: Camera[] = [];
 
-  constructor(private data: DataService) {}
+  constructor(
+    private data: DataService,
+    private readonly formBuilder: FormBuilder
+  ) {}
 
   ngOnInit() {}
 
-  buildForm(assignment?: AssignmentResponse) {}
+  buildForm() {
+    this.assignmentForm = this.formBuilder.group({
+      deviceNo: this.formBuilder.control({ value: null }, [
+        Validators.required
+      ]),
+      id: this.formBuilder.control({ value: null }, [
+        Validators.required
+      ])
+    });
+  }
 
   getUnassignedVehicles() {}
 

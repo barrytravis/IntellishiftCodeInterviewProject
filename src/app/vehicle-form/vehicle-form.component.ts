@@ -12,6 +12,7 @@ export class VehicleFormComponent implements OnInit {
   @Output() public updateVehicle = new EventEmitter<Vehicle>();
   @Output() public deleteVehicle = new EventEmitter<number>();
   @Output() public deleteUnsubmittedVehicle = new EventEmitter<void>();
+  
   private _vehicle: Vehicle;
   @Input() public set vehicle(vehicle: Vehicle) {
     this._vehicle = vehicle;
