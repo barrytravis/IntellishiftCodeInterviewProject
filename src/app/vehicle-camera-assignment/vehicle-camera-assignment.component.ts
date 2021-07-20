@@ -89,19 +89,20 @@ export class VehicleCameraAssignmentComponent implements OnInit {
       this.openIsAssignedModal(
         'Both the vehicle and the camera are already assigned, please unassign before making a new assignment.'
       );
+
       return true;
-    } else {
-      if (vehicleAssigned) {
-        this.openIsAssignedModal(
-          'Thi vehicle is already assigned, please unassign before making a new assignment.'
-        );
-        return true;
-      } else {
-        this.openIsAssignedModal(
-          'This camera is already assigned, please unassign before making a new assignment.'
-        );
-        return true;
-      }
+    } else if (vehicleAssigned) {
+      this.openIsAssignedModal(
+        'Thi vehicle is already assigned, please unassign before making a new assignment.'
+      );
+
+      return true;
+    } else if (cameraAssigned) {
+      this.openIsAssignedModal(
+        'This camera is already assigned, please unassign before making a new assignment.'
+      );
+
+      return true;
     }
 
     return false;
@@ -110,7 +111,7 @@ export class VehicleCameraAssignmentComponent implements OnInit {
   public openIsAssignedModal(message: string) {
     const dialogRef = this.dialog.open(GenericMessageDialogComponent, {
       width: '250px',
-      data: { message: message }
+      data: message
     });
 
     dialogRef.afterClosed().subscribe(() => this.getAssignments());
