@@ -27,6 +27,7 @@ export class AssignmentCardComponent implements OnInit {
   public assignmentForm: FormGroup = new FormGroup({});
 
   @Input() public set assignment(assignment: AssignmentResponse) {
+    console.log(assignment);
     this._assignment = assignment;
     this.isNewAssignment =
       this._assignment.id === null || this._assignment.id === undefined;
@@ -34,9 +35,9 @@ export class AssignmentCardComponent implements OnInit {
     if (!this.isNewAssignment) {
       this._vehicle = this.getVehicleById(assignment.vehicleId);
       this._camera = this.getCameraById(assignment.cameraId);
-    } else {
-      this.buildForm();
     }
+
+    this.buildForm();
   }
 
   public isNewAssignment: boolean;
@@ -51,9 +52,39 @@ export class AssignmentCardComponent implements OnInit {
   ngOnInit() {}
 
   buildForm() {
+    let cameraId: number
+    if  (this._camera?.id != null || this._camera?.id != undefined){
+      cameraId = this._camera.id;
+    } else {
+      cameraId = null;
+    }
+
+    let deviceNumber: string
+    if  (this._camera?.deviceNo != null || this._camera?.deviceNo != undefined){
+      deviceNumber = this._camera.deviceNo;
+    } else {
+      deviceNumber = '';
+    }
+
+    let vehicleName: string
+    if  (this._vehicle?.name != null || this._vehicle?.name != undefined){
+      vehicleName = this._vehicle.name;
+    } else {
+      vehicleName = '';
+    }
+
+    let vehicleId: number
+    if  (this._vehicle?.id != null || this._vehicle?.id != undefined){
+      vehicleId = this._vehicle.id;
+    } else {
+      vehicleId = null;
+    }
+
     this.assignmentForm = this.formBuilder.group({
-      cameraId: this.formBuilder.control('', [Validators.required]),
-      vehicleId: this.formBuilder.control('', [Validators.required])
+      cameraId: this.formBuilder.control({ value:cameraId, disabled: !this.isNewAssignment }, [Validators.required]),
+      cameraNumber: this.formBuilder.control({ value: deviceNumber, disabled: !this.isNewAssignment }, [Validators.required]),
+      vehicleId: this.formBuilder.control({ value: vehicleId, disabled: true }, [Validators.required]),
+      vehicleName: this.formBuilder.control({ value: vehicleName, disabled: t}, [Validators.required])
     });
   }
 

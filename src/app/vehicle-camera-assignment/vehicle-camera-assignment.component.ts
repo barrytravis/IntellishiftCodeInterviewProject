@@ -51,8 +51,8 @@ export class VehicleCameraAssignmentComponent implements OnInit {
   public async assign(assignment: AssignmentRequest) {
     if (
       !(await this.isCurrentlyAssigned(
-        assignment.cameraId,
-        assignment.vehicleId
+        +assignment.cameraId,
+        +assignment.vehicleId
       ))
     ) {
       this.data
@@ -81,22 +81,22 @@ export class VehicleCameraAssignmentComponent implements OnInit {
       this.originalAssignments.findIndex(x => x.vehicleId === vehicleId) != -1;
     let cameraAssigned: boolean =
       this.originalAssignments.findIndex(x => x.cameraId === cameraId) != -1;
-
+      
     if (vehicleAssigned && cameraAssigned) {
       this.openIsAssignedModal(
-        'Both the vehicle and the camera are already assigned, please unassign before making a new assignment.'
+        'Both the vehicle and the camera are already assigned. Please unassign before making a new assignment.'
       );
 
       return true;
     } else if (vehicleAssigned) {
       this.openIsAssignedModal(
-        'This vehicle is already assigned, please unassign before making a new assignment.'
+        'This vehicle is already assigned. Please unassign before making a new assignment.'
       );
 
       return true;
     } else if (cameraAssigned) {
       this.openIsAssignedModal(
-        'This camera is already assigned, please unassign before making a new assignment.'
+        'This camera is already assigned. Please unassign before making a new assignment.'
       );
 
       return true;

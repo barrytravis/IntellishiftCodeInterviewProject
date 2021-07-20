@@ -1,20 +1,10 @@
 <mat-card class="assignment-card">
   <mat-card-content>
-    <div class="row">
-      <div class="column" *ngIf="isNewAssignment">
 
-        <form [formGroup]="assignmentForm">
+    <form [formGroup]="assignmentForm">
 
-          <mat-form-field *ngIf="assignmentForm.controls['cameraId'] as cameraIdControl">
-            <mat-label>Camera ID</mat-label>
-            <input matInput placeholder="Camera Number" formControlName="cameraId" />
-            <mat-error *ngIf="cameraIdControl.hasError('required')">
-              <p>Required</p>
-            </mat-error>
-            <mat-error *ngIf="cameraIdControl.hasError('cameraPaired')">
-              <p>This camera is already assigned</p>
-            </mat-error>
-          </mat-form-field>
+      <div class="row">
+        <div class="column">
 
           <mat-form-field *ngIf="assignmentForm.controls['vehicleId'] as vehicleIdControl">
             <mat-label>Vehicle ID</mat-label>
@@ -22,38 +12,40 @@
             <mat-error *ngIf="vehicleIdControl.hasError('required')">
               <p>Required</p>
             </mat-error>
-            <mat-error *ngIf="vehicleIdControl.hasError('vehiclePaired')">
-              <p>This vehicle is already assigned</p>
+          </mat-form-field>
+
+          <mat-form-field *ngIf="!isNewAssignment">
+            <mat-label>Vehicle Name</mat-label>
+            <input matInput placeholder="Vehicle Name" formControlName="vehicleName" />
+          </mat-form-field>
+
+        </div>
+        <div class="column">
+
+          <mat-form-field *ngIf="assignmentForm.controls['cameraId'] as cameraIdControl">
+            <mat-label>Camera ID</mat-label>
+            <input matInput placeholder="Camera ID" formControlName="cameraId" />
+            <mat-error *ngIf="cameraIdControl.hasError('required')">
+              <p>Required</p>
             </mat-error>
           </mat-form-field>
 
-        </form>
-
-        <div class="buttons">
-          <button mat-button color="primary" [disabled]="assignmentForm.invalid" (click)="submitForm()">Submit</button>
-          <button mat-button color="secondary" (click)="delAssignment()">Cancel</button>
-        </div>
-
-      </div>
-      <div *ngIf="!isNewAssignment">
-        <div class="column">
-
-          <h4>Vehicle ID: {{_vehicle.id}}</h4>
-          <h4>Vehicle Name: {{_vehicle.name}}</h4>
+          <mat-form-field *ngIf="!isNewAssignment">
+            <mat-label>Camera Number</mat-label>
+            <input matInput placeholder="Camera Number" formControlName="cameraNumber" />
+          </mat-form-field>
 
         </div>
-        <div class="column">
+        <div class="buttons column">
 
-          <h4>Camera ID: {{_camera.id}}</h4>
-          <h4>Camera Number: {{_camera.deviceNo}}</h4>
-
-        </div>
-        <div class="buttons">
-
-          <button mat-button color="warn" (click)="deleteAssignment.emit(_assignment)">Unassign</button>
+          <button mat-button color="warn" *ngIf="!isNewAssignment" (click)="deleteAssignment.emit(_assignment)">Unassign</button>
+          <button mat-button color="primary" *ngIf="isNewAssignment" [disabled]="assignmentForm.invalid" (click)="submitForm()">Submit</button>
+          <button mat-button color="secondary" *ngIf="isNewAssignment" (click)="delAssignment()">Cancel</button>
 
         </div>
       </div>
-    </div>
+
+    </form>
+
   </mat-card-content>
 </mat-card>
