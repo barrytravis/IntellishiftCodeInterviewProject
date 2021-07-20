@@ -35,19 +35,25 @@
         </div>
 
       </div>
-      <div class="column" *ngIf="!isNewAssignment">
+      <div *ngIf="!isNewAssignment">
+        <div class="column">
 
+          <h4>Vehicle ID: {{_vehicle.id}}</h4>
+          <h4>Vehicle Name: {{_vehicle.name}}</h4>
 
-        <h4>Vehicle: {{_vehicle.name}}</h4>
-
-        <h4>Camera: {{_camera.deviceNo}}</h4>
-
-        <div class="buttons">
-          <button mat-button color="warn" (click)="deleteAssignment.emit(_assignment.)">Unassign</button>
         </div>
+        <div class="column">
 
+          <h4>Camera ID: {{_camera.id}}</h4>
+          <h4>Camera Number: {{_camera.deviceNo}}</h4>
+
+        </div>
+        <div class="buttons">
+
+          <button mat-button color="warn" (click)="deleteAssignment.emit(_assignment)">Unassign</button>
+
+        </div>
       </div>
-
     </div>
   </mat-card-content>
 </mat-card>

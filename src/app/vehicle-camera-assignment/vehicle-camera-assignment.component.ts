@@ -29,7 +29,7 @@ export class VehicleCameraAssignmentComponent implements OnInit {
 
   getAssignments() {
     this.data.get<AssignmentResponse[]>('assignments').subscribe(data => {
-      this.originalAssignments = data;
+      this.originalAssignments = data.filter(x => x.deleted == false);
       this.filterAssignmentList();
     });
   }
@@ -49,6 +49,7 @@ export class VehicleCameraAssignmentComponent implements OnInit {
   }
 
   public async assign(assignment: AssignmentRequest) {
+    
     if (
       !(await this.isCurrentlyAssigned(
         assignment.cameraId,
@@ -62,7 +63,7 @@ export class VehicleCameraAssignmentComponent implements OnInit {
           { cameraId: assignment.cameraId, vehicleId: assignment.vehicleId }
         )
         .pipe(tap(r => console.log(r)))
-        .subscribe();
+        .subscribe(() => this.getAssignments());
     }
   }
 

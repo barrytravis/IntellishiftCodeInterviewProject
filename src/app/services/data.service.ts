@@ -117,7 +117,8 @@ export class DataService {
           this.assignments.set(vid[0], { ...vid[1], ...{ deleted: true } });
         }
         this.assignments.set(key + 1, {
-          ...data,
+          cameraId: data.cameraId,
+          vehicleId: data.vehicleId,
           deleted: false,
           dateCreated: new Date()
         });
@@ -167,13 +168,11 @@ export class DataService {
     ],
     [
       'assignments/:id',
-      (params: any, data: Assignment) => {
-        this.assignments.set(params.id, {
-          cameraId: data.cameraId,
-          vehicleId: data.vehicleId,
-          dateCreated: data.dateCreated,
-          deleted: true
-        });
+      (params: any, data: any) => {
+        let current = this.assignments.get(params.id);
+        current.deleted = true;
+        this.assignments.set(params.id, current);
+        return {};
       }
     ]
   ]);
@@ -193,6 +192,7 @@ export class DataService {
   private vehicles = new Map<number, Vehicle>([
     [0, { name: 'Dump Truck 1' }],
     [1, { name: 'Dump Truck 2' }],
+    [2, { name: 'Dump Truck 3' }],
     [3, { name: 'Dump Truck 4' }],
     [4, { name: 'Dump Truck 5' }],
     [5, { name: 'Dump Truck 6' }],
@@ -287,7 +287,10 @@ export class DataService {
         status = 200;
         statusText = 'OK';
       } else if (options.method === 'DELETE') {
-        body = this.mockDeleteEndpointMap.get(options.url)(options.params);
+        body = this.mockDeleteEndpointMap.get(options.url)(
+          options.params,
+          options.data
+        );
         status = 200;
         statusText = 'OK';
       } else {

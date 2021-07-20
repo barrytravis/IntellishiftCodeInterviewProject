@@ -27,6 +27,7 @@ export class AssignmentCardComponent implements OnInit {
   public assignmentForm: FormGroup = new FormGroup({});
 
   @Input() public set assignment(assignment: AssignmentResponse) {
+    console.log(assignment);
     this._assignment = assignment;
     this.isNewAssignment =
       this._assignment.id === null || this._assignment.id === undefined;
