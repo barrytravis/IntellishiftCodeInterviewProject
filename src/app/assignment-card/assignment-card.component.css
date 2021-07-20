@@ -11,3 +11,8 @@
 .column {
   padding: 5px;
 }
+
+.buttons {
+  display: flex;
+}
+

@@ -3,28 +3,48 @@
     <div class="row">
       <div class="column" *ngIf="isNewAssignment">
 
-        <mat-form-field appearance="fill">
-          <mat-label>Vehicle Name</mat-label>
-          <mat-select [(value)]="_assignment.vehicleId">
-            <mat-option *ngFor="let vehicle of unassignedVehicles">{{vehicle.name}}</mat-option>
-          </mat-select>
-        </mat-form-field>
+        <form [formGroup]="assignmentForm">
 
-        <mat-form-field appearance="fill">
-        <mat-label>Camera Number</mat-label>
-        <mat-select [(value)]="_assignment.cameraId">
-          <mat-option *ngFor="let vehicle of unassignedCameras">{{vehicle.deviceNo}}</mat-option>
-        </mat-select>
-      </mat-form-field>
+          <mat-form-field *ngIf="assignmentForm.controls['cameraDeviceNo'] as cameraDeviceNoControl">
+            <mat-label>Camera Number</mat-label>
+            <input matInput placeholder="Camera Number" formControlName="cameraDeviceNo" />
+            <mat-error *ngIf="cameraDeviceNoControl.hasError('required')">
+              <p>Required</p>
+            </mat-error>
+            <mat-error *ngIf="cameraDeviceNoControl.hasError('cameraPaired')">
+              <p>This camera is already assigned</p>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field *ngIf="assignmentForm.controls['vehicleId'] as vehicleIdControl">
+            <mat-label>Camera Number</mat-label>
+            <input matInput placeholder="Camera Number" formControlName="vehicleId" />
+            <mat-error *ngIf="vehicleIdControl.hasError('required')">
+              <p>Required</p>
+            </mat-error>
+            <mat-error *ngIf="vehicleIdControl.hasError('vehiclePaired')">
+              <p>This vehicle is already assigned</p>
+            </mat-error>
+          </mat-form-field>
+
+        </form>
+
+        <div class="buttons">
+          <button mat-button color="primary" [disabled]="assignmentForm.invalid" (click)="submitForm()">Submit</button>
+          <button mat-button color="secondary" (click)="deleteUnsubmittedAssignment.emit()">Cancel</button>
+        </div>
 
       </div>
       <div class="column" *ngIf="!isNewAssignment">
 
 
-        <h4>Vehicle: {{_assignment.vehicleId}}</h4>
-        
-        <h4>Camera: {{_assignment.cameraId}}</h4>
+        <h4>Vehicle: {{_vehicle.name}}</h4>
 
+        <h4>Camera: {{_camera.deviceNo}}</h4>
+
+        <div class="buttons">
+          <button mat-button color="warn" (click)="deleteAssignment(_assignment.id)">Unassign</button>
+        </div>
 
       </div>
 

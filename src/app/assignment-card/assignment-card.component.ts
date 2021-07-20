@@ -1,6 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AssignmentRequest, AssignmentResponse } from '../models/assignment.model';
+import {
+  AssignmentRequest,
+  AssignmentResponse
+} from '../models/assignment.model';
 import { Camera } from '../models/camera.model';
 import { Vehicle } from '../models/vehicle.model';
 import { DataService } from '../services/data.service';
@@ -49,18 +52,27 @@ export class AssignmentCardComponent implements OnInit {
 
   buildForm() {
     this.assignmentForm = this.formBuilder.group({
-      deviceNo: this.formBuilder.control({ value: null }, [
+      cameraDeviceNo: this.formBuilder.control({ value: null }, [
         Validators.required
       ]),
-      id: this.formBuilder.control({ value: null }, [
+      vehicleId: this.formBuilder.control({ value: null }, [
         Validators.required
       ])
     });
   }
 
-  getUnassignedVehicles() {}
+  submitForm() {
+    this.assignmentForm.updateValueAndValidity();
 
-  getUnassignedCameras() {}
+    if (!this.assignmentForm.invalid) {
+      let formAssignment: AssignmentRequest = new AssignmentRequest();
+      let rawFormValue = this.assignmentForm.getRawValue();
+      formAssignment.cameraId = rawFormValue.deviceNo;
+      formAssignment.vehicleId = rawFormValue.id;
+
+      this.createAssignment.emit(formAssignment);
+    }
+  }
 
   getCameraById(id: number): Camera {
     let camera: Camera;
