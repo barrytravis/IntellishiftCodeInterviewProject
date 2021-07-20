@@ -49,7 +49,6 @@ export class VehicleCameraAssignmentComponent implements OnInit {
   }
 
   public async assign(assignment: AssignmentRequest) {
-    
     if (
       !(await this.isCurrentlyAssigned(
         assignment.cameraId,
@@ -60,7 +59,10 @@ export class VehicleCameraAssignmentComponent implements OnInit {
         .post(
           'assignments',
           {},
-          { cameraId: assignment.cameraId, vehicleId: assignment.vehicleId }
+          {
+            cameraId: +assignment.cameraId,
+            vehicleId: +assignment.vehicleId
+          }
         )
         .pipe(tap(r => console.log(r)))
         .subscribe(() => this.getAssignments());
