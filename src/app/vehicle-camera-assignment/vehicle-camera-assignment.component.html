@@ -16,10 +16,12 @@
 
   </div>
   <div class="row">
+    <div class="column">
 
-    <app-assignment-card *ngFor="let assignment of assignments; let i = index" [assignment]="assignment"
-      (createAssignment)="assign($event)" (deleteAssignment)="unAssign($event)">
-    </app-assignment-card>
+      <app-assignment-card *ngFor="let assignment of assignments; let i = index" [assignment]="assignment"
+        (createAssignment)="assign($event)" (deleteAssignment)="unAssign($event)">
+      </app-assignment-card>
 
+    </div>
   </div>
 </div>

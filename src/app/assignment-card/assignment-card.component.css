@@ -10,6 +10,7 @@
 
 .column {
   padding: 5px;
+  flex: left;
 }
 
 .buttons {
