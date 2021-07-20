@@ -30,7 +30,7 @@ export class VehicleCameraAssignmentComponent implements OnInit {
   getAssignments() {
     this.data.get<AssignmentResponse[]>('assignments').subscribe(data => {
       this.originalAssignments = data.filter(x => x.deleted == false);
-      this.filterAssignmentList();
+      this.filterAssignmentList(this.searchInput);
     });
   }
 

@@ -60,7 +60,7 @@ export class VehicleComponent implements OnInit {
   getVehicles(): void {
     this.data.get<Vehicle[]>('vehicles').subscribe(data => {
       this.originalVehicles = data;
-      this.filterVehicleList();
+      this.filterVehicleList(this.searchInput);
     });
   }
 
