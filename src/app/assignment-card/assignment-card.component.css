@@ -2,7 +2,6 @@
   width: fit-content;
   margin-top: 10px;
   margin-left: 10px;
-  flex: left;
 }
 
 .row {
@@ -11,6 +10,7 @@
 
 .column {
   padding: 5px;
+  width: 50%;;
 }
 
 .buttons {

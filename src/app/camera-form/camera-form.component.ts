@@ -35,19 +35,8 @@ export class CameraFormComponent implements OnInit {
   ngOnInit() {}
 
   buildForm(camera?: Camera) {
-    let deviceNumber: string
-    if  (camera?.deviceNo != null || camera?.deviceNo != undefined){
-      deviceNumber = camera.deviceNo;
-    } else {
-      deviceNumber = '';
-    }
-
-    let cameraId: number
-    if  (camera?.id != null || camera?.id != undefined){
-      cameraId = camera.id;
-    } else {
-      cameraId = null;
-    }
+    let cameraId: number = (camera?.id == null) ? null : camera.id;
+    let deviceNumber: string = (camera?.deviceNo == null) ? '' : camera.deviceNo;
 
     this.cameraEntryForm = this.formBuilder.group({
       deviceNo: this.formBuilder.control({value: deviceNumber, disabled: this.formIsReadOnly}, [Validators.required]),

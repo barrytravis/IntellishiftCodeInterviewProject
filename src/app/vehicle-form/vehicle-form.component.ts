@@ -35,19 +35,8 @@ export class VehicleFormComponent implements OnInit {
   ngOnInit() {}
 
   buildForm(vehicle?: Vehicle) {
-    let vehicleName: string
-    if  (vehicle?.name != null || vehicle?.name != undefined){
-      vehicleName = vehicle.name;
-    } else {
-      vehicleName = '';
-    }
-
-    let vehicleId: number
-    if  (vehicle?.id != null || vehicle?.id != undefined){
-      vehicleId = vehicle.id;
-    } else {
-      vehicleId = null;
-    }
+    let vehicleName: string = (vehicle?.id == null) ? '' : vehicle.name;
+    let vehicleId: number = (vehicle?.id == null) ? null : vehicle.id;
 
     this.vehicleEntryForm = this.formBuilder.group({
       name: this.formBuilder.control({value: vehicleName, disabled: this.formIsReadOnly}, [Validators.required]),

@@ -52,39 +52,16 @@ export class AssignmentCardComponent implements OnInit {
   ngOnInit() {}
 
   buildForm() {
-    let cameraId: number
-    if  (this._camera?.id != null || this._camera?.id != undefined){
-      cameraId = this._camera.id;
-    } else {
-      cameraId = null;
-    }
-
-    let deviceNumber: string
-    if  (this._camera?.deviceNo != null || this._camera?.deviceNo != undefined){
-      deviceNumber = this._camera.deviceNo;
-    } else {
-      deviceNumber = '';
-    }
-
-    let vehicleName: string
-    if  (this._vehicle?.name != null || this._vehicle?.name != undefined){
-      vehicleName = this._vehicle.name;
-    } else {
-      vehicleName = '';
-    }
-
-    let vehicleId: number
-    if  (this._vehicle?.id != null || this._vehicle?.id != undefined){
-      vehicleId = this._vehicle.id;
-    } else {
-      vehicleId = null;
-    }
+    let cameraId: number = (this._camera?.id == null) ? null : this._camera.id;
+    let deviceNumber: string = (this._camera?.deviceNo == null) ? '' : this._camera.deviceNo;
+    let vehicleName: string = (this._vehicle?.id == null) ? '' : this._vehicle.name;
+    let vehicleId: number = (this._vehicle?.id == null) ? null : this._vehicle.id;
 
     this.assignmentForm = this.formBuilder.group({
       cameraId: this.formBuilder.control({ value:cameraId, disabled: !this.isNewAssignment }, [Validators.required]),
       cameraNumber: this.formBuilder.control({ value: deviceNumber, disabled: !this.isNewAssignment }, [Validators.required]),
       vehicleId: this.formBuilder.control({ value: vehicleId, disabled: true }, [Validators.required]),
-      vehicleName: this.formBuilder.control({ value: vehicleName, disabled: t}, [Validators.required])
+      vehicleName: this.formBuilder.control({ value: vehicleName, disabled: true }, [Validators.required])
     });
   }
 
