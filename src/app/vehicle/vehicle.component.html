@@ -8,7 +8,7 @@
     <button mat-button color="primary" (click)="addBlankVehicle()"><p>New Vehicle</p></button>
 
   </div>
-  <div class="row">
+  <div>
 
     <app-vehicle-form *ngFor="let vehicle of vehicles;let i = index" [vehicle]="vehicle"
       (createVehicle)="createVehicle($event)" (updateVehicle)="updateVehicle($event)"

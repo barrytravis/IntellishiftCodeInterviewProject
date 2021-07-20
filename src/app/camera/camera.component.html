@@ -8,7 +8,7 @@
     <button mat-button color="primary" (click)="addBlankCamera()"><p>New Camera</p></button>
 
   </div>
-  <div class="row">
+  <div>
 
     <app-camera-form *ngFor="let camera of cameras;let i = index" [camera]="camera"
       (createCamera)="createCamera($event)" (updateCamera)="updateCamera($event)" (deleteCamera)="deleteCamera($event)"
