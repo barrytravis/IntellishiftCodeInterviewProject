@@ -34,8 +34,9 @@ export class AssignmentCardComponent implements OnInit {
 
   public formIsReadOnly: boolean;
   public isNewAssignment: boolean;
-  public unassignedVehicles: Vehicle[] = [];
-  public unassignedCameras: Camera[] = [];
+  public isEdit: boolean = false;
+  unassignedVehicles: Vehicle[] = [];
+  unassignedCameras: Camera[] = [];
 
   constructor(private data: DataService) {}
 

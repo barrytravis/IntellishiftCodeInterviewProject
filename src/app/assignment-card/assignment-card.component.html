@@ -1,7 +1,7 @@
 <mat-card class="assignment-card">
   <mat-card-content>
     <div class="row">
-      <div class="column">
+      <div class="column" *ngIf="isEdit">
 
         <mat-form-field appearance="fill">
           <mat-label>Vehicle Name</mat-label>
@@ -10,17 +10,24 @@
           </mat-select>
         </mat-form-field>
 
-      </div>
-      <div class="column">
-
         <mat-form-field appearance="fill">
-          <mat-label>Camera Number</mat-label>
-          <mat-select [(value)]="_assignment.cameraId">
-            <mat-option *ngFor="let vehicle of unassignedCameras">{{vehicle.deviceNo}}</mat-option>
-          </mat-select>
-        </mat-form-field>
+        <mat-label>Camera Number</mat-label>
+        <mat-select [(value)]="_assignment.cameraId">
+          <mat-option *ngFor="let vehicle of unassignedCameras">{{vehicle.deviceNo}}</mat-option>
+        </mat-select>
+      </mat-form-field>
 
       </div>
+      <div class="column" *ngIf="!isEdit">
+
+
+        <h4>Vehicle: {{_assignment.vehicleId}}</h4>
+        
+        <h4>Camera: {{_assignment.cameraId}}</h4>
+
+
+      </div>
+
     </div>
   </mat-card-content>
 </mat-card>
