@@ -1,19 +1,26 @@
 <div class="container">
   <div class="row">
+    <div class="column">
 
-    <mat-form-field class="search-form">
-      <input matInput placeholder="Search By Vehicle Name" name="searchForm"  [(ngModel)]="searchInput" (ngModelChange)="filterVehicleList($event)" />
-    </mat-form-field>
+      <mat-form-field class="search-form">
+        <input matInput placeholder="Search By Vehicle Name" name="searchForm"  [(ngModel)]="searchInput" (ngModelChange)="filterVehicleList($event)" />
+      </mat-form-field>
 
-    <button mat-button color="primary" (click)="addBlankVehicle()"><p>New Vehicle</p></button>
+    </div>
+    <div class="column">
 
+      <button mat-button color="primary" (click)="addBlankVehicle()"><p>New Vehicle</p></button>
+
+    </div>
   </div>
-  <div>
+  <div class="row">
+    <div class="column">
 
-    <app-vehicle-form *ngFor="let vehicle of vehicles;let i = index" [vehicle]="vehicle"
-      (createVehicle)="createVehicle($event)" (updateVehicle)="updateVehicle($event)"
-      (deleteVehicle)="deleteVehicle($event)" (deleteUnsubmittedVehicle)="removeBlankVehicle(i)">
-    </app-vehicle-form>
+      <app-vehicle-form *ngFor="let vehicle of vehicles;let i = index" [vehicle]="vehicle"
+        (createVehicle)="createVehicle($event)" (updateVehicle)="updateVehicle($event)"
+        (deleteVehicle)="deleteVehicle($event)" (deleteUnsubmittedVehicle)="removeBlankVehicle(i)">
+      </app-vehicle-form>
 
+    </div>
   </div>
 </div>

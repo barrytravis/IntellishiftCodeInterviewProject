@@ -14,12 +14,17 @@
             </mat-error>
           </mat-form-field>
 
+        </div>
+        <div class="column">
+
           <mat-form-field *ngIf="!isNewAssignment">
             <mat-label>Vehicle Name</mat-label>
             <input matInput placeholder="Vehicle Name" formControlName="vehicleName" />
           </mat-form-field>
 
         </div>
+      </div>
+      <div class="row">
         <div class="column">
 
           <mat-form-field *ngIf="assignmentForm.controls['cameraId'] as cameraIdControl">
@@ -29,6 +34,9 @@
               <p>Required</p>
             </mat-error>
           </mat-form-field>
+
+        </div>
+        <div class="column">
 
           <mat-form-field *ngIf="!isNewAssignment">
             <mat-label>Camera Number</mat-label>
@@ -43,6 +51,7 @@
           <button mat-button color="secondary" *ngIf="isNewAssignment" (click)="delAssignment()">Cancel</button>
 
         </div>
+
       </div>
 
     </form>

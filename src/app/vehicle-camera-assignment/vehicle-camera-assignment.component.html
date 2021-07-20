@@ -1,27 +1,29 @@
 <div class="container">
   <div class="row">
-
-    <mat-form-field class="search-form">
-      <input matInput placeholder="Search By Vehicle ID" name="searchForm"  [(ngModel)]="searchInput" (ngModelChange)="filterAssignmentList($event)" />
-    </mat-form-field>
-
-    <button mat-button color="primary" *ngIf="!newAssignment" (click)="createBlankAssignment()">New Assignment</button>
-
-  </div>
-  <div class="row">
-
-    <app-assignment-card *ngIf="newAssignment" [assignment]="newAssignment" (createAssignment)="assign($event)"
-      (deleteUnsubmittedAssignment)="newAssignment=null">
-    </app-assignment-card>
-
-  </div>
-  <div class="row">
     <div class="column">
 
-      <app-assignment-card *ngFor="let assignment of assignments; let i = index" [assignment]="assignment"
-        (createAssignment)="assign($event)" (deleteAssignment)="unAssign($event)">
+      <mat-form-field class="search-form">
+        <input matInput placeholder="Search By Vehicle ID" name="searchForm"  [(ngModel)]="searchInput" (ngModelChange)="filterAssignmentList($event)" />
+      </mat-form-field>
+
+      <button mat-button color="primary" *ngIf="!newAssignment" (click)="createBlankAssignment()">New Assignment</button>
+
+    </div>
+  </div>
+  <div class="row" *ngIf="newAssignment">
+    <div class="column">
+
+      <app-assignment-card [assignment]="newAssignment" (createAssignment)="assign($event)"
+        (deleteUnsubmittedAssignment)="removeBlankAssignment()">
       </app-assignment-card>
 
     </div>
+  </div>
+  <div class="row">
+
+    <app-assignment-card class="column" *ngFor="let assignment of assignments; let i = index" [assignment]="assignment"
+      (createAssignment)="assign($event)" (deleteAssignment)="unAssign($event)">
+    </app-assignment-card>
+
   </div>
 </div>

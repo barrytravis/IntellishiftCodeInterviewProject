@@ -59,9 +59,9 @@ export class AssignmentCardComponent implements OnInit {
 
     this.assignmentForm = this.formBuilder.group({
       cameraId: this.formBuilder.control({ value:cameraId, disabled: !this.isNewAssignment }, [Validators.required]),
-      cameraNumber: this.formBuilder.control({ value: deviceNumber, disabled: !this.isNewAssignment }, [Validators.required]),
-      vehicleId: this.formBuilder.control({ value: vehicleId, disabled: true }, [Validators.required]),
-      vehicleName: this.formBuilder.control({ value: vehicleName, disabled: true }, [Validators.required])
+      cameraNumber: this.formBuilder.control({ value: deviceNumber, disabled: true }, []),
+      vehicleId: this.formBuilder.control({ value: vehicleId, disabled: !this.isNewAssignment }, [Validators.required]),
+      vehicleName: this.formBuilder.control({ value: vehicleName, disabled: true }, [])
     });
   }
 

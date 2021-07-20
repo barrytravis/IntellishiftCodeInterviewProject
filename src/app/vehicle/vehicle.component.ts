@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
+import { GenericMessageDialogComponent } from '../generic-message-dialog/generic-message-dialog.component';
 import { Vehicle } from '../models/vehicle.model';
 import { DataService } from '../services/data.service';
 
@@ -13,7 +15,7 @@ export class VehicleComponent implements OnInit {
   public originalVehicles: Vehicle[] = [];
   public searchInput: string = '';
 
-  constructor(private data: DataService) {}
+  constructor(private data: DataService, public dialog: MatDialog) {}
 
   ngOnInit() {
     this.getVehicles();
@@ -23,29 +25,36 @@ export class VehicleComponent implements OnInit {
     if (!searchInput) {
       this.vehicles = this.originalVehicles;
     } else {
-      this.vehicles = this.originalVehicles.filter(x =>
-        x.name.toLocaleLowerCase().includes(searchInput.toLocaleLowerCase())
+      this.vehicles = this.originalVehicles.filter(
+        x =>
+          x.name === undefined ||
+          x.name.toLocaleLowerCase().includes(searchInput.toLocaleLowerCase())
       );
     }
   }
 
   addBlankVehicle() {
     this.originalVehicles.unshift(new Vehicle());
+    this.filterVehicleList(this.searchInput);
   }
 
   removeBlankVehicle(index: number) {
     this.originalVehicles.splice(index, 1);
-    this.filterVehicleList();
+    this.filterVehicleList(this.searchInput);
   }
 
   createVehicle(newVehicle: Vehicle) {
-    this.data
-      .post(
-        'vehicles/:id',
-        { id: newVehicle.id },
-        { name: newVehicle.name, cameraId: newVehicle.cameraId }
-      )
-      .subscribe(() => this.getVehicles(), err => console.log(err));
+    if (!this.isExistingVehicleId(newVehicle.id)) {
+      this.data
+        .post(
+          'vehicles/:id',
+          { id: newVehicle.id },
+          { name: newVehicle.name, cameraId: newVehicle.cameraId }
+        )
+        .subscribe(() => this.getVehicles(), err => console.log(err));
+    } else {
+      this.openModal('This Vehicle ID is already used.');
+    }
   }
 
   getVehicles(): void {
@@ -69,5 +78,15 @@ export class VehicleComponent implements OnInit {
     this.data
       .delete('vehicles/:id', { id: id })
       .subscribe(() => this.getVehicles());
+  }
+
+  isExistingVehicleId(id: number): boolean {
+    return this.originalVehicles.findIndex(x => x.id === id) === -1;
+  }
+
+  public openModal(message: string) {
+    const dialogRef = this.dialog.open(GenericMessageDialogComponent, {
+      data: message
+    });
   }
 }

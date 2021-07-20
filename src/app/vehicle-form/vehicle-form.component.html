@@ -1,30 +1,39 @@
 <div class="flex-container">
   <form [formGroup]="vehicleEntryForm">
+    <div class="row">
+      <div class="column">
 
-    <mat-form-field *ngIf="vehicleEntryForm.controls['id'] as idControl">
-      <mat-label>Vehicle ID</mat-label>
-      <input matInput placehlder="Vehicle ID" formControlName="id" />
-      <mat-error *ngIf="idControl.hasError('required')">
-        <p>Required</p>
-      </mat-error>
-      <mat-error *ngIf="idControl.hasError('pattern')">
-        <p>Numbers only</p>
-      </mat-error>
-    </mat-form-field>
+        <mat-form-field *ngIf="vehicleEntryForm.controls['id'] as idControl">
+          <mat-label>Vehicle ID</mat-label>
+          <input matInput placehlder="Vehicle ID" formControlName="id" />
+          <mat-error *ngIf="idControl.hasError('required')">
+            <p>Required</p>
+          </mat-error>
+          <mat-error *ngIf="idControl.hasError('pattern')">
+            <p>Numbers only</p>
+          </mat-error>
+        </mat-form-field>
 
-    <mat-form-field *ngIf="vehicleEntryForm.controls['name'] as nameControl">
-      <mat-label>Name</mat-label>
-      <input matInput placehlder="Name" formControlName="name" />
-      <mat-error *ngIf="nameControl.hasError('required')">
-        <p>Required</p>
-      </mat-error>
-    </mat-form-field>
+      </div>
+      <div class="column">
 
+        <mat-form-field *ngIf="vehicleEntryForm.controls['name'] as nameControl">
+          <mat-label>Name</mat-label>
+          <input matInput placehlder="Name" formControlName="name" />
+          <mat-error *ngIf="nameControl.hasError('required')">
+            <p>Required</p>
+          </mat-error>
+        </mat-form-field>
+
+      </div>
+      <div class="buttons column">
+
+        <button mat-button color="primary" *ngIf="formIsReadOnly" (click)="allowEdit()">Edit</button>
+        <button mat-button color="primary" *ngIf="!formIsReadOnly" [disabled]="vehicleEntryForm.invalid"  (click)="submitForm()">Submit</button>
+        <button mat-button color="secondary" *ngIf="!formIsReadOnly" (click)="resetForm()">Cancel</button>
+        <button mat-button color="warn" *ngIf="formIsReadOnly"(click)="delete()">Remove</button>
+
+      </div>
+    </div>
   </form>
-  <div class="buttons">
-    <button mat-button color="primary" *ngIf="formIsReadOnly" (click)="allowEdit()">Edit</button>
-    <button mat-button color="primary" *ngIf="!formIsReadOnly" [disabled]="vehicleEntryForm.invalid"  (click)="submitForm()">Submit</button>
-    <button mat-button color="secondary" *ngIf="!formIsReadOnly" (click)="resetForm()">Cancel</button>
-    <button mat-button color="warn" *ngIf="formIsReadOnly"(click)="delete()">Remove</button>
-  </div>
 </div>

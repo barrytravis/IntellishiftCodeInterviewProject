@@ -1,19 +1,26 @@
 <div class="container">
   <div class="row">
+    <div class="column">
 
-    <mat-form-field class="search-form">
-      <input matInput placeholder="Search By Device Number" name="searchForm"  [(ngModel)]="searchInput" (ngModelChange)="filterCameraList($event)" />
-    </mat-form-field>
+      <mat-form-field class="search-form">
+        <input matInput placeholder="Search By Device Number" name="searchForm"  [(ngModel)]="searchInput" (ngModelChange)="filterCameraList($event)" />
+      </mat-form-field>
 
-    <button mat-button color="primary" (click)="addBlankCamera()"><p>New Camera</p></button>
+    </div>
+    <div class="column">
 
+      <button mat-button color="primary" (click)="addBlankCamera()"><p>New Camera</p></button>
+
+    </div>
   </div>
-  <div>
+  <div class="row">
+    <div class="column">
 
-    <app-camera-form *ngFor="let camera of cameras;let i = index" [camera]="camera"
-      (createCamera)="createCamera($event)" (updateCamera)="updateCamera($event)" (deleteCamera)="deleteCamera($event)"
-      (deleteUnsubmittedCamera)="removeBlankCamera(i)">
-    </app-camera-form>
+      <app-camera-form *ngFor="let camera of cameras;let i = index" [camera]="camera"
+        (createCamera)="createCamera($event)" (updateCamera)="updateCamera($event)"
+        (deleteCamera)="deleteCamera($event)" (deleteUnsubmittedCamera)="removeBlankCamera(i)">
+      </app-camera-form>
 
+    </div>
   </div>
 </div>
