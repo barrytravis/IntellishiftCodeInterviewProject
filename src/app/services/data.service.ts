@@ -240,7 +240,6 @@ export class DataService {
     options.url = url;
     options.params = params;
     options.data = data;
-    console.log(data);
     return this.request(options).pipe(map(r => r.body as T));
   }
 
