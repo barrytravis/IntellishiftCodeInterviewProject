@@ -1,5 +1,5 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import * as AssignmentActions from '../../+store/actions/assignment.actions';
+import { AssignmentActions } from '../../+store/actions';
 import { AssignmentResponse, AssignmentRequest, Assignment } from '../../models/assignment.model';
 
 export interface AssignmentState {
@@ -13,16 +13,10 @@ export const assignmentReducer = createReducer(
   on(AssignmentActions.createAssignment, (state, { assignment }) => ({
     assignments: [ ...state.assignments, assignment]
   })),
-  on(AssignmentActions.getAssignmentById, (state, {  }) => ({
+  on(AssignmentActions.updateAssignment, (state, { assignment }) => ({
     
   })),
-  on(AssignmentActions.getAssignments, state => ({
-    
-  })),
-  on(AssignmentActions.updateAssignment, (state, {  }) => ({
-    
-  })),
-  on(AssignmentActions.deleteAssignment, (state, {  }) => ({
+  on(AssignmentActions.deleteAssignment, (state, { assignment }) => ({
     
   })),
 );

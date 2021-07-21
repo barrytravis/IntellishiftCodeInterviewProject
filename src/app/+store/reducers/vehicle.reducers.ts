@@ -13,12 +13,6 @@ export const assignmentReducer = createReducer(
   on(VehicleActions.createVehicle, (state, { vehicle }) => ({
     vehicles: [ ...state.vehicles, vehicle]
   })),
-  on(VehicleActions.getVehicleById, (state, {  }) => ({
-    
-  })),
-  on(VehicleActions.getVehicles, state => ({
-    
-  })),
   on(VehicleActions.updateVehicle, (state, { vehicle }) => ({
     
   })),

@@ -1,5 +1,5 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import * as CameraActions from '../../+store/actions/camera.actions';
+import { CameraActions } from '../../+store/actions';
 import { Camera } from '../../models/camera.model';
 
 export interface CameraState {
@@ -13,17 +13,11 @@ export const cameraReducer = createReducer(
   on(CameraActions.createCamera, (state, { camera }) => ({
     cameras: [ ...state.cameras, camera]
   })),
-  on(CameraActions.getCameraById, (state, {  }) => ({
-    
+  on(CameraActions.updateCamera, (state, { camera }) => ({
+    cameras: state.cameras.map((value, index) => index === camera.id ? {...value, name: camera } : value) 
   })),
-  on(CameraActions.getCameras, state => ({
-    
-  })),
-  on(CameraActions.updateCamera, (state, {  }) => ({
-    
-  })),
-  on(CameraActions.deleteCamera, (state, {  }) => ({
-    
+  on(CameraActions.deleteCamera, (state, { cameraId }) => ({
+    cameras: state.cameras.splice(cameraId) 
   })),
 );
 
