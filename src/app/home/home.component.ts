@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { CameraActions } from '../+store/actions';
+import { CameraReducer } from '../+store/reducers';
+import { CameraSelector } from '../+store/selectors';
 
 @Component({
   selector: 'app-home',
@@ -8,9 +12,12 @@ import { Component, OnInit } from '@angular/core';
 export class HomeComponent implements OnInit {
   currentTab: string = 'assignment';
 
-  constructor() {}
+  constructor(private readonly store: Store<CameraReducer.CameraState>) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.store.dispatch(CameraActions.loadCameras());
+    console.log(this.store.select(CameraSelector.selectCameras));
+  }
 
   tabControl(selectedTab: string) {
     this.currentTab = selectedTab;
