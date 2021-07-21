@@ -14,10 +14,12 @@ import { CameraFormComponent } from './camera-form/camera-form.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AssignmentCardComponent } from './assignment-card/assignment-card.component';
 import { GenericMessageDialogComponent } from './generic-message-dialog/generic-message-dialog.component';
+import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
   imports: [
     StoreModule.forRoot({}),
+    EffectsModule.forRoot(),
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,

@@ -4,7 +4,7 @@ import { Camera } from '../../models/camera.model';
 export const loadCameras = createAction('[VEHICLE] LoadCameras');
 
 export const loadCamerasSuccess = createAction(
-  '[VEHICLE] loadCamerasSuccess',
+  '[VEHICLE] oadCamerasSuccess',
   props<{ cameras: Camera[] }>()
 );
 

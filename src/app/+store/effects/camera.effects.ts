@@ -10,16 +10,21 @@ import { EMPTY } from 'rxjs';
 export class CameraEffects {
   constructor(private dataService: DataService, private actions$: Actions) {}
 
-  @Effect()
-  loadCameras = createEffect(() =>
-    this.actions$.pipe(
+  loadCameras = createEffect(() => {
+    return this.actions$.pipe(
       ofType(CameraActions.loadCameras),
-      switchMap(() =>
-        this.dataService.get<Camera[]>('cameras').pipe(
-          map(cameras => CameraActions.loadCamerasSuccess({ cameras })),
+      switchMap(() => {
+        console.log('in effect');
+        return this.dataService.get<Camera[]>('cameras').pipe(
+          map(cameras => {
+            console.log('in effect after dataService');
+            console.log(cameras);
+
+            return CameraActions.loadCamerasSuccess({ cameras });
+          }),
           catchError(() => EMPTY)
-        )
-      )
-    )
-  );
+        );
+      })
+    );
+  });
 }
