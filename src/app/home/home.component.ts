@@ -21,9 +21,9 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.store.dispatch(CameraActions.loadCameras());
 
-    this.store
-      .pipe(select(CameraSelector.selectCameras))
-      .subscribe(x => console.log(x));
+    // this.store
+    //   .pipe(select(CameraSelector.selectCameras))
+    //   .subscribe(x => console.log(x));
 
     // this.store
     //   .select(CameraSelector.selectAllCameras)

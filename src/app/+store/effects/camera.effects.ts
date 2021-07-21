@@ -5,8 +5,8 @@ import { Injectable } from '@angular/core';
 import { CameraActions } from '../../+store/actions';
 import { Camera } from '../../models/camera.model';
 import { EMPTY } from 'rxjs';
+import { root } from 'rxjs/internal/util/root';
 
-@Injectable()
 export class CameraEffects {
   constructor(private dataService: DataService, private actions$: Actions) {}
 
@@ -16,6 +16,7 @@ export class CameraEffects {
       switchMap(() => {
         return this.dataService.get<Camera[]>('cameras').pipe(
           map(cameras => {
+            console.log(cameras);
             return CameraActions.loadCamerasSuccess({ cameras });
           }),
           catchError(() => EMPTY)
