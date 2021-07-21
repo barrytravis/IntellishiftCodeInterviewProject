@@ -14,10 +14,12 @@ export const assignmentReducer = createReducer(
     vehicles: [ ...state.vehicles, vehicle]
   })),
   on(VehicleActions.updateVehicle, (state, { vehicle }) => ({
-    
+    vehicles: state.vehicles.map((value, index) =>
+    index === vehicle.id ? { ...value, name: vehicle.name } : value
+  )
   })),
-  on(VehicleActions.deleteVehicle, (state, { vehicle }) => ({
-    
+  on(VehicleActions.deleteVehicle, (state, { vehicleId }) => ({
+    vehicles: state.vehicles.splice(vehicleId)
   })),
 );
 

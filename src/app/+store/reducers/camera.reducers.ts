@@ -11,14 +11,16 @@ export const initialState: CameraState = { cameras: [] };
 export const cameraReducer = createReducer(
   initialState,
   on(CameraActions.createCamera, (state, { camera }) => ({
-    cameras: [ ...state.cameras, camera]
+    cameras: [...state.cameras, camera]
   })),
   on(CameraActions.updateCamera, (state, { camera }) => ({
-    cameras: state.cameras.map((value, index) => index === camera.id ? {...value, name: camera } : value) 
+    cameras: state.cameras.map((value, index) =>
+      index === camera.id ? { ...value, deviceNo: camera } : value
+    )
   })),
   on(CameraActions.deleteCamera, (state, { cameraId }) => ({
-    cameras: state.cameras.splice(cameraId) 
-  })),
+    cameras: state.cameras.splice(cameraId)
+  }))
 );
 
 export function reducer(state: CameraState | undefined, action: Action) {

@@ -14,10 +14,14 @@ export const assignmentReducer = createReducer(
     assignments: [ ...state.assignments, assignment]
   })),
   on(AssignmentActions.updateAssignment, (state, { assignment }) => ({
-    
+    assignments: state.assignments.map((value, index) =>
+      index === assignment.id ? { ...value, assignment } : value
+    )
   })),
   on(AssignmentActions.deleteAssignment, (state, { assignment }) => ({
-    
+    assignments: state.assignments.map((value, index) =>
+    index === assignment.id ? { ...value, deleted: true } : value
+  )
   })),
 );
 

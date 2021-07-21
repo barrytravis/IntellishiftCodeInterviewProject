@@ -6,15 +6,6 @@ export const createAssignment = createAction(
   props<{ assignment: AssignmentRequest }>()
 );
 
-export const getAssignments = createAction(
-  '[ASSIGNMENT] GetAssignments'
-);
-
-export const getAssignmentById = createAction(
-  '[ASSIGNMENT] GetAssignmentById',
-  props<{ assignmentId: number }>()
-);
-
 export const updateAssignment = createAction(
   '[ASSIGNMENT] UpdateAssignment',
   props<{ assignment: AssignmentResponse }>()

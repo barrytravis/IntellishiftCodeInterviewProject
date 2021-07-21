@@ -6,15 +6,6 @@ export const createVehicle = createAction(
   props<{ vehicle: Vehicle }>()
 );
 
-export const getVehicles = createAction(
-  '[VEHICLE] GetVehicles'
-);
-
-export const getVehicleById = createAction(
-  '[VEHICLE] GetVehicleById',
-  props<{ vehicleId: number }>()
-);
-
 export const updateVehicle = createAction(
   '[VEHICLE] UpdateVehicle',
   props<{ vehicle: Vehicle }>()
