@@ -1,5 +1,5 @@
 import { Actions, createEffect, Effect, ofType } from '@ngrx/effects';
-import { map, catchError, switchMap } from 'rxjs/operators';
+import { map, catchError, switchMap, tap } from 'rxjs/operators';
 import { DataService } from '../../services/data.service';
 import { Injectable } from '@angular/core';
 import { CameraActions } from '../../+store/actions';
@@ -12,6 +12,7 @@ export class CameraEffects {
 
   loadCameras = createEffect(() => {
     return this.actions$.pipe(
+      tap(x => console.log('effect tap' + x)),
       ofType(CameraActions.loadCameras),
       switchMap(() => {
         console.log('in effect');
