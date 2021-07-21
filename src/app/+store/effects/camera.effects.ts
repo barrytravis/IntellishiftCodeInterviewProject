@@ -16,8 +16,7 @@ export class CameraEffects {
       switchMap(() => {
         return this.dataService.get<Camera[]>('cameras').pipe(
           map(cameras => {
-            console.log(cameras);
-            return CameraActions.loadCamerasSuccess( { cameras } );
+            return CameraActions.loadCamerasSuccess({ cameras });
           }),
           catchError(() => EMPTY)
         );

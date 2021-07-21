@@ -7,7 +7,7 @@ export interface CameraState {
   cameras: Array<Camera>;
 }
 
-export const adapter: EntityAdapter<CameraState> = createEntityAdapter<Camera>();
+export const adapter: EntityAdapter<Camera> = createEntityAdapter<Camera>();
 
 export const initialState: CameraState = adapter.getInitialState({
   cameras: []
@@ -15,12 +15,11 @@ export const initialState: CameraState = adapter.getInitialState({
 
 export const cameraReducer = createReducer(
   initialState,
-  on(CameraActions.loadCamerasSuccess, (state, { cameras }) => {
-    console.log('in reducer');
-    console.log(cameras);
-    adapter.removeAll({...state});
-    return adapter.addAll(cameras, {...state});
-  }),
+  on(CameraActions.loadCamerasSuccess, (state, action) => 
+    produce(state, baseState => {
+      baseState.cameras = action.cameras
+    })
+  ),
   on(CameraActions.createCamera, (state, { camera }) => ({
     cameras: [...state.cameras, camera]
   })),
