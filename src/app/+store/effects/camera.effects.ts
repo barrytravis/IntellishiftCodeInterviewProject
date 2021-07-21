@@ -7,21 +7,25 @@ import { Camera } from '../../models/camera.model';
 import { EMPTY } from 'rxjs';
 import { root } from 'rxjs/internal/util/root';
 
+@Injectable()
 export class CameraEffects {
   constructor(private dataService: DataService, private actions$: Actions) {}
 
-  loadCameras = createEffect(() => {
-    return this.actions$.pipe(
+  loadCameras = createEffect(
+    () => 
+    this.actions$.pipe(
       ofType(CameraActions.loadCameras),
-      switchMap(() => {
-        return this.dataService.get<Camera[]>('cameras').pipe(
-          map(cameras => {
+      map(()) => {
+        console.log('inside loadCameras');
+        this.dataService.get('cameras').pipe(
+          map(()) => {
+            console.log('cameras after data service');
             console.log(cameras);
-            return CameraActions.loadCamerasSuccess({ cameras });
+            CameraActions.loadCamerasSuccess( cameras );
           }),
           catchError(() => EMPTY)
         );
       })
     );
-  });
+  );
 }

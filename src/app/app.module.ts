@@ -20,9 +20,16 @@ import { CameraEffects } from './store/effects';
 @NgModule({
   imports: [
     BrowserModule,
-    StoreModule.forRoot({}),
-    EffectsModule.forRoot([CameraEffects]),
     FormsModule,
+    StoreModule.forRoot(reducers, {
+      metaReducers,
+      runtimeChecks: {
+        strictStateImmutability: true,
+        strictActionImmutability: true
+      }
+    }),
+    EffectsModule.forRoot([CameraEffects]),
+    StorageModule.forRoot({ IDBNoWrap: true }),
     ReactiveFormsModule,
     MaterialModule,
     BrowserAnimationsModule,
