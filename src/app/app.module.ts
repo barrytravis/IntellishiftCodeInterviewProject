@@ -20,7 +20,7 @@ import { CameraEffects } from './+store/effects/camera.effects';
 @NgModule({
   imports: [
     StoreModule.forRoot({}),
-    EffectsModule.forRoot([CameraEffects, ]),
+    EffectsModule.forRoot([CameraEffects]),
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,

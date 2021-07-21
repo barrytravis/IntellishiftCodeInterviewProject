@@ -12,16 +12,12 @@ export class CameraEffects {
 
   loadCameras = createEffect(() => {
     return this.actions$.pipe(
-      tap(x => console.log('effect tap' + x)),
       ofType(CameraActions.loadCameras),
       switchMap(() => {
-        console.log('in effect');
         return this.dataService.get<Camera[]>('cameras').pipe(
           map(cameras => {
-            console.log('in effect after dataService');
             console.log(cameras);
-
-            return CameraActions.loadCamerasSuccess({ cameras });
+            return CameraActions.loadCamerasSuccess( { cameras } );
           }),
           catchError(() => EMPTY)
         );
