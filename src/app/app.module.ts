@@ -15,7 +15,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AssignmentCardComponent } from './assignment-card/assignment-card.component';
 import { GenericMessageDialogComponent } from './generic-message-dialog/generic-message-dialog.component';
 import { EffectsModule } from '@ngrx/effects';
-import { CameraEffects } from './store/effects';
+import { reducers, metaReducers } from '../+store/reducers';
 
 @NgModule({
   imports: [
