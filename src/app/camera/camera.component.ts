@@ -67,8 +67,8 @@ export class CameraComponent implements OnInit {
   }
 
   getCameras() {
-    this.store.pipe(select(CameraSelector.selectCameras)).subscribe(data => {
-      this.originalCameras = data.sort(x => x.id);
+    this.store.pipe(select(CameraSelector.getCameras)).subscribe(data => {
+      this.originalCameras = data.;
       this.filterCameraList(this.searchInput);
     });
   }

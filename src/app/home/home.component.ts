@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
-import { CameraActions } from '../+store/actions';
+import { AssignmentActions, CameraActions, VehicleActions } from '../+store/actions';
 import { CamerasState } from '../+store/reducers/camera.reducers';
 import { CameraSelector } from '../+store/selectors';
 import { Actions, ofType } from '@ngrx/effects';
 import { Camera } from '../models/camera.model';
+import { AssignmentsState } from '../+store/reducers/assignment.reducers';
+import { VehiclesState } from '../+store/reducers/vehicle.reducers';
 
 @Component({
   selector: 'app-home',
@@ -15,11 +17,17 @@ export class HomeComponent implements OnInit {
   currentTab: string = 'assignment';
 
   constructor(
-    private readonly store: Store<CamerasState>,
+    private readonly camerasStore: Store<CamerasState>,
+    private readonly vehiclesStore: Store<VehiclesState>,
+    private readonly assignmentsStore: Store<AssignmentsState>,
     private readonly actions$: Actions
   ) {}
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.camerasStore.dispatch(CameraActions.loadCameras());
+    this.vehiclesStore.dispatch(VehicleActions.loadVehicles());
+    this.assignmentsStore.dispatch(AssignmentActions.loadAssignments());
+  }
 
   tabControl(selectedTab: string) {
     this.currentTab = selectedTab;
