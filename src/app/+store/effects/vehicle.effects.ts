@@ -17,7 +17,7 @@ export class VehicleEffects {
     private store: Store<VehiclesState>
   ) {}
 
-  loadVehicle = createEffect(() =>
+  loadVehicles = createEffect(() =>
     this.actions$.pipe(
       ofType(VehicleActions.loadVehicles),
       switchMap(() =>
@@ -59,8 +59,8 @@ export class VehicleEffects {
             'vehicles/:id',
             { id: +data.vehicle.id },
             {
-              id: data.vehicle.id,
-              name: +data.vehicle.name,
+              id: +data.vehicle.id,
+              name: data.vehicle.name,
               cameraId: +data.vehicle.cameraId
             }
           )

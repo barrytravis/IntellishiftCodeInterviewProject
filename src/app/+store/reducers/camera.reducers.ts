@@ -23,21 +23,16 @@ export const camerasReducer = createReducer(
   on(CameraActions.createCameraSuccess, (state, action) => ({
     cameras: [...state.cameras, action.camera]
   })),
-  on(CameraActions.updateCameraSuccess, (state, action) => {
-    console.log(action);
-    return {
-      cameras: state.cameras.map((value, index) =>
-        index === action.camera.id
-          ? { ...value, deviceNo: action.camera.deviceNo }
-          : value
-      )
-    };
-  }),
-  on(CameraActions.deleteCameraSuccess, (state, action) => {
-    return {
-      cameras: [...state.cameras.filter(c => +c.id !== +action.cameraId)]
-    };
-  })
+  on(CameraActions.updateCameraSuccess, (state, action) => ({
+    cameras: state.cameras.map((value, index) =>
+      index === action.camera.id
+        ? { ...value, deviceNo: action.camera.deviceNo }
+        : value
+    )
+  })),
+  on(CameraActions.deleteCameraSuccess, (state, action) => ({
+    cameras: [...state.cameras.filter(c => +c.id !== +action.cameraId)]
+  }))
 );
 
 export function reducer(state: CamerasState | undefined, action: Action) {

@@ -37,9 +37,9 @@ export class CameraComponent implements OnInit {
   }
 
   getCameras() {
-    this.store.pipe(select(CameraSelector.getCameras)).subscribe(data => {
-      this.cameras = [...data];
-    });
+    this.store
+      .pipe(select(CameraSelector.getCameras))
+      .subscribe(data => (this.cameras = [...data]));
   }
 
   updateCamera(camera: Camera) {
@@ -55,7 +55,8 @@ export class CameraComponent implements OnInit {
       this.cameras = this.cameras.filter(
         x =>
           x.deviceNo === undefined ||
-          x.deviceNo.toLocaleLowerCase()
+          x.deviceNo
+            .toLocaleLowerCase()
             .includes(searchInput.toLocaleLowerCase())
       );
     } else {

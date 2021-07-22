@@ -20,34 +20,36 @@ export class VehicleComponent implements OnInit {
 
   constructor(
     private readonly store: Store<VehiclesState>,
-    public dialog: MatDialog) {}
+    public dialog: MatDialog
+  ) {}
 
   ngOnInit() {
     this.getVehicles();
     this.filterVehicleList(this.searchInput);
   }
-  
+
   createVehicle(newVehicle: Vehicle) {
     if (!this.isExistingVehicleId(newVehicle.id)) {
-      this.store.dispatch(VehicleActions.createVehicle({ vehicle: newVehicle }));
+      this.store.dispatch(
+        VehicleActions.createVehicle({ vehicle: newVehicle })
+      );
     } else {
       this.openModal('This Vehicle ID is already used.');
     }
   }
 
   getVehicles(): void {
-    this.store.pipe(select(VehicleSelector.getVehicles))
-    .subscribe(data => {
-      this.vehicles = [...data];
-    });
+    this.store
+      .pipe(select(VehicleSelector.getVehicles))
+      .subscribe(data => (this.vehicles = [...data]));
   }
 
   updateVehicle(vehicle: Vehicle) {
-    this.store.dispatch(VehicleActions.updateVehicle({vehicle}));
+    this.store.dispatch(VehicleActions.updateVehicle({ vehicle }));
   }
 
   deleteVehicle(vehicleId: number) {
-    this.store.dispatch(VehicleActions.deleteVehicle({vehicleId}));
+    this.store.dispatch(VehicleActions.deleteVehicle({ vehicleId }));
   }
 
   filterVehicleList(searchInput?) {

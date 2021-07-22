@@ -30,9 +30,9 @@ export const vehiclesReducer = createReducer(
         : value
     )
   })),
-  on(VehicleActions.deleteVehicleSuccess, (state, action) => {
-    return { vehicles: [...state.vehicles.filter(c => c.id !== action.vehicleId)] };
-  })
+  on(VehicleActions.deleteVehicleSuccess, (state, action) => ({
+    vehicles: [...state.vehicles.filter(c => c.id !== action.vehicleId)]
+  }))
 );
 
 export function reducer(state: VehiclesState | undefined, action: Action) {

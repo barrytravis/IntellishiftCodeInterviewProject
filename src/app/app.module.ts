@@ -17,6 +17,8 @@ import { GenericMessageDialogComponent } from './generic-message-dialog/generic-
 import { EffectsModule } from '@ngrx/effects';
 import { reducers, metaReducers } from './+store/reducers';
 import { CameraEffects } from './+store/effects/camera.effects';
+import { AssignmentEffects } from './+store/effects/assignment.effects';
+import { VehicleEffects } from './+store/effects/vehicle.effects';
 
 @NgModule({
   imports: [
@@ -29,7 +31,7 @@ import { CameraEffects } from './+store/effects/camera.effects';
         strictActionImmutability: true
       }
     }),
-    EffectsModule.forRoot([CameraEffects]),
+    EffectsModule.forRoot([CameraEffects, VehicleEffects, AssignmentEffects]),
     ReactiveFormsModule,
     MaterialModule,
     BrowserAnimationsModule,
