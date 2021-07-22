@@ -20,17 +20,17 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.store.dispatch(CameraActions.loadCameras());
+    // this.store.dispatch(CameraActions.loadCameras());
 
-    this.store
-      .pipe(select(CameraSelector.selectCameras))
-      .subscribe(x => console.log(x));
+    // this.store
+    //   .pipe(select(CameraSelector.selectCameras))
+    //   .subscribe(x => console.log(x));
 
-    this.store.dispatch(CameraActions.deleteCamera({ cameraId: 4 }));
+    // this.store.dispatch(CameraActions.deleteCamera({ cameraId: 4 }));
 
-    this.store
-      .pipe(select(CameraSelector.selectCameras))
-      .subscribe(x => console.log(x));
+    // this.store
+    //   .pipe(select(CameraSelector.selectCameras))
+    //   .subscribe(x => console.log(x));
   }
 
   tabControl(selectedTab: string) {

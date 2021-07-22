@@ -169,8 +169,6 @@ export class DataService {
     [
       'assignments/:id',
       (params: any, data: any) => {
-        let current = this.assignments.get(params.id);
-        current.deleted = true;
         this.assignments.set(params.id, data);
         return params.id;
       }
