@@ -1,5 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { select, Store } from '@ngrx/store';
+import { CamerasState } from '../+store/reducers/camera.reducers';
+import { VehiclesState } from '../+store/reducers/vehicle.reducers';
+import { CameraSelector, VehicleSelector } from '../+store/selectors';
 import {
   AssignmentRequest,
   AssignmentResponse
@@ -32,8 +36,17 @@ export class AssignmentCardComponent implements OnInit {
       this._assignment.id === null || this._assignment.id === undefined;
 
     if (!this.isNewAssignment) {
-      this._vehicle = this.getVehicleById(assignment.vehicleId);
-      this._camera = this.getCameraById(assignment.cameraId);
+      this.vehicleStore.pipe(select(VehicleSelector.getVehicles))
+        .subscribe(x => {
+          let r = x.filter(vehicle => vehicle.id === assignment.vehicleId);
+          this._vehicle = r.length > 0 ? r[0] : null;
+        });
+
+      this.cameraStore.pipe(select(CameraSelector.getCameras))
+        .subscribe(x => {
+          let r = x.filter(camera => camera.id === assignment.cameraId);
+          this._camera = r.length > 0 ? r[0] : null;
+        });
     }
 
     this.buildForm();
@@ -44,7 +57,8 @@ export class AssignmentCardComponent implements OnInit {
   unassignedCameras: Camera[] = [];
 
   constructor(
-    private data: DataService,
+    private readonly vehicleStore: Store<VehiclesState>,
+    private readonly cameraStore: Store<CamerasState>,
     private readonly formBuilder: FormBuilder
   ) {}
 
@@ -70,27 +84,10 @@ export class AssignmentCardComponent implements OnInit {
     if (!this.assignmentForm.invalid) {
       let formAssignment: AssignmentRequest = new AssignmentRequest();
       let rawFormValue = this.assignmentForm.getRawValue();
-      formAssignment.cameraId = rawFormValue.cameraId;
-      formAssignment.vehicleId = rawFormValue.vehicleId;
+      formAssignment.cameraId = +rawFormValue.cameraId;
+      formAssignment.vehicleId = +rawFormValue.vehicleId;
       this.createAssignment.emit(formAssignment);
     }
-  }
-
-  getCameraById(id: number): Camera {
-    let camera: Camera;
-    this.data
-      .get<Camera>('cameras/:id', { id: id })
-      .subscribe(data => (camera = data));
-
-    return camera;
-  }
-
-  getVehicleById(id: number): Vehicle {
-    let vehicle: Vehicle;
-    this.data.get<Vehicle>('vehicles/:id', { id: id }).subscribe(data => {
-      vehicle = data;
-    });
-    return vehicle;
   }
 
   delAssignment() {

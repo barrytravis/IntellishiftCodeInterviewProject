@@ -35,5 +35,5 @@ export const deleteAssignment = createAction(
 
 export const deleteAssignmentSuccess = createAction(
   '[ASSIGNMENT] DeleteAssignmentSuccess',
-  props<{ assignment: AssignmentResponse }>()
+  props<{ assignmentId: number }>()
 );

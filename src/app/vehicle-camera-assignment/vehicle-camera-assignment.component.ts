@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { select, Store } from '@ngrx/store';
+import { AssignmentActions } from '../+store/actions';
+import { AssignmentsState } from '../+store/reducers/assignment.reducers';
+import { AssignmentSelector } from '../+store/selectors';
 import { GenericMessageDialogComponent } from '../generic-message-dialog/generic-message-dialog.component';
 import {
   Assignment,
   AssignmentRequest,
   AssignmentResponse
 } from '../models/assignment.model';
-import { DataService } from '../services/data.service';
 
 @Component({
   selector: 'app-vehicle-camera-assignment',
@@ -16,47 +17,33 @@ import { DataService } from '../services/data.service';
   styleUrls: ['./vehicle-camera-assignment.component.css']
 })
 export class VehicleCameraAssignmentComponent implements OnInit {
-  constructor(private data: DataService, public dialog: MatDialog) {}
+  constructor(
+    private readonly store: Store<AssignmentsState>,
+    public dialog: MatDialog
+  ) {}
 
   public assignments: AssignmentResponse[] = [];
-  public originalAssignments: AssignmentResponse[] = [];
   public newAssignment: AssignmentResponse = null;
   public searchInput: string = '';
 
   ngOnInit() {
     this.getAssignments();
+    this.filterAssignmentList(this.searchInput);
   }
 
   getAssignments() {
-    this.data.get<AssignmentResponse[]>('assignments').subscribe(data => {
-      this.originalAssignments = data.filter(x => x.deleted == false);
-      this.filterAssignmentList(this.searchInput);
-    });
+    this.store
+      .pipe(select(AssignmentSelector.getAssignments))
+      .subscribe(data => {
+        console.log(data);
+        this.assignments = [...data].filter(x => x.deleted == false);
+      });
   }
 
-  filterAssignmentList(searchInput?) {
-    if (!searchInput) {
-      this.assignments = this.originalAssignments;
-    } else {
-      this.assignments = this.originalAssignments.filter(x =>
-        x.vehicleId === undefined ||
-        x.vehicleId.toString().includes(searchInput.toString())
-      );
-    }
-  }
-
-  public createBlankAssignment() {
-    this.newAssignment = new AssignmentResponse();
-    this.filterAssignmentList(this.searchInput);
-  }
-
-  public removeBlankAssignment(){
-    this.newAssignment = null;    
-    this.filterAssignmentList(this.searchInput);
-  }
-
-  public async assign(assignment: AssignmentRequest) {
+  public async createAssignment(assignment: AssignmentRequest) {
     this.newAssignment = null;
+
+    console.log(assignment);
 
     if (
       !(await this.isCurrentlyAssigned(
@@ -64,30 +51,38 @@ export class VehicleCameraAssignmentComponent implements OnInit {
         +assignment.vehicleId
       ))
     ) {
-      this.data
-        .post(
-          'assignments',
-          {},
-          {
-            cameraId: +assignment.cameraId,
-            vehicleId: +assignment.vehicleId
-          }
-        )
-        .subscribe(() => this.getAssignments());
+      this.store.dispatch(AssignmentActions.createAssignment({ assignment }));
     }
   }
 
-  public unAssign(assignment: AssignmentResponse) {
-    this.data
-      .delete('assignments/:id', { id: assignment.id }, assignment)
-      .subscribe(() => this.getAssignments());
+  public deleteAssignment(assignment: AssignmentResponse) {
+    this.store.dispatch(AssignmentActions.deleteAssignment({ assignment }));
+  }
+
+  filterAssignmentList(searchInput?) {
+    if (searchInput) {
+      this.assignments = this.assignments.filter(x => {
+        x.vehicleId === undefined ||
+          x.vehicleId.toString().includes(searchInput.toString());
+      });
+    } else {
+      this.getAssignments();
+    }
+  }
+
+  public createBlankAssignment() {
+    this.newAssignment = new AssignmentResponse();
+  }
+
+  public removeBlankAssignment() {
+    this.newAssignment = null;
   }
 
   public isCurrentlyAssigned(cameraId: number, vehicleId: number): boolean {
     let vehicleAssigned: boolean =
-      this.originalAssignments.findIndex(x => x.vehicleId === vehicleId) != -1;
+      this.assignments.findIndex(x => x.vehicleId === vehicleId) != -1;
     let cameraAssigned: boolean =
-      this.originalAssignments.findIndex(x => x.cameraId === cameraId) != -1;
+      this.assignments.findIndex(x => x.cameraId === cameraId) != -1;
 
     if (vehicleAssigned && cameraAssigned) {
       this.openModal(

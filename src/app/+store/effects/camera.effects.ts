@@ -58,7 +58,8 @@ export class CameraEffects {
               id: +data.camera.id,
               deviceNo: data.camera.deviceNo,
               vehicleId: +data.camera.vehicleId
-            })
+            }
+          )
           .pipe(map(camera => CameraActions.updateCameraSuccess({ camera })))
       )
     )

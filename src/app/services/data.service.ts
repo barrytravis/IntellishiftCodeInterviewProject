@@ -96,7 +96,7 @@ export class DataService {
           deviceNo: data.deviceNo,
           vehicleId: data.vehicleId
         });
-        
+
         let camera = null;
         camera = JSON.parse(JSON.stringify(this.cameras.get(params.id)));
         camera.id = params.id;
@@ -105,7 +105,7 @@ export class DataService {
     ],
     [
       'assignments',
-      (params: any, data: AssignmentRequest) => {
+      (params: any, data: any) => {
         let key = this.getLastKeyInMap(this.assignments);
         let cid = this.getUndeletedByValue(
           this.assignments,
@@ -131,8 +131,8 @@ export class DataService {
         });
 
         let assignment = null;
-        assignment = JSON.parse(JSON.stringify(this.assignments.get(params.id)));
-        assignment.id = params.id;
+        assignment = JSON.parse(JSON.stringify(this.assignments.get(key + 1)));
+        assignment.id = (key + 1);
         return assignment;
       }
     ]

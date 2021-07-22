@@ -26,9 +26,10 @@ export const assignmentReducer = createReducer(
   on(AssignmentActions.loadAssignmentsSuccess, (state, action) => ({
     assignments: action.assignments
   })),
-  on(AssignmentActions.createAssignmentSuccess, (state, action) => ({
-    assignments: [...state.assignments, action.assignment]
-  })),
+  on(AssignmentActions.createAssignmentSuccess, (state, action) => {
+    console.log(action);
+    return { assignments: [...state.assignments, action.assignment] };
+  }),
   on(AssignmentActions.updateAssignmentSuccess, (state, action) => ({
     assignments: state.assignments.map((value, index) =>
       index === action.assignment.id
@@ -40,11 +41,14 @@ export const assignmentReducer = createReducer(
         : value
     )
   })),
-  on(AssignmentActions.deleteAssignmentSuccess, (state, action) => ({
-    assignments: state.assignments.map((value, index) =>
-      index === action.assignment.id ? { ...value, deleted: true } : value
-    )
-  }))
+  on(AssignmentActions.deleteAssignmentSuccess, (state, action) => {
+    console.log(action);
+    return {
+      assignments: state.assignments.map((value, index) =>
+        index === action.assignment.id ? { ...value, deleted: true } : value
+      )
+    };
+  })
 );
 
 export function reducer(state: AssignmentsState | undefined, action: Action) {

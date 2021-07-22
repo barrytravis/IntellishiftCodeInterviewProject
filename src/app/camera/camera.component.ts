@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { select, Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
 import { CameraActions } from '../+store/actions';
 import { CamerasState } from '../+store/reducers/camera.reducers';
 import { CameraSelector } from '../+store/selectors';
 import { GenericMessageDialogComponent } from '../generic-message-dialog/generic-message-dialog.component';
 import { Camera } from '../models/camera.model';
-import { DataService } from '../services/data.service';
 
 @Component({
   selector: 'app-camera',

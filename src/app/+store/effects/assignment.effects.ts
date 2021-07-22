@@ -39,7 +39,7 @@ export class AssignmentEffects {
   createAssignment = createEffect(() =>
     this.actions$.pipe(
       ofType(AssignmentActions.createAssignment),
-      switchMap((data) =>
+      switchMap(data =>
         this.dataService
           .post<AssignmentResponse>(
             'assignments',
@@ -76,21 +76,24 @@ export class AssignmentEffects {
   deleteAssignment = createEffect(() =>
     this.actions$.pipe(
       ofType(AssignmentActions.deleteAssignment),
-      switchMap((data) =>
+      switchMap(data =>
         this.dataService
-        .delete<AssignmentResponse>(
-          'assignments/:id',
-          { id: data.assignment.id },
-          {
-            cameraId: +data.assignment.cameraId,
-            vehicleId: +data.assignment.vehicleId,
-            dateCreated: data.assignment.dateCreated,
-            deleted: true,
-            id: +data.assignment.id
-          })
+          .delete<AssignmentResponse>(
+            'assignments/:id',
+            { id: data.assignment.id },
+            {
+              cameraId: +data.assignment.cameraId,
+              vehicleId: +data.assignment.vehicleId,
+              dateCreated: data.assignment.dateCreated,
+              deleted: true,
+              id: +data.assignment.id
+            }
+          )
           .pipe(
             map(assignment =>
-              AssignmentActions.deleteAssignmentSuccess({ assignment })
+              AssignmentActions.deleteAssignmentSuccess({
+                assignmentId: assignment.id
+              })
             )
           )
       )

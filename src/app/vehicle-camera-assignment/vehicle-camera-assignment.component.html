@@ -13,7 +13,7 @@
   <div class="row" *ngIf="newAssignment">
     <div class="column">
 
-      <app-assignment-card [assignment]="newAssignment" (createAssignment)="assign($event)"
+      <app-assignment-card [assignment]="newAssignment" (createAssignment)="createAssignment($event)"
         (deleteUnsubmittedAssignment)="removeBlankAssignment()">
       </app-assignment-card>
 
@@ -22,7 +22,7 @@
   <div class="row">
 
     <app-assignment-card class="column" *ngFor="let assignment of assignments; let i = index" [assignment]="assignment"
-      (createAssignment)="assign($event)" (deleteAssignment)="unAssign($event)">
+      (createAssignment)="createAssignment($event)" (deleteAssignment)="deleteAssignment($event)">
     </app-assignment-card>
 
   </div>
