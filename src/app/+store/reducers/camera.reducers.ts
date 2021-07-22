@@ -32,7 +32,7 @@ export const camerasReducer = createReducer(
   })),
   on(CameraActions.deleteCameraSuccess, (state, action) => {
     return {
-      cameras: [...state.cameras.filter(c => c.id !== action.cameraId)]
+      cameras: [...state.cameras.filter(c => +c.id !== +action.cameraId)]
     };
   })
 );

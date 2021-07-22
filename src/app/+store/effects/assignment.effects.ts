@@ -26,7 +26,7 @@ export class AssignmentEffects {
       ofType(AssignmentActions.loadAssignments),
       switchMap(() =>
         this.dataService
-          .get<AssignmentResponse[]>('Assignments')
+          .get<AssignmentResponse[]>('assignments')
           .pipe(
             map(assignments =>
               AssignmentActions.loadAssignmentsSuccess({ assignments })
@@ -58,30 +58,39 @@ export class AssignmentEffects {
     )
   );
 
-  updateAssignment = createEffect(() =>
-    this.actions$.pipe(
-      ofType(AssignmentActions.updateAssignment),
-      switchMap((data) =>
-        this.dataService
-          .put<AssignmentResponse>('Assignments', {}, data.assignment)
-          .pipe(
-            map(assignment =>
-              AssignmentActions.updateAssignmentSuccess({ assignment })
-            )
-          )
-      )
-    )
-  );
+  // updateAssignment = createEffect(() =>
+  //   this.actions$.pipe(
+  //     ofType(AssignmentActions.updateAssignment),
+  //     switchMap((data) =>
+  //       this.dataService
+  //         .put<AssignmentResponse>('Assignments', {}, data.assignment)
+  //         .pipe(
+  //           map(assignment =>
+  //             AssignmentActions.updateAssignmentSuccess({ assignment })
+  //           )
+  //         )
+  //     )
+  //   )
+  // );
 
   deleteAssignment = createEffect(() =>
     this.actions$.pipe(
       ofType(AssignmentActions.deleteAssignment),
       switchMap((data) =>
         this.dataService
-        .delete('assignments/:id', { id: data.assignment.id }, data.assignment)
+        .delete<AssignmentResponse>(
+          'assignments/:id',
+          { id: data.assignment.id },
+          {
+            cameraId: +data.assignment.cameraId,
+            vehicleId: +data.assignment.vehicleId,
+            dateCreated: data.assignment.dateCreated,
+            deleted: true,
+            id: +data.assignment.id
+          })
           .pipe(
-            map(assignments =>
-              AssignmentActions.deleteAssignmentSuccess({ data.id })
+            map(assignment =>
+              AssignmentActions.deleteAssignmentSuccess({ assignment })
             )
           )
       )

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { CameraActions } from '../+store/actions';
-import { CameraState } from '../+store/reducers/camera.reducers';
+import { CamerasState } from '../+store/reducers/camera.reducers';
 import { CameraSelector } from '../+store/selectors';
 import { Actions, ofType } from '@ngrx/effects';
 import { Camera } from '../models/camera.model';
@@ -15,7 +15,7 @@ export class HomeComponent implements OnInit {
   currentTab: string = 'assignment';
 
   constructor(
-    private readonly store: Store<CameraState>,
+    private readonly store: Store<CamerasState>,
     private readonly actions$: Actions
   ) {}
 
@@ -26,8 +26,11 @@ export class HomeComponent implements OnInit {
       .pipe(select(CameraSelector.selectCameras))
       .subscribe(x => console.log(x));
 
-    this.store.dispatch(CameraActions.deleteCamera( {cameraId: 4} ));
+    this.store.dispatch(CameraActions.deleteCamera({ cameraId: 4 }));
 
+    this.store
+      .pipe(select(CameraSelector.selectCameras))
+      .subscribe(x => console.log(x));
   }
 
   tabControl(selectedTab: string) {
