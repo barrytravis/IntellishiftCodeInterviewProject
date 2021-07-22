@@ -1,30 +1,43 @@
+import { createEntityAdapter, EntityAdapter } from '@ngrx/entity';
 import { Action, createReducer, on } from '@ngrx/store';
 import { AssignmentActions } from '../../+store/actions';
-import { AssignmentResponse, AssignmentRequest, Assignment } from '../../models/assignment.model';
+import { Assignment, AssignmentRequest, AssignmentResponse } from '../../models/assignment.model';
+import produce from 'immer';
 
 export interface AssignmentState {
   assignments: Array<AssignmentResponse>;
 }
 
-export const initialState: AssignmentState = { assignments: [] };
+export const assignmentFeatureKey = 'assignment';
+export const adapter: EntityAdapter<AssignmentResponse> = createEntityAdapter<AssignmentResponse>();
+
+export const initialState: AssignmentState = adapter.getInitialState({
+  assignments: []
+});
 
 export const assignmentReducer = createReducer(
   initialState,
-  on(AssignmentActions.createAssignment, (state, { assignment }) => ({
-    assignments: [ ...state.assignments, assignment]
+  on(AssignmentActions.loadAssignmentSuccess, (state, action) => ({
+    assignments: action.assignments
   })),
-  on(AssignmentActions.updateAssignment, (state, { assignment }) => ({
+  on(AssignmentActions.createAssignment, (state, action) => ({
+    assignments: [...state.assignments, action.assignment]
+  })),
+  on(AssignmentActions.updateAssignment, (state, action) => ({
     assignments: state.assignments.map((value, index) =>
-      index === assignment.id ? { ...value, assignment } : value
+      index === action.assignment.id
+        ? { ...value, vehicleId: action.assignment.vehicleId, cameraId: action.assignment.cameraId }
+        : value
     )
   })),
-  on(AssignmentActions.deleteAssignment, (state, { assignment }) => ({
+  on(AssignmentActions.deleteAssignment, (state, action) => ({
     assignments: state.assignments.map((value, index) =>
-    index === assignment.id ? { ...value, deleted: true } : value
-  )
-  })),
+    index === action.assignment.id ? { ...value, deleted: true } : value
+    
+  }))
 );
 
 export function reducer(state: AssignmentState | undefined, action: Action) {
   return assignmentReducer(state, action);
 }
+

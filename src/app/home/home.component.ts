@@ -27,9 +27,7 @@ export class HomeComponent implements OnInit {
       .subscribe(x => console.log(x));
 
     this.store.dispatch(CameraActions.deleteCamera( {cameraId: 4} ));
-    // this.store
-    //   .select(CameraSelector.selectAllCameras)
-    //   .subscribe(x => console.log(x));
+
   }
 
   tabControl(selectedTab: string) {

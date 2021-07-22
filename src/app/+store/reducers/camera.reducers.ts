@@ -31,8 +31,7 @@ export const camerasReducer = createReducer(
     )
   })),
   on(CameraActions.deleteCamera, (state, action) => {
-    console.log(action);
-    return {cameras: [...state.cameras.splice(action.cameraId)]}
+    return { cameras: [...state.cameras.filter(c => c.id !== action.cameraId)] };
   })
 );
 
