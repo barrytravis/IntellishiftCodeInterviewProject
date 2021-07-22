@@ -35,6 +35,6 @@ export const vehiclesReducer = createReducer(
   })
 );
 
-export function reducer(state: VehicleState | undefined, action: Action) {
+export function reducer(state: VehiclesState | undefined, action: Action) {
   return vehiclesReducer(state, action);
 }
