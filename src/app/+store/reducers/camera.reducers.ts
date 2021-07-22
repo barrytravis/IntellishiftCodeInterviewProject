@@ -2,11 +2,8 @@ import { createEntityAdapter, EntityAdapter } from '@ngrx/entity';
 import { Action, createReducer, on } from '@ngrx/store';
 import { CameraActions } from '../../+store/actions';
 import { Camera } from '../../models/camera.model';
+import { CameraState } from '../../+store/reducers/camera.reducers';
 import produce from 'immer';
-
-export interface CameraState {
-  cameras: Array<Camera>;
-}
 
 export const cameraFeatureKey = 'cameras';
 export const adapter: EntityAdapter<Camera> = createEntityAdapter<Camera>();

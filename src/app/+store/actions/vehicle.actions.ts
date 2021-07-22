@@ -3,8 +3,8 @@ import { Vehicle } from '../../models/vehicle.model';
 
 export const loadVehicles = createAction('[VEHICLE] LoadVehicles');
 
-export const loadVehicleSuccess = createAction(
-  '[VEHICLE] LoadVehicleSuccess',
+export const loadVehiclesSuccess = createAction(
+  '[VEHICLE] LoadVehiclesSuccess',
   props<{ vehicle: Vehicle[] }>()
 );
 
@@ -34,6 +34,6 @@ export const deleteVehicle = createAction(
 );
 
 export const deleteVehicleSuccess = createAction(
-  '[VEHICLE] DeleteVehicle',
+  '[VEHICLE] DeleteVehicleSuccess',
   props<{ vehicleId: number }>()
 );

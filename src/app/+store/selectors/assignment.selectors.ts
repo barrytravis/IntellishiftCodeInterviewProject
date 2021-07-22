@@ -1,4 +1,9 @@
-import { createSelector } from '@ngrx/store';
-import { AssignmentState } from '../../+store/reducers/assignment.reducers';
+import { AssignmentResponse } from '../../models/assignment.model';
 
-export const selectAssignments = (state: AssignmentState) => state.assignments;
+export interface AssignmentState {
+  assignments: Array<AssignmentResponse>;
+}
+
+export const selectAssignments = (state: AssignmentState) => {
+  return state.assignments
+};

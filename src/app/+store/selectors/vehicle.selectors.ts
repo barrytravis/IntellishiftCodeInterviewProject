@@ -1,4 +1,9 @@
-import { createSelector } from '@ngrx/store';
-import { VehicleState } from '../../+store/reducers/vehicle.reducers';
+import { Vehicle } from "../../models/vehicle.model";
 
-export const selectCameras = (state: VehicleState) => state.vehicles;
+export interface VehicleState {
+  vehicles: Array<Vehicle>;
+}
+
+export const selectCameras = (state: VehicleState) => {
+  return state.vehicles
+};

@@ -2,11 +2,8 @@ import { createEntityAdapter, EntityAdapter } from '@ngrx/entity';
 import { Action, createReducer, on } from '@ngrx/store';
 import { VehicleActions } from '../../+store/actions';
 import { Vehicle } from '../../models/vehicle.model';
+import { VehicleState } from '../../+store/reducers/vehicle.reducers';
 import produce from 'immer';
-
-export interface VehicleState {
-  vehicles: Array<Vehicle>;
-}
 
 export const vehicleFeatureKey = 'vehicle';
 export const adapter: EntityAdapter<Vehicle> = createEntityAdapter<Vehicle>();
@@ -17,7 +14,7 @@ export const initialState: VehicleState = adapter.getInitialState({
 
 export const vehiclesReducer = createReducer(
   initialState,
-  on(VehicleActions.loadVehicleSuccess, (state, action) => ({
+  on(VehicleActions.loadVehiclesSuccess, (state, action) => ({
     vehicles: action.vehicles
   })),
   on(VehicleActions.createVehicle, (state, action) => ({
