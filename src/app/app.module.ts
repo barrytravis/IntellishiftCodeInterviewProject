@@ -15,7 +15,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AssignmentCardComponent } from './assignment-card/assignment-card.component';
 import { GenericMessageDialogComponent } from './generic-message-dialog/generic-message-dialog.component';
 import { EffectsModule } from '@ngrx/effects';
-import { reducers, metaReducers } from '../+store/reducers';
+import { reducers, metaReducers } from './+store/reducers';
+import { CameraEffects } from './+store/effects/camera.effects';
 
 @NgModule({
   imports: [
@@ -29,7 +30,6 @@ import { reducers, metaReducers } from '../+store/reducers';
       }
     }),
     EffectsModule.forRoot([CameraEffects]),
-    StorageModule.forRoot({ IDBNoWrap: true }),
     ReactiveFormsModule,
     MaterialModule,
     BrowserAnimationsModule,

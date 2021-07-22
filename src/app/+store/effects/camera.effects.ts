@@ -6,26 +6,30 @@ import { CameraActions } from '../../+store/actions';
 import { Camera } from '../../models/camera.model';
 import { EMPTY } from 'rxjs';
 import { root } from 'rxjs/internal/util/root';
+import { CameraState } from '../../+store/reducers/camera.reducers';
+import { select, Store } from '@ngrx/store';
 
 @Injectable()
 export class CameraEffects {
-  constructor(private dataService: DataService, private actions$: Actions) {}
+  constructor(private dataService: DataService, private actions$: Actions, private store: Store<CameraState>) {}
 
-  loadCameras = createEffect(
-    () => 
+
+  loadCameras = createEffect(() =>
     this.actions$.pipe(
       ofType(CameraActions.loadCameras),
-      map(()) => {
-        console.log('inside loadCameras');
-        this.dataService.get('cameras').pipe(
-          map(()) => {
-            console.log('cameras after data service');
-            console.log(cameras);
-            CameraActions.loadCamerasSuccess( cameras );
-          }),
-          catchError(() => EMPTY)
-        );
-      })
-    );
+      switchMap(() => 
+        this.dataService.get<Camera[]>('cameras').pipe(
+          map(cameras => CameraActions.loadCamerasSuccess({ cameras }))
+        )
+
+
+        
+
+
+      )
+    )
   );
+
+
+
 }

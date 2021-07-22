@@ -10,15 +10,15 @@ import * as fromCameraReducer from './camera.reducers';
 import * as fromVehicleReducer from './vehicle.reducers';
 
 export interface AppState {
-  [fromCameraReducer.cameras]: fromCameraReducer.CameraState;
-  [fromAssignmentReducer.assignments]: fromAssignmentReducer.AssignmentState;
-  [fromVehicleReducer.vehicles]: fromVehicleReducer.VehicleState;
+  [fromCameraReducer.cameraFeatureKey]: fromCameraReducer.CameraState;
+  // assignments: fromAssignmentReducer.AssignmentState;
+  // vehicles: fromVehicleReducer.VehicleState;
 }
 
 export const reducers: ActionReducerMap<AppState> = {
-  [fromCameraReducer.cameras]: fromCameraReducer.reducer,
-  [fromAssignmentReducer.assignments]: fromAssignmentReducer.reducer,
-  [fromVehicleReducer.vehicles]: fromVehicleReducer.reducer
+  [fromCameraReducer.cameraFeatureKey]: fromCameraReducer.reducer
+  // assignments: fromAssignmentReducer.reducer,
+  // vehicles: fromVehicleReducer.reducer
 };
 
 export const metaReducers: MetaReducer<AppState>[] = [];
