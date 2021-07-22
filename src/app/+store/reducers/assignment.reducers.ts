@@ -2,13 +2,16 @@ import { createEntityAdapter, EntityAdapter } from '@ngrx/entity';
 import { Action, createReducer, on } from '@ngrx/store';
 import { AssignmentActions } from '../../+store/actions';
 import { Assignment, AssignmentRequest, AssignmentResponse } from '../../models/assignment.model';
-import { AssignmentState } from '../../+store/reducers/assignment.reducers';
 import produce from 'immer';
+
+export interface AssignmentsState {
+  assignments: Array<AssignmentResponse>;
+}
 
 export const assignmentFeatureKey = 'assignment';
 export const adapter: EntityAdapter<AssignmentResponse> = createEntityAdapter<AssignmentResponse>();
 
-export const initialState: AssignmentState = adapter.getInitialState({
+export const initialState: AssignmentsState = adapter.getInitialState({
   assignments: []
 });
 
@@ -34,7 +37,7 @@ export const assignmentReducer = createReducer(
   }))
 );
 
-export function reducer(state: AssignmentState | undefined, action: Action) {
+export function reducer(state: AssignmentsState | undefined, action: Action) {
   return assignmentReducer(state, action);
 }
 

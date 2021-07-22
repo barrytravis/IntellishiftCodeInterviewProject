@@ -5,7 +5,7 @@ export const loadAssignments = createAction('[ASSIGNMENT] LoadAssignments');
 
 export const loadAssignmentsSuccess = createAction(
   '[ASSIGNMENT] LoadAssignmentsSuccess',
-  props<{ assignment: AssignmentResponse[] }>()
+  props<{ assignments: AssignmentResponse[] }>()
 );
 
 export const createAssignment = createAction(

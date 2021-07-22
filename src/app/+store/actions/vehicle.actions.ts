@@ -5,7 +5,7 @@ export const loadVehicles = createAction('[VEHICLE] LoadVehicles');
 
 export const loadVehiclesSuccess = createAction(
   '[VEHICLE] LoadVehiclesSuccess',
-  props<{ vehicle: Vehicle[] }>()
+  props<{ vehicles: Vehicle[] }>()
 );
 
 export const createVehicle = createAction(

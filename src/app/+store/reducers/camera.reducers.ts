@@ -2,13 +2,16 @@ import { createEntityAdapter, EntityAdapter } from '@ngrx/entity';
 import { Action, createReducer, on } from '@ngrx/store';
 import { CameraActions } from '../../+store/actions';
 import { Camera } from '../../models/camera.model';
-import { CameraState } from '../../+store/reducers/camera.reducers';
 import produce from 'immer';
+
+export interface CamerasState {
+  cameras: Array<Camera>;
+}
 
 export const cameraFeatureKey = 'cameras';
 export const adapter: EntityAdapter<Camera> = createEntityAdapter<Camera>();
 
-export const initialState: CameraState = adapter.getInitialState({
+export const initialState: CamerasState = adapter.getInitialState({
   cameras: []
 });
 
@@ -28,10 +31,12 @@ export const camerasReducer = createReducer(
     )
   })),
   on(CameraActions.deleteCamera, (state, action) => {
-    return { cameras: [...state.cameras.filter(c => c.id !== action.cameraId)] };
+    return {
+      cameras: [...state.cameras.filter(c => c.id !== action.cameraId)]
+    };
   })
 );
 
-export function reducer(state: CameraState | undefined, action: Action) {
+export function reducer(state: CamerasState | undefined, action: Action) {
   return camerasReducer(state, action);
 }

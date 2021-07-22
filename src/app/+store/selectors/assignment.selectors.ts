@@ -1,9 +1,8 @@
+import { AssignmentsState } from '../../+store/reducers/assignment.reducers';
 import { AssignmentResponse } from '../../models/assignment.model';
 
-export interface AssignmentState {
-  assignments: Array<AssignmentResponse>;
-}
 
-export const selectAssignments = (state: AssignmentState) => {
+
+export const selectAssignments = (state: AssignmentsState) => {
   return state.assignments
 };
