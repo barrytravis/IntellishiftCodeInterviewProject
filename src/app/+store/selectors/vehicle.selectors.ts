@@ -1,6 +1,6 @@
 import { VehiclesState } from "../../+store/reducers/vehicle.reducers";
-import { Vehicle } from "../../models/vehicle.model";
+import { createFeatureSelector, createSelector } from '@ngrx/store';
 
-export const selectCameras = (state: VehiclesState) => {
-  return state.vehicles
-};
+export const selectVehiclesState = createFeatureSelector<VehiclesState>('assignments');
+
+export const getVehicles = createSelector(selectVehiclesState, (state: VehiclesState) => state.vehicles)

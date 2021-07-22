@@ -1,6 +1,6 @@
 import { AssignmentsState } from '../../+store/reducers/assignment.reducers';
-import { AssignmentResponse } from '../../models/assignment.model';
+import { createFeatureSelector, createSelector } from '@ngrx/store';
 
-export const selectAssignments = (state: AssignmentsState) => {
-  return state.assignments
-};
+export const selectAssignmentsState = createFeatureSelector<AssignmentsState>('assignments');
+
+export const getAssignments = createSelector(selectAssignmentsState, (state: AssignmentsState) => state.assignments)
