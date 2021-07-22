@@ -6,17 +6,6 @@ export interface CamerasState {
   cameras: Array<Camera>;
 }
 
-// export interface State {
-//   cameras: CamerasState;
-// }
-
 export const selectCameras = (state: CamerasState) => {
-  console.log('in selector');
-  console.log(state);
   return state.cameras;
 };
-
-// export const selectAllCameras = createSelector(
-//   selectCameras,
-//   (state: CameraState) => state.cameras
-// );

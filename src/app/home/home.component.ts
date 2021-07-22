@@ -4,6 +4,7 @@ import { CameraActions } from '../+store/actions';
 import { CameraState } from '../+store/reducers/camera.reducers';
 import { CameraSelector } from '../+store/selectors';
 import { Actions, ofType } from '@ngrx/effects';
+import { Camera } from '../models/camera.model';
 
 @Component({
   selector: 'app-home',
@@ -21,10 +22,11 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.store.dispatch(CameraActions.loadCameras());
 
-    // this.store
-    //   .pipe(select(CameraSelector.selectCameras))
-    //   .subscribe(x => console.log(x));
+    this.store
+      .pipe(select(CameraSelector.selectCameras))
+      .subscribe(x => console.log(x));
 
+    this.store.dispatch(CameraActions.deleteCamera( {cameraId: 4} ));
     // this.store
     //   .select(CameraSelector.selectAllCameras)
     //   .subscribe(x => console.log(x));

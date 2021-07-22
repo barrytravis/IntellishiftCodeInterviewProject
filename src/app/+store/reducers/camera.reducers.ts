@@ -17,24 +17,23 @@ export const initialState: CameraState = adapter.getInitialState({
 
 export const camerasReducer = createReducer(
   initialState,
-  on(CameraActions.loadCamerasSuccess, (state, action) => {
-    console.log(action.cameras);
-    return produce(state, baseState => {
-      baseState.cameras = [];
-      baseState.cameras.concat(action.cameras);
-    });
-  }),
+  on(CameraActions.loadCamerasSuccess, (state, action) => ({
+    cameras: action.cameras
+  })),
   on(CameraActions.createCamera, (state, action) => ({
     cameras: [...state.cameras, action.camera]
-  }))
-  // on(CameraActions.updateCamera, (state, action) => ({
-  //   cameras: state.cameras.map((value, index) =>
-  //     index === action.camera.id ? { ...value, deviceNo: action.camera } : value
-  //   )
-  // })),
-  // on(CameraActions.deleteCamera, (state, action) => ({
-  //   cameras: [...state.cameras.splice(action.cameraId)]
-  // }))
+  })),
+  on(CameraActions.updateCamera, (state, action) => ({
+    cameras: state.cameras.map((value, index) =>
+      index === action.camera.id
+        ? { ...value, deviceNo: action.camera.deviceNo }
+        : value
+    )
+  })),
+  on(CameraActions.deleteCamera, (state, action) => {
+    console.log(action);
+    return {cameras: [...state.cameras.splice(action.cameraId)]}
+  })
 );
 
 export function reducer(state: CameraState | undefined, action: Action) {
