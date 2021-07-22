@@ -17,13 +17,13 @@ export const initialState: CameraState = adapter.getInitialState({
 
 export const camerasReducer = createReducer(
   initialState,
-  // on(CameraActions.loadCamerasSuccess, (state, action) => {
-  //   console.log(action.cameras);
-  //   return produce(state, baseState => {
-  //     baseState.cameras = [];
-  //     baseState.cameras.concat(action.cameras);
-  //   });
-  // }),
+  on(CameraActions.loadCamerasSuccess, (state, action) => {
+    console.log(action.cameras);
+    return produce(state, baseState => {
+      baseState.cameras = [];
+      baseState.cameras.concat(action.cameras);
+    });
+  }),
   on(CameraActions.createCamera, (state, action) => ({
     cameras: [...state.cameras, action.camera]
   }))

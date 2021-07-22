@@ -13,7 +13,6 @@ import { select, Store } from '@ngrx/store';
 export class CameraEffects {
   constructor(private dataService: DataService, private actions$: Actions, private store: Store<CameraState>) {}
 
-
   loadCameras = createEffect(() =>
     this.actions$.pipe(
       ofType(CameraActions.loadCameras),
@@ -21,15 +20,8 @@ export class CameraEffects {
         this.dataService.get<Camera[]>('cameras').pipe(
           map(cameras => CameraActions.loadCamerasSuccess({ cameras }))
         )
-
-
-        
-
-
       )
     )
   );
-
-
 
 }

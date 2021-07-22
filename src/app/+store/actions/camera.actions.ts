@@ -13,12 +13,27 @@ export const createCamera = createAction(
   props<{ camera: Camera }>()
 );
 
+export const createCameraSuccess = createAction(
+  '[VEHICLE] CreateCameraSuccess',
+  props<{ camera: Camera }>()
+);
+
 export const updateCamera = createAction(
   '[VEHICLE] UpdateCamera',
   props<{ camera: Camera }>()
 );
 
+export const updateCameraSuccess = createAction(
+  '[VEHICLE] UpdateCameraSuccess',
+  props<{ camera: Camera }>()
+);
+
 export const deleteCamera = createAction(
   '[VEHICLE] DeleteCamera',
+  props<{ cameraId: number }>()
+);
+
+export const deleteCameraSuccess = createAction(
+  '[VEHICLE] DeleteCameraSuccess',
   props<{ cameraId: number }>()
 );
