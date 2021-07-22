@@ -42,6 +42,7 @@ import { VehicleEffects } from './+store/effects/vehicle.effects';
       { path: 'assignment', component: VehicleCameraAssignmentComponent }
     ])
   ],
+  entryComponents: [GenericMessageDialogComponent],
   declarations: [
     AppComponent,
     HomeComponent,

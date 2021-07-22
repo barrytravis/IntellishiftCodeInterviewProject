@@ -39,7 +39,7 @@ export class VehicleEffects {
             'vehicles/:id',
             { id: +data.vehicle.id },
             {
-              cameraId: +data.vehicle.cameraId,
+              cameraId: null,
               name: data.vehicle.name
             }
           )
