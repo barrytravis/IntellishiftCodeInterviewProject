@@ -132,21 +132,21 @@ export class DataService {
       'vehicles/:id',
       (params: any, data: any) => {
         this.vehicles.set(params.id, data);
-        return this.vehicles[params.id];
+        return this.vehicles.get(params.id);
       }
     ],
     [
       'cameras/:id',
       (params: any, data: any) => {
         this.cameras.set(params.id, data);
-        return this.cameras[params.id];
+        return this.cameras.get(params.id);
       }
     ],
     [
       'assignments/:id',
       (params: any, data: any) => {
         this.assignments.set(params.id, data);
-        return this.assignments[params.id];
+        return this.assignments.get(params.id);
       }
     ]
   ]);

@@ -64,7 +64,6 @@ export class VehicleFormComponent implements OnInit {
   allowEdit(){
     this.formIsReadOnly = false;
     this.vehicleEntryForm.get('name').enable({onlySelf: true});
-    this.vehicleEntryForm.get('cameraId').enable({onlySelf: true});
   }
 
   resetForm(){
