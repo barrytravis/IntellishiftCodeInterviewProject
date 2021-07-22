@@ -25,6 +25,7 @@ export class CameraComponent implements OnInit {
 
   ngOnInit() {
     this.getCameras();
+    this.filterCameraList(this.searchInput);
   }
 
   createCamera(newCamera: Camera) {
@@ -37,8 +38,7 @@ export class CameraComponent implements OnInit {
 
   getCameras() {
     this.store.pipe(select(CameraSelector.getCameras)).subscribe(data => {
-      console.log(data);
-      this.cameras = this.filterCameraList([...data], this.searchInput);
+      this.cameras = [...data];
     });
   }
 
@@ -50,28 +50,25 @@ export class CameraComponent implements OnInit {
     this.store.dispatch(CameraActions.deleteCamera({ cameraId }));
   }
 
-  filterCameraList(cameras: Camera[], searchInput?: string): Camera[] {
-    if (!searchInput) {
-      return cameras;
-    } else {
-      return cameras.filter(
+  filterCameraList(searchInput?: string) {
+    if (searchInput) {
+      this.cameras = this.cameras.filter(
         x =>
           x.deviceNo === undefined ||
-          x.deviceNo
-            .toLocaleLowerCase()
+          x.deviceNo.toLocaleLowerCase()
             .includes(searchInput.toLocaleLowerCase())
       );
+    } else {
+      this.getCameras();
     }
   }
 
   addBlankCamera() {
     this.cameras.unshift(new Camera());
-    this.filterCameraList(this.cameras, this.searchInput);
   }
 
   removeBlankCamera(index: number) {
     this.cameras.splice(index, 1);
-    this.filterCameraList(this.cameras, this.searchInput);
   }
 
   isExistingCameraId(id: number): boolean {

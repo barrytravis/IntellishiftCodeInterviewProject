@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { VehicleActions } from '../+store/actions';
+import { VehiclesState } from '../+store/reducers/vehicle.reducers';
 import { GenericMessageDialogComponent } from '../generic-message-dialog/generic-message-dialog.component';
+import { VehicleSelector } from '../+store/selectors';
 import { Vehicle } from '../models/vehicle.model';
 import { DataService } from '../services/data.service';
 
@@ -12,80 +16,66 @@ import { DataService } from '../services/data.service';
 })
 export class VehicleComponent implements OnInit {
   public vehicles: Vehicle[] = [];
-  public originalVehicles: Vehicle[] = [];
   public searchInput: string = '';
 
-  constructor(private data: DataService, public dialog: MatDialog) {}
+  constructor(
+    private readonly store: Store<VehiclesState>,
+    public dialog: MatDialog) {}
 
   ngOnInit() {
     this.getVehicles();
-  }
-
-  filterVehicleList(searchInput?) {
-    if (!searchInput) {
-      this.vehicles = this.originalVehicles;
-    } else {
-      this.vehicles = this.originalVehicles.filter(
-        x =>
-          x.name === undefined ||
-          x.name.toLocaleLowerCase().includes(searchInput.toLocaleLowerCase())
-      );
-    }
-  }
-
-  addBlankVehicle() {
-    this.originalVehicles.unshift(new Vehicle());
     this.filterVehicleList(this.searchInput);
   }
-
-  removeBlankVehicle(index: number) {
-    this.originalVehicles.splice(index, 1);
-    this.filterVehicleList(this.searchInput);
-  }
-
+  
   createVehicle(newVehicle: Vehicle) {
     if (!this.isExistingVehicleId(newVehicle.id)) {
-      this.data
-        .post(
-          'vehicles/:id',
-          { id: newVehicle.id },
-          { name: newVehicle.name, cameraId: newVehicle.cameraId }
-        )
-        .subscribe(() => this.getVehicles(), err => console.log(err));
+      this.store.dispatch(VehicleActions.createVehicle({ vehicle: newVehicle }));
     } else {
       this.openModal('This Vehicle ID is already used.');
     }
   }
 
   getVehicles(): void {
-    this.data.get<Vehicle[]>('vehicles').subscribe(data => {
-      this.originalVehicles = data;
-      this.filterVehicleList(this.searchInput);
+    this.store.pipe(select(VehicleSelector.getVehicles))
+    .subscribe(data => {
+      this.vehicles = [...data];
     });
   }
 
   updateVehicle(vehicle: Vehicle) {
-    this.data
-      .put<Vehicle>(
-        'vehicles/:id',
-        { id: vehicle.id },
-        { id: vehicle.id, name: vehicle.name, cameraId: vehicle.cameraId }
-      )
-      .subscribe(() => this.getVehicles(), err => console.log(err));
+    this.store.dispatch(VehicleActions.updateVehicle({vehicle}));
   }
 
-  deleteVehicle(id: number) {
-    this.data
-      .delete('vehicles/:id', { id: id })
-      .subscribe(() => this.getVehicles());
+  deleteVehicle(vehicleId: number) {
+    this.store.dispatch(VehicleActions.deleteVehicle({vehicleId}));
+  }
+
+  filterVehicleList(searchInput?) {
+    if (searchInput) {
+      this.vehicles = this.vehicles.filter(
+        x =>
+          x.name === undefined ||
+          x.name.toLocaleLowerCase().includes(searchInput.toLocaleLowerCase())
+      );
+    } else {
+      this.getVehicles();
+    }
+  }
+
+  addBlankVehicle() {
+    this.vehicles.unshift(new Vehicle());
+  }
+
+  removeBlankVehicle(index: number) {
+    this.vehicles.splice(index, 1);
   }
 
   isExistingVehicleId(id: number): boolean {
-    return this.originalVehicles.findIndex(x => x.id === id) === -1;
+    return this.vehicles.findIndex(x => x.id === id) === -1;
   }
 
   public openModal(message: string) {
-    const dialogRef = this.dialog.open(GenericMessageDialogComponent, {
+    this.dialog.open(GenericMessageDialogComponent, {
       data: message
     });
   }

@@ -8,7 +8,7 @@ export interface VehiclesState {
   vehicles: Array<Vehicle>;
 }
 
-export const vehicleFeatureKey = 'vehicle';
+export const vehicleFeatureKey = 'vehicles';
 export const adapter: EntityAdapter<Vehicle> = createEntityAdapter<Vehicle>();
 
 export const initialState: VehiclesState = adapter.getInitialState({
