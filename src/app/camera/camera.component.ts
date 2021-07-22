@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { CamerasState } from '../+store/reducers/camera.reducers';
+import { CameraSelector } from '../+store/selectors';
 import { GenericMessageDialogComponent } from '../generic-message-dialog/generic-message-dialog.component';
 import { Camera } from '../models/camera.model';
 import { DataService } from '../services/data.service';
@@ -15,7 +18,11 @@ export class CameraComponent implements OnInit {
   public originalCameras: Camera[] = [];
   public searchInput: string = '';
 
-  constructor(private data: DataService, public dialog: MatDialog) {}
+  constructor(
+    private readonly store: Store<CamerasState>,
+    private data: DataService,
+    public dialog: MatDialog
+  ) {}
 
   ngOnInit() {
     this.getCameras();
@@ -60,7 +67,7 @@ export class CameraComponent implements OnInit {
   }
 
   getCameras() {
-    this.data.get<Camera[]>('cameras').subscribe(data => {
+    this.store.pipe(select(CameraSelector.selectCameras)).subscribe(data => {
       this.originalCameras = data.sort(x => x.id);
       this.filterCameraList(this.searchInput);
     });

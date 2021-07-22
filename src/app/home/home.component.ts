@@ -19,19 +19,7 @@ export class HomeComponent implements OnInit {
     private readonly actions$: Actions
   ) {}
 
-  ngOnInit() {
-    // this.store.dispatch(CameraActions.loadCameras());
-
-    // this.store
-    //   .pipe(select(CameraSelector.selectCameras))
-    //   .subscribe(x => console.log(x));
-
-    // this.store.dispatch(CameraActions.deleteCamera({ cameraId: 4 }));
-
-    // this.store
-    //   .pipe(select(CameraSelector.selectCameras))
-    //   .subscribe(x => console.log(x));
-  }
+  ngOnInit() { }
 
   tabControl(selectedTab: string) {
     this.currentTab = selectedTab;
