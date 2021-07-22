@@ -33,7 +33,7 @@ export const assignmentReducer = createReducer(
   on(AssignmentActions.deleteAssignment, (state, action) => ({
     assignments: state.assignments.map((value, index) =>
     index === action.assignment.id ? { ...value, deleted: true } : value
-    
+    )
   }))
 );
 
