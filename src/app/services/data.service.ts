@@ -82,7 +82,7 @@ export class DataService {
         vehicle = this.vehicles.set(params.id, {
           name: data.name
         });
-        return {};
+        return this.vehicles[params.id];
       }
     ],
     [
@@ -93,7 +93,7 @@ export class DataService {
           deviceNo: data.deviceNo,
           vehicleId: data.vehicleId
         });
-        return {};
+        return this.cameras[params.id];
       }
     ],
     [
@@ -122,7 +122,7 @@ export class DataService {
           deleted: false,
           dateCreated: new Date()
         });
-        return {};
+        return this.assignments[params.id];
       }
     ]
   ]);
@@ -132,21 +132,21 @@ export class DataService {
       'vehicles/:id',
       (params: any, data: any) => {
         this.vehicles.set(params.id, data);
-        return {};
+        return this.vehicles[params.id];
       }
     ],
     [
       'cameras/:id',
       (params: any, data: any) => {
         this.cameras.set(params.id, data);
-        return {};
+        return this.cameras[params.id];
       }
     ],
     [
       'assignments/:id',
       (params: any, data: any) => {
         this.assignments.set(params.id, data);
-        return {};
+        return this.assignments[params.id];
       }
     ]
   ]);
@@ -156,14 +156,14 @@ export class DataService {
       'vehicles/:id',
       (params: any) => {
         this.vehicles.delete(params.id);
-        return {};
+        return params.id;
       }
     ],
     [
       'cameras/:id',
       (params: any) => {
         this.cameras.delete(params.id);
-        return {};
+        return params.id;
       }
     ],
     [
@@ -172,7 +172,7 @@ export class DataService {
         let current = this.assignments.get(params.id);
         current.deleted = true;
         this.assignments.set(params.id, current);
-        return {};
+        return params.id;
       }
     ]
   ]);

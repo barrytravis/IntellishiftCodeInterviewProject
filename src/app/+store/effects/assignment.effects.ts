@@ -3,7 +3,11 @@ import { map, catchError, switchMap, tap } from 'rxjs/operators';
 import { DataService } from '../../services/data.service';
 import { Injectable } from '@angular/core';
 import { AssignmentActions } from '../../+store/actions';
-import { Assignment, AssignmentRequest, AssignmentResponse } from '../../models/assignment.model';
+import {
+  Assignment,
+  AssignmentRequest,
+  AssignmentResponse
+} from '../../models/assignment.model';
 import { EMPTY } from 'rxjs';
 import { root } from 'rxjs/internal/util/root';
 import { AssignmentsState } from '../../+store/reducers/assignment.reducers';
@@ -11,17 +15,76 @@ import { select, Store } from '@ngrx/store';
 
 @Injectable()
 export class AssignmentEffects {
-  constructor(private dataService: DataService, private actions$: Actions, private store: Store<AssignmentsState>) {}
+  constructor(
+    private dataService: DataService,
+    private actions$: Actions,
+    private store: Store<AssignmentsState>
+  ) {}
 
   loadAssignments = createEffect(() =>
     this.actions$.pipe(
       ofType(AssignmentActions.loadAssignments),
-      switchMap(() => 
-        this.dataService.get<AssignmentResponse[]>('Assignments').pipe(
-          map(assignments => AssignmentActions.loadAssignmentsSuccess({ assignments }))
-        )
+      switchMap(() =>
+        this.dataService
+          .get<AssignmentResponse[]>('Assignments')
+          .pipe(
+            map(assignments =>
+              AssignmentActions.loadAssignmentsSuccess({ assignments })
+            )
+          )
       )
     )
   );
 
+  createAssignment = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AssignmentActions.createAssignment),
+      switchMap((data) =>
+        this.dataService
+          .post<AssignmentResponse>(
+            'assignments',
+            {},
+            {
+              cameraId: +data.assignment.cameraId,
+              vehicleId: +data.assignment.vehicleId
+            }
+          )
+          .pipe(
+            map(assignment =>
+              AssignmentActions.createAssignmentSuccess({ assignment })
+            )
+          )
+      )
+    )
+  );
+
+  updateAssignment = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AssignmentActions.updateAssignment),
+      switchMap((data) =>
+        this.dataService
+          .put<AssignmentResponse>('Assignments', {}, data.assignment)
+          .pipe(
+            map(assignment =>
+              AssignmentActions.updateAssignmentSuccess({ assignment })
+            )
+          )
+      )
+    )
+  );
+
+  deleteAssignment = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AssignmentActions.deleteAssignment),
+      switchMap((data) =>
+        this.dataService
+        .delete('assignments/:id', { id: data.assignment.id }, data.assignment)
+          .pipe(
+            map(assignments =>
+              AssignmentActions.deleteAssignmentSuccess({ data.id })
+            )
+          )
+      )
+    )
+  );
 }

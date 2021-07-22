@@ -20,17 +20,17 @@ export const assignmentReducer = createReducer(
   on(AssignmentActions.loadAssignmentsSuccess, (state, action) => ({
     assignments: action.assignments
   })),
-  on(AssignmentActions.createAssignment, (state, action) => ({
+  on(AssignmentActions.createAssignmentSuccess, (state, action) => ({
     assignments: [...state.assignments, action.assignment]
   })),
-  on(AssignmentActions.updateAssignment, (state, action) => ({
+  on(AssignmentActions.updateAssignmentSuccess, (state, action) => ({
     assignments: state.assignments.map((value, index) =>
       index === action.assignment.id
         ? { ...value, vehicleId: action.assignment.vehicleId, cameraId: action.assignment.cameraId }
         : value
     )
   })),
-  on(AssignmentActions.deleteAssignment, (state, action) => ({
+  on(AssignmentActions.deleteAssignmentSuccess, (state, action) => ({
     assignments: state.assignments.map((value, index) =>
     index === action.assignment.id ? { ...value, deleted: true } : value
     )

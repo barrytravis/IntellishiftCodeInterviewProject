@@ -20,17 +20,17 @@ export const vehiclesReducer = createReducer(
   on(VehicleActions.loadVehiclesSuccess, (state, action) => ({
     vehicles: action.vehicles
   })),
-  on(VehicleActions.createVehicle, (state, action) => ({
+  on(VehicleActions.createVehicleSuccess, (state, action) => ({
     vehicles: [...state.vehicles, action.vehicle]
   })),
-  on(VehicleActions.updateVehicle, (state, action) => ({
+  on(VehicleActions.updateVehicleSuccess, (state, action) => ({
     vehicles: state.vehicles.map((value, index) =>
       index === action.vehicle.id
         ? { ...value, name: action.vehicle.name }
         : value
     )
   })),
-  on(VehicleActions.deleteVehicle, (state, action) => {
+  on(VehicleActions.deleteVehicleSuccess, (state, action) => {
     return { vehicles: [...state.vehicles.filter(c => c.id !== action.vehicleId)] };
   })
 );
