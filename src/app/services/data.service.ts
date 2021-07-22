@@ -78,22 +78,29 @@ export class DataService {
     [
       'vehicles/:id',
       (params: any, data: any) => {
-        let vehicle: object = null;
-        vehicle = this.vehicles.set(params.id, {
-          name: data.name
+        this.vehicles.set(params.id, {
+          name: data.name,
+          cameraId: data.cameraId
         });
-        return this.vehicles[params.id];
+
+        let vehicle = null;
+        vehicle = JSON.parse(JSON.stringify(this.vehicles.get(params.id)));
+        vehicle.id = params.id;
+        return vehicle;
       }
     ],
     [
       'cameras/:id',
       (params: any, data: any) => {
-        let camera: object = null;
-        camera = this.cameras.set(params.id, {
+        this.cameras.set(params.id, {
           deviceNo: data.deviceNo,
           vehicleId: data.vehicleId
         });
-        return this.cameras[params.id];
+        
+        let camera = null;
+        camera = JSON.parse(JSON.stringify(this.cameras.get(params.id)));
+        camera.id = params.id;
+        return camera;
       }
     ],
     [
@@ -122,7 +129,11 @@ export class DataService {
           deleted: false,
           dateCreated: new Date()
         });
-        return this.assignments[params.id];
+
+        let assignment = null;
+        assignment = JSON.parse(JSON.stringify(this.assignments.get(params.id)));
+        assignment.id = params.id;
+        return assignment;
       }
     ]
   ]);

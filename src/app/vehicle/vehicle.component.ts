@@ -73,7 +73,7 @@ export class VehicleComponent implements OnInit {
   }
 
   isExistingVehicleId(id: number): boolean {
-    return this.vehicles.findIndex(x => x.id === id) === -1;
+    return this.vehicles.findIndex(x => x.id === id) !== -1;
   }
 
   public openModal(message: string) {

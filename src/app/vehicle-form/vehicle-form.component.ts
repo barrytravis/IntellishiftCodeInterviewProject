@@ -48,15 +48,16 @@ export class VehicleFormComponent implements OnInit {
     this.vehicleEntryForm.updateValueAndValidity();
     
     if(!this.vehicleEntryForm.invalid){
-      let formCamera: Vehicle = new Vehicle();
+      let formVehicle: Vehicle = new Vehicle();
       let rawFormValue = this.vehicleEntryForm.getRawValue();
-      formCamera.name = rawFormValue.name;
-      formCamera.id = rawFormValue.id;
+      formVehicle.name = rawFormValue.name;
+      formVehicle.id = +rawFormValue.id;
+      formVehicle.cameraId = +this.vehicle?.cameraId ?? null;
 
       if(this._vehicle.id != null){
-        this.updateVehicle.emit(formCamera)
+        this.updateVehicle.emit(formVehicle)
       } else {
-        this.createVehicle.emit(formCamera);
+        this.createVehicle.emit(formVehicle);
       }
     }
   }

@@ -73,7 +73,7 @@ export class CameraComponent implements OnInit {
   }
 
   isExistingCameraId(id: number): boolean {
-    return this.cameras.findIndex(x => x.id === id) === -1;
+    return this.cameras.findIndex(x => x.id === id) !== -1;
   }
 
   public openModal(message: string) {
