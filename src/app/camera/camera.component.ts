@@ -32,6 +32,8 @@ export class CameraComponent implements OnInit {
     } else {
       this.openModal('This Camera ID is already used.');
     }
+
+    this.searchInput = '';
   }
 
   getCameras() {
@@ -41,7 +43,8 @@ export class CameraComponent implements OnInit {
   }
 
   updateCamera(camera: Camera) {
-    this.store.dispatch(CameraActions.updateCamera({ camera }));
+    this.store.dispatch(CameraActions.updateCamera({ camera }));    
+    this.searchInput = '';
   }
 
   deleteCamera(cameraId: number) {

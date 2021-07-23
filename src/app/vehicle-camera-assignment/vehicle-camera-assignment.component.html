@@ -3,7 +3,7 @@
     <div class="column">
 
       <mat-form-field class="search-form">
-        <input matInput placeholder="Search By Vehicle ID" name="searchForm"  [(ngModel)]="searchInput" (ngModelChange)="filterAssignmentList($event)" />
+        <input matInput placeholder="Search By Vehicle or Camera ID" name="searchForm"  [(ngModel)]="searchInput" (ngModelChange)="filterAssignmentList($event)" />
       </mat-form-field>
 
       <button mat-button color="primary" *ngIf="!newAssignment" (click)="createBlankAssignment()">New Assignment</button>

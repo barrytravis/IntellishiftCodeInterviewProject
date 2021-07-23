@@ -36,6 +36,8 @@ export class VehicleComponent implements OnInit {
     } else {
       this.openModal('This Vehicle ID is already used.');
     }
+    
+    this.searchInput = '';
   }
 
   getVehicles(): void {
@@ -46,6 +48,7 @@ export class VehicleComponent implements OnInit {
 
   updateVehicle(vehicle: Vehicle) {
     this.store.dispatch(VehicleActions.updateVehicle({ vehicle }));
+    this.searchInput = '';
   }
 
   deleteVehicle(vehicleId: number) {

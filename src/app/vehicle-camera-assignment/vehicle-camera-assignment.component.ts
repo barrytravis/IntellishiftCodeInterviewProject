@@ -58,7 +58,11 @@ export class VehicleCameraAssignmentComponent implements OnInit {
   filterAssignmentList(searchInput?: string) {
     if (searchInput) {
       this.assignments = this.assignments.filter(
-        x => x.vehicleId === undefined || x.vehicleId === +searchInput
+        x =>
+          x.vehicleId === undefined ||
+          x.cameraId === undefined ||
+          x.vehicleId === +searchInput ||
+          x.cameraId === +searchInput
       );
     } else {
       this.getAssignments();
