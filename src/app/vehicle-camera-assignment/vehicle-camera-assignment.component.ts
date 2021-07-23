@@ -131,7 +131,7 @@ export class VehicleCameraAssignmentComponent implements OnInit {
 
   public openModal(messages: string[]) {
     const dialogRef = this.dialog.open(GenericMessageDialogComponent, {
-      messages: messages
+      data: messages
     });
 
     dialogRef.afterClosed().subscribe(() => this.getAssignments());
