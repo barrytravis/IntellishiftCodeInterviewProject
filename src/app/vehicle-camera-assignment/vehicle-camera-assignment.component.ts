@@ -121,9 +121,12 @@ export class VehicleCameraAssignmentComponent implements OnInit {
       messages.push('Please unassign before making a new assignment.');
     }
 
-    this.openModal(messages);
-
-    return false;
+    if(cameraAssigned || vehicleAssigned || !vehicleExists || !cameraExists){
+      this.openModal(messages);
+      return false;
+    } else {
+      return true;
+    }
   }
 
   public openModal(messages: string[]) {
