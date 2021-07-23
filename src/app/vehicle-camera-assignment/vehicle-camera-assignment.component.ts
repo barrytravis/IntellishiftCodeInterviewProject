@@ -55,12 +55,11 @@ export class VehicleCameraAssignmentComponent implements OnInit {
     this.store.dispatch(AssignmentActions.deleteAssignment({ assignment }));
   }
 
-  filterAssignmentList(searchInput?) {
+  filterAssignmentList(searchInput?: string) {
     if (searchInput) {
-      this.assignments = this.assignments.filter(x => {
-        x.vehicleId === undefined ||
-          x.vehicleId.toString().includes(searchInput.toString());
-      });
+      this.assignments = this.assignments.filter(
+        x => x.vehicleId === undefined || x.vehicleId === +searchInput
+      );
     } else {
       this.getAssignments();
     }
@@ -121,7 +120,7 @@ export class VehicleCameraAssignmentComponent implements OnInit {
       messages.push('Please unassign before making a new assignment.');
     }
 
-    if(cameraAssigned || vehicleAssigned || !vehicleExists || !cameraExists){
+    if (cameraAssigned || vehicleAssigned || !vehicleExists || !cameraExists) {
       this.openModal(messages);
       return false;
     } else {
