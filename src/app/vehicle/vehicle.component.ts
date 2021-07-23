@@ -53,6 +53,7 @@ export class VehicleComponent implements OnInit {
 
   deleteVehicle(vehicleId: number) {
     this.store.dispatch(VehicleActions.deleteVehicle({ vehicleId }));
+    this.searchInput = '';
   }
 
   filterVehicleList(searchInput?) {

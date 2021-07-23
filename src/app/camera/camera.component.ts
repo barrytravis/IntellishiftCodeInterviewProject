@@ -49,6 +49,7 @@ export class CameraComponent implements OnInit {
 
   deleteCamera(cameraId: number) {
     this.store.dispatch(CameraActions.deleteCamera({ cameraId }));
+    this.searchInput = '';
   }
 
   filterCameraList(searchInput?: string) {

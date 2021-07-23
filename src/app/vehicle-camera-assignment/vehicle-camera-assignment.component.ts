@@ -49,10 +49,12 @@ export class VehicleCameraAssignmentComponent implements OnInit {
     if (await this.assignmentIsValid(assignment)) {
       this.store.dispatch(AssignmentActions.createAssignment({ assignment }));
     }
+    this.searchInput = '';
   }
 
   public deleteAssignment(assignment: AssignmentResponse) {
     this.store.dispatch(AssignmentActions.deleteAssignment({ assignment }));
+    this.searchInput = '';
   }
 
   filterAssignmentList(searchInput?: string) {
