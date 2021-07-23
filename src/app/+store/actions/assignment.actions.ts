@@ -1,5 +1,9 @@
 import { createAction, props } from '@ngrx/store';
-import { AssignmentResponse, AssignmentRequest, Assignment } from '../../models/assignment.model';
+import {
+  AssignmentResponse,
+  AssignmentRequest,
+  Assignment
+} from '../../models/assignment.model';
 
 export const loadAssignments = createAction('[ASSIGNMENT] LoadAssignments');
 
@@ -35,5 +39,5 @@ export const deleteAssignment = createAction(
 
 export const deleteAssignmentSuccess = createAction(
   '[ASSIGNMENT] DeleteAssignmentSuccess',
-  props<{ assignmentId: number }>()
+  props<{ assignment: AssignmentResponse }>()
 );

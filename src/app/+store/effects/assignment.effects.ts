@@ -91,9 +91,7 @@ export class AssignmentEffects {
           )
           .pipe(
             map(assignment =>
-              AssignmentActions.deleteAssignmentSuccess({
-                assignmentId: assignment.id
-              })
+              AssignmentActions.deleteAssignmentSuccess({ assignment })
             )
           )
       )

@@ -3,8 +3,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { select, Store } from '@ngrx/store';
 import { AssignmentActions } from '../+store/actions';
 import { AssignmentsState } from '../+store/reducers/assignment.reducers';
-import { AssignmentSelector } from '../+store/selectors';
-import { GenericMessageDialogComponent } from '../generic-message-dialog/generic-message-dialog.component';
+import {
+  AssignmentSelector,
+  VehicleSelector,
+  CameraSelector
+} from '../+store/selectors';
+import { GenericMessageDialogComponent } from '../generic-messages-dialog/generic-messages-dialog.component';
 import {
   Assignment,
   AssignmentRequest,
@@ -34,23 +38,15 @@ export class VehicleCameraAssignmentComponent implements OnInit {
   getAssignments() {
     this.store
       .pipe(select(AssignmentSelector.getAssignments))
-      .subscribe(data => {
-        console.log(data);
-        this.assignments = [...data].filter(x => x.deleted == false);
-      });
+      .subscribe(
+        data => (this.assignments = [...data].filter(x => x.deleted == false))
+      );
   }
 
   public async createAssignment(assignment: AssignmentRequest) {
     this.newAssignment = null;
 
-    console.log(assignment);
-
-    if (
-      !(await this.isCurrentlyAssigned(
-        +assignment.cameraId,
-        +assignment.vehicleId
-      ))
-    ) {
+    if (await this.assignmentIsValid(assignment)) {
       this.store.dispatch(AssignmentActions.createAssignment({ assignment }));
     }
   }
@@ -78,38 +74,61 @@ export class VehicleCameraAssignmentComponent implements OnInit {
     this.newAssignment = null;
   }
 
-  public isCurrentlyAssigned(cameraId: number, vehicleId: number): boolean {
+  public assignmentIsValid(assignment: AssignmentRequest): boolean {
+    let messages: string[] = [];
+    let vehicleId: number = +assignment.vehicleId;
+    let cameraId: number = +assignment.cameraId;
+
     let vehicleAssigned: boolean =
       this.assignments.findIndex(x => x.vehicleId === vehicleId) != -1;
+
     let cameraAssigned: boolean =
       this.assignments.findIndex(x => x.cameraId === cameraId) != -1;
 
-    if (vehicleAssigned && cameraAssigned) {
-      this.openModal(
-        'Both the vehicle and the camera are already assigned. Please unassign before making a new assignment.'
+    let vehicleExists: boolean = false;
+    this.store
+      .pipe(select(VehicleSelector.getVehicles))
+      .subscribe(
+        vehicles =>
+          (vehicleExists = vehicles.findIndex(x => x.id === vehicleId) != -1)
       );
 
-      return true;
-    } else if (vehicleAssigned) {
-      this.openModal(
-        'This vehicle is already assigned. Please unassign before making a new assignment.'
+    let cameraExists: boolean = false;
+    this.store
+      .pipe(select(CameraSelector.getCameras))
+      .subscribe(
+        cameras =>
+          (cameraExists = cameras.findIndex(x => x.id === cameraId) != -1)
       );
 
-      return true;
-    } else if (cameraAssigned) {
-      this.openModal(
-        'This camera is already assigned. Please unassign before making a new assignment.'
-      );
-
-      return true;
+    if (!vehicleExists) {
+      messages.push('Vehicle ID: ' + vehicleId.toString() + ' does not exist.');
     }
+    if (!cameraExists) {
+      messages.push('Camera ID: ' + cameraId.toString() + ' does not exist.');
+    }
+    if (vehicleAssigned) {
+      messages.push(
+        'Vehicle ID: ' + vehicleId.toString() + ' is already assigned.'
+      );
+    }
+    if (cameraAssigned) {
+      messages.push(
+        'Camera ID: ' + cameraId.toString() + ' is already assigned.'
+      );
+    }
+    if (cameraAssigned || vehicleAssigned) {
+      messages.push('Please unassign before making a new assignment.');
+    }
+
+    this.openModal(messages);
 
     return false;
   }
 
-  public openModal(message: string) {
+  public openModal(messages: string[]) {
     const dialogRef = this.dialog.open(GenericMessageDialogComponent, {
-      data: message
+      data: messages
     });
 
     dialogRef.afterClosed().subscribe(() => this.getAssignments());

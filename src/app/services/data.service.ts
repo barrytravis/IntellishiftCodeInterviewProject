@@ -181,7 +181,11 @@ export class DataService {
       'assignments/:id',
       (params: any, data: any) => {
         this.assignments.set(params.id, data);
-        return params.id;
+
+        let assignment = null;
+        assignment = JSON.parse(JSON.stringify(this.assignments.get(params.id)));
+        assignment.id = params.id;
+        return assignment;
       }
     ]
   ]);
