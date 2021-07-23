@@ -8,7 +8,7 @@ import {
   VehicleSelector,
   CameraSelector
 } from '../+store/selectors';
-import { GenericMessageDialogComponent } from '../generic-messages-dialog/generic-messages-dialog.component';
+import { GenericMessageDialogComponent } from '../generic-message-dialog/generic-message-dialog.component';
 import {
   Assignment,
   AssignmentRequest,
